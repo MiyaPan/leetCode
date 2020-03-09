@@ -1,0 +1,29 @@
+{
+    "name": "code",
+    "version": "1.0.0",
+    "description": "be better",
+    "main": "index.js",
+    "scripts": {
+        "test": "jest",
+        "test-debug": "npm --node-options --inspect-brk test",
+        "dbg": "npm run test-debug"
+    },
+    "author": "miya",
+    "devDependencies": {
+        "@babel/core": "^7.8.7",
+        "@babel/preset-env": "^7.8.7",
+        "babel-jest": "^25.1.0",
+        "jest": "^24.9.0"
+    },
+    "dependencies": {
+        "module-alias": "^2.2.2"
+    },
+    "_moduleAliases": {
+        "@src": "./src",
+        "@easy": "./src/easy",
+        "@medium": "./src/medium",
+        "@model": "./src/model",
+        "@utils": "./src/utils",
+        "@test-utils": "./spec/utils"
+    }
+}
