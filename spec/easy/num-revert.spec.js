@@ -6,7 +6,7 @@ describe('num revert', () => {
     });
 
     test('shoule correct', () => {
-        expect(numRevert(-12345)).toEqual(54321);
+        expect(numRevert(-12345)).toEqual(-54321);
     })
 });
 
