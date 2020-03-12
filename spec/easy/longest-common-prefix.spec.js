@@ -22,7 +22,6 @@ describe('longestCommonPrefix', () => {
     });
 
     test("['a', 'a', 'b'] return ''", () => {
-        debugger
         expect(longestCommonPrefix(['a', 'a', 'b'])).toEqual('');
     });
 });
