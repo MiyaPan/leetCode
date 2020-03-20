@@ -30,7 +30,7 @@ export const removeDuplicates = (nums) => {
 }
 
 // 最初版本代码
-var removeDuplicates = function(nums) {
+var removeDuplicates0 = function(nums) {
     if (nums.length === 0) {
         return 0;
     }

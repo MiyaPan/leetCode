@@ -6,7 +6,6 @@ describe('is valid parentheses', () => {
     });
 
     test("'4', '2' return 6", () => {
-        debugger
         expect(lastDigit('4', '2')).toEqual(6);
     });
 
