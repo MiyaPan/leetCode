@@ -36,7 +36,7 @@ export const countAndSay = (n) => {
     return result;
 }
 
-// 正则和字符串替换
+// 正则和字符串替换               
 export const countAndSay1 = (n) => {
     let start = '1';
     for(let i = 1; i< n; i++) {
