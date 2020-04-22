@@ -26,7 +26,6 @@ describe('mySqrt', () => {
     });
 
     test(" 1024 return 32", () => {
-        debugger
         expect(mySqrt(1024)).toEqual(32);
     });
 });

@@ -48,7 +48,6 @@ describe('divideAndConquer', () => {
     });
 
     test('[-1,0,-2] return 0', () => {
-        debugger
         expect(divideAndConquer([-1,0,-2])).toEqual(0);
     });
 });
