@@ -36,11 +36,11 @@ export const countAndSay = (n) => {
     return result;
 }
 
-// 正则和字符串替换               
+// 正则和字符串替换
 export const countAndSay1 = (n) => {
     let start = '1';
     for(let i = 1; i< n; i++) {
-        // (\d*) 没有*，有*就是匹配所有数字了，得 /g
+        // (\d*) 没有*，有*就是匹配所有数字了
         start = start.replace(/(\d)\1*/g, (match, digital) => {
             return match.length + digital;
         })
