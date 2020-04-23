@@ -654,7 +654,7 @@ function getAllAncestor (node, p, result) {
 }
 ```
 
-## 12. 根据 前序中序 => 后序
+## 12. 根据前序中序构建二叉树
 
 方式 | 序列
 -- | --
@@ -662,9 +662,62 @@ function getAllAncestor (node, p, result) {
 中序 | [4 7 2 1 8 5 9 3 6]
 后序 | [7 4 2 8 9 5 6 3 1]
 
-思路：
+思路：前序的一个是根，然后把中序分成左右两个子树，然后对子树递归创建
+
+已测试
+```js
+function buildTree2(preorder, inorder) {
+    if (!preorder || preorder.length === 0 || !inorder || inorder.length === 0) {
+        return null;
+    }
+
+    // 这种记得 shift 掉头
+    // if (preorder.length === 1 || inorder.length === 1) {
+    //     // return new TreeNode(preorder[0]);
+    //     return new TreeNode(preorder.shift());
+    // }
+
+    const index = inorder.indexOf(preorder[0]);
+    let root = new TreeNode(preorder.shift());
+    root.left = buildTree2(preorder, inorder.slice(0, index));
+    root.right = buildTree2(preorder, inorder.slice(index + 1));
+
+    return root;
+};
+```
+## 13. 根据 前序中序 => 后序
+
+思路：1. 在构建过程中直接输出后序
+    2. 先构建，再遍历输出
+
+在构建过程中直接输出后序：
+
+思路： 这样递归的方式就是先构建左子，再右子，再回退递归栈到上一层，也就是根，所以按照这个顺序正好就是
 
 ```js
+// 因为这样递归的方式就是先构建左子，再右子，再回退递归栈到上一层，也就是根，所以按照这个顺序正好就是
+function getPostByPreAndIn(preorder, inorder) {
+    let result = [];
 
+    const root = _getPostByPreAndIn(preorder, inorder);
+    console.log(root)
+
+    function _getPostByPreAndIn(preorder, inorder) {
+        if (!preorder || !inorder || inorder.length === 0  || preorder.length  === 0 ) {
+            return null;
+        }
+    
+        const index = inorder.indexOf(preorder[0]);
+        const root = new TreeNode(preorder.shift());
+    
+        root.left = _getPostByPreAndIn(preorder, inorder.slice(0, index));
+        root.right = _getPostByPreAndIn(preorder, inorder.slice(index+1));
+
+        result.push(root.val)
+    
+        return root;
+    }
+
+    return result;
+}
 ```
-

@@ -15,7 +15,7 @@ describe('getAllAncestor', () => {
      *  0     3     6
     */
 
-    test("tree return fl", () => {
+    test("tree return [4,2,5]", () => {
         expect(getAllAncestor(tree, tree.left.right.left).toString()).toEqual([4,2,5].toString());
     });
 });
