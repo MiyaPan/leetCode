@@ -721,3 +721,40 @@ function getPostByPreAndIn(preorder, inorder) {
     return result;
 }
 ```
+
+## 14. 根据中后序构建二叉树，并输出前序
+
+思路：同上
+
+```js
+function buildTree(inorder, postorder) {
+    const result = [];
+    _buildTree(inorder, postorder);
+
+    function _buildTree(inorder, postorder) {
+        if (!inorder.length || !postorder.length) {
+            return null;
+        }
+    
+        const index = inorder.indexOf(postorder[postorder.length-1]);
+        const root = new TreeNode(postorder.pop());
+    
+        // 区别就是先 右 后 左：因为 postorder 是逆序挨个 pop，左右得在 inorder 中先找右边，
+        // 先找左边会找不到 postorder[postorder.length-1]
+        root.right = _buildTree(inorder.slice(index+1), postorder);
+        root.left = _buildTree(inorder.slice(0, index), postorder);
+    
+        // 同时这里可以输出前序，这里是逆序的，转一下就行
+        result.push(root.val);
+    
+        return root;
+    }
+
+    return result.reverse();
+}
+
+function TreeNode(val) {
+    this.val = val;
+    this.left = this.right = null;
+}
+```
