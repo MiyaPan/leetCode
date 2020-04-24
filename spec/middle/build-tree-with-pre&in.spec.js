@@ -9,7 +9,6 @@ describe('buildTree', () => {
 
 describe('buildTree2', () => {
     test("[3,9,20,15,7],[9,3,15,20,7]  return ", () => {
-        debugger
         expect(JSON.stringify(buildTree2([3,9,20,15,7],[9,3,15,20,7]))).toEqual('{\"val\":3,\"right\":{\"val\":20,\"right\":{\"val\":7,\"right\":null,\"left\":null},\"left\":{\"val\":15,\"right\":null,\"left\":null}},\"left\":{\"val\":9,\"right\":null,\"left\":null}}');
     });
 });

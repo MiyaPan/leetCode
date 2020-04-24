@@ -8,7 +8,6 @@ export const getPostByPreAndIn = (preorder, inorder) => {
     let result = [];
 
     const root = _getPostByPreAndIn(preorder, inorder);
-    console.log(root)
 
     function _getPostByPreAndIn(preorder, inorder) {
         if (!preorder || !inorder || inorder.length === 0  || preorder.length  === 0 ) {

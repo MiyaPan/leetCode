@@ -291,7 +291,7 @@ function bfsQueue(node) {
 }
 ```
 
-3. 用队列，不用递归了，优化性能：shift 性能低，换用指针来记录
+3. 不用递归，优化性能：shift 性能低，换用指针来记录
 
 ```js
 function bfsQueue(node) {
@@ -299,8 +299,8 @@ function bfsQueue(node) {
     let queue = [node];
     let pointer = 0;
 
-    while(queue.length) {
-        node = queue[pointer++]; // 取队列首元素
+    while(pointer < queue.length) {
+        node = queue[pointer++]; // 取队列"首元素"
         result.push(node.val);
         node.left && queue.push(node.left);
         node.right && queue.push(node.right);
@@ -700,7 +700,6 @@ function getPostByPreAndIn(preorder, inorder) {
     let result = [];
 
     const root = _getPostByPreAndIn(preorder, inorder);
-    console.log(root)
 
     function _getPostByPreAndIn(preorder, inorder) {
         if (!preorder || !inorder || inorder.length === 0  || preorder.length  === 0 ) {
@@ -756,5 +755,109 @@ function buildTree(inorder, postorder) {
 function TreeNode(val) {
     this.val = val;
     this.left = this.right = null;
+}
+```
+
+## 15. 二叉树的层次遍历 II
+
+逆序输出，见 level-order-bottom.js 文件
+
+思路：DFS 遍历过程中标记 level，把相同 level 的依次 push
+
+```js
+levelOrderBottom = (root) => {
+    const result = [];
+    let level = -1;
+
+    _levelOrderBottom(root);
+
+    /**
+     *            5
+     *        /        \
+     *       2          8
+     *     /   \       / \
+     *    1     4     7   9
+     *   /     /     /
+     *  0     3     6
+    */
+    function _levelOrderBottom(node) {
+        if (!node) {
+            return null;
+        }
+ 
+        // 这里把 root 当 0 层处理的，结果要求叶子是 0 层，所以最后要 revert()
+        level++;
+
+        node.left && _levelOrderBottom(node.left);
+        node.right && _levelOrderBottom(node.right);
+
+        if (result[level] === undefined) {
+            result[level] = [];
+        }
+        // 哪能等于啊！！！等于就把 push 的值 return 了啊，疯了吗
+        // if (result[level] === undefined) 也要放值啊，不是等于 []
+        // result[level] = result[level].push(node.val);
+        result[level].push(node.val);
+
+        level--;
+    }
+
+    // 如果是从根到叶子层序遍历，就不用 reverse 了，对应 leetcode 102 题
+    return result.reverse();
+}
+```
+
+解法2：非递归 - 层序遍历是用栈非递归实现的
+
+思路：把层序遍历进行修改。
+
+```js
+function levelOrderBottom2(node) {
+    if (!node) {
+        return [];
+    }
+
+    let out = _levelOrderBottom2(node);
+
+    // 如果是从根到叶子层序遍历，就不用 reverse 了，对应 leetcode 102 题
+    return out.reverse();
+    /**
+     *            5
+     *        /        \
+     *       2          8
+     *     /   \       / \
+     *    1     4     7   9
+     *   /     /     /
+     *  0     3     6
+    */
+   function _levelOrderBottom2(node) {
+       if (!node) {
+           return null;
+       }
+   
+       let stack = [node];
+       let result = [];
+       let pointer = 0;
+       let level = 0;
+       
+       while(pointer < stack.length) {
+           result[level] = result[level] || [];
+           const nodeInNextLevel = [];
+   
+           while(pointer < stack.length) {
+               node = stack[pointer];
+               result[level].push(node.val);
+               node.left && nodeInNextLevel.push(node.left);
+               node.right && nodeInNextLevel.push(node.right);
+               pointer++;
+           }
+   
+           // !! concat 不会改变原有数组，而是返回新数组！！！
+           stack = stack.concat(nodeInNextLevel);
+           level++;
+       }
+   
+       return result;
+   }
 }
 ```
