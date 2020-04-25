@@ -758,7 +758,7 @@ function TreeNode(val) {
 }
 ```
 
-## 15. 二叉树的层次遍历 II
+## 15. 二叉树的层次遍历 - 先输出叶子那层，向上倒序
 
 逆序输出，见 level-order-bottom.js 文件
 
@@ -860,4 +860,101 @@ function levelOrderBottom2(node) {
        return result;
    }
 }
+```
+
+## 16. 二叉树的层次遍历 - 先输出根那层，向下顺序
+
+思路：同 15，最后 out 不用 revese 而已
+
+## 17. 二叉树锯齿形遍历
+
+思路：还是层序遍历的思路，只不过奇数层的时候，不要把 node 的值直接放到 result 里，而是放到临时数组，正常弹出，再把临时数组 reverse 一下，合并到 result 就行。
+
+```js
+function zigzagLevelOrder(root) {
+    if (!root) {
+        return [];
+    }
+
+    let stack = [root];
+    let result = [];
+    let level = 0;
+    let pointer = 0;
+
+    while(pointer < stack.length) {
+        // 每次进入下一次，先初始化 result[level]
+        result[level] = result[level] || [];
+        const nodeInNextLevel = [];
+        const reverseNodes = [];
+    /**
+     *            5
+     *        /        \
+     *       2          8
+     *     /   \       / \
+     *    1     4     7   9
+     *   /     /     /
+     *  0     3    
+    */
+        while(pointer < stack.length) {
+            const node = stack[pointer];
+            if (level%2 === 1) {
+                reverseNodes.push(node.val);
+            } else {
+                result[level].push(node.val);
+            }
+            
+            node.left && nodeInNextLevel.push(node.left);
+            node.right && nodeInNextLevel.push(node.right);
+            pointer++;
+        }
+
+        if (level%2 === 1) {
+            reverseNodes.reverse();
+            result[level] = result[level].concat(reverseNodes);
+        }
+
+        stack = stack.concat(nodeInNextLevel);
+        level++;
+    }
+
+    return result;
+}
+```
+
+## 18. n 叉树的层序遍历
+
+思路：层序遍历的套路，不过 stack 里不是放的 left 和 right，而是 children 数组而已
+
+```js
+function levelOrder(root) {
+     if (!root) {
+         return [];
+     }
+
+     let stack = [root];
+     let result = [];
+     let level = 0;
+     let pointer = 0;
+
+     while(pointer < stack.length) {
+        result[level] = result[level] || [];
+        let nodesInNextLevel = [];
+
+        while(pointer < stack.length) {
+            const node = stack[pointer];
+            result[level].push(node.val);
+            // concat 不修改原数组，要用返回值啊啊啊啊！！！2次了！！！
+            // node.children && nodesInNextLevel.concat(node.children);
+            // [1].concat(null) 竟然返回 [1, null]！！！
+            if (node.children) {
+                nodesInNextLevel = nodesInNextLevel.concat(node.children);
+            }
+            pointer++;
+        }
+        stack = stack.concat(nodesInNextLevel);
+        level++;
+     }
+
+     return result;
+ }
 ```
