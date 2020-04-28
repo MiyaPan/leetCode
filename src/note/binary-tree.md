@@ -958,3 +958,46 @@ function levelOrder(root) {
      return result;
  }
 ```
+
+## 19. 判断是不是完全二叉树
+
+详细题解见 middle/is-complete-tree.js
+思路： 二刷请完善
+
+```js
+function isCompleteTree(root) {
+    if (!root) {
+        return false;
+    }
+
+    let stack = [root];
+    let pointer = 0;
+    let nextNodeShouldBeNull = false;
+
+    /**
+     *     1            1                1
+     *   /   \        /   \            /   \
+     *  2     3      2     3          2     3
+     * /                  /  \       /     /  \
+     * 5                  5   6     4      5   6
+    */
+    while(pointer < stack.length) {
+        // 因为 push 的时候没判空，null 也进去了，所以 node 可能是 null，傻不傻
+        let node = stack[pointer];
+        if (node !== null) {
+            if (nextNodeShouldBeNull) {
+                return false;
+            }
+            stack.push(node.left);
+            stack.push(node.right);
+        }
+
+        if (!node) {
+            nextNodeShouldBeNull = true;
+        }
+        pointer++;
+    }
+
+    return true;
+}
+```
