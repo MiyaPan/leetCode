@@ -118,7 +118,42 @@ function _inOrder(node, result) {
     }
 }
 ```
+2. 0 非递归
+自己写的：先把左子一捅到底，然后出最后一个的值，然后遍历当前节点的右子树，右子树重复前面的过程，如果没有右子树就退栈，找父节点的右子树循环
 
+逻辑对，但是代码不简单，看下面的代码，就是每次 while 的时候，不是判断 node.left，而是判断 node 是不是空，这样的结果是所有左子树全入栈，不要剩下最后一个【二叉树这么有递归星，不要自己处理边界了】，全进完再出，如果有右子，就重复循环遍历右子树，没有，进入下一个循环时 node 为 null，所以正好跳过 while，接着出栈，也不用记录 pre 了啊啊啊啊！
+
+```js
+const result = [];
+    // 因为下面while里，如果 node.left，会 push node，所以初始化不用。或者while里就不要判断 node.left，而是判断 node
+    // let stack = [root];
+    let stack = [];
+    let node = root;
+    let pre = null;
+
+    // 因为是中序，root 会从栈中弹出，当把 root 从栈里 pop 出来的时候，栈空了，还需要加 || node 这个条件
+    while(stack.length || node) {
+        // 不用 pop 栈顶，下一个 node 总是在循环最后给出，要么是栈里的，要么是右子
+        // node = stack.pop();
+        while(node.left && node !== pre) {
+            stack.push(node);
+            node = node.left;
+        }
+
+        result.push(node.val);
+
+        // 右子"从来不入栈"，只有左子入栈 -- 右子会作为下个循环的根入栈
+        if (node.right) {
+            node = node.right;
+        } else {
+            node = stack.pop();
+            // 记录下前一个从栈里弹出的节点，只需要记录栈里弹出的就行，保证栈里的不重复入栈就行
+            pre = node;
+        }
+    }
+    
+    return result;
+```
 2. 非递归遍历
 
 ```js
@@ -127,26 +162,27 @@ function inOrderNonRecursive(node) {
         return;
     }
     
-    let result = [];
-    let stack = [node];
-    let currentNode = node.left;
-    let top = null;
+    const result = [];
+    let stack = [root];
+    let node = root.left;
 
-    // 当把根节点 pop 出来时，stack 为空，这时候因为右子还有，还要继续遍历
-    while(stack.length || currentNode) {
-        // 一捅到底的把左子都放进去，知道左子为空，开始弹出，出的时候检查右子，如果还有左子就接着捅，没有就单纯出
-        while(currentNode) {
-            stack.push(currentNode);
-            currentNode = currentNode.left;
+    while(stack.length || node) {
+        while(node) {
+            stack.push(node);
+            // 这样最后一个 node 是 null，我们可以直接开始出栈
+            // 所以用到遍历的流程，最好都把 null push 进去？？？！！！
+            node = node.left;
         }
- 
-        // 出顶节点，不用放右孩子到栈里，，只是把当前节点更新为右孩子，这样就避免了拿到顶元素又去遍历左孩子的死循环
-        // 不要企图 push 右节点，push 的操作都放到 while 里，pop 都在 while 外，清晰
-        top = stack.pop();
-        result.push(top.val);
-        currentNode = top.right;
-    }
 
+        node = stack.pop();
+        result.push(node.val);
+        // node 会为 null，这样正好跳过下个循环的 while，接着出栈！
+        // 如果不为 null，正好遍历右子树！赞啊！也不用记录 pre了！！
+        // 二叉树的 null 一定要重视，要好好用起来啊
+        // 一定不要判断，就是直接赋值，因为 null 是有用的！！！！
+        node = node.right;
+    }
+    
     return result;
 }
 ```
