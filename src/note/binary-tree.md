@@ -6,7 +6,7 @@ LeetCode 二叉树题目汇总：https://tding.top/archives/101cdf53.html
 http://www.jintiankansha.me/t/4EJM5iEhVB
 https://juejin.im/post/5d9f0b9551882509165ff2a8
 
-二叉树解法就全是递归，不要想非递归的方法！非递归的 BFS 和 DFS 会就行，其他问题都递归，不用想非递归解法，更不简洁了。
+**二叉树解法就全是递归，只要没要求非递归，优先想递归的方法！！！**
 
 ## 0. 二叉树的一些性质
 
@@ -378,15 +378,26 @@ function countLeafNode(node) {
 
 ## 5. 获取树的深度
 
-我想的是层序遍历的时候 count 一下，就不太简洁了
+不强制非递归，肯定优先想递归方法
+
+思路1：DFS ，不用说肯定用栈，就是中序遍历，一捅到底再右拐那一套。
+    见参考答案https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/solution/er-cha-shu-de-zui-da-shen-du-by-leetcode/
+
+思路2：递归
+
+思路3：就是用自己level那套，参见https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/solution/cde-san-chong-fang-fa-shi-xian-you-zhu-jie-by-zzxh/
+
 ```js
-function getDepth(node) {
-    if (!node) {
+function maxDepth(root) {
+    if (!root) {
         return 0;
     }
-    let leftDepth = getDepth(node.left) + 1;
-    let rightDepth = getDepth(node.right) + 1;
-    return leftDepth > rightDepth ? leftDepth : rightDepth;
+
+    let leftDepth = maxDepth(root.left);
+    let rightDepth = maxDepth(root.right);
+    return 1 + (leftDepth > rightDepth ? leftDepth : rightDepth);
+    // 这里写了 4 个maxDepth，会调用 4个递归栈，超时，这种递归的就单独存变量吧！
+    // return 1 + (maxDepth(root.left) > maxDepth(root.right) ? maxDepth(root.left) : maxDepth(root.right));
 }
 ```
 
