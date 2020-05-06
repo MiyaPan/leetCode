@@ -20,6 +20,8 @@ https://juejin.im/post/5d9f0b9551882509165ff2a8
 参考： https://www.jianshu.com/p/5e9ea25a1aae
 https://segmentfault.com/a/1190000008850005
 
+https://leetcode-cn.com/problems/binary-tree-postorder-traversal/solution/mo-fang-di-gui-zhi-bian-yi-xing-by-sonp/
+
 ### 先序遍历 - 即先根遍历
 1. 递归写法
 
@@ -239,6 +241,38 @@ function _postOrder(node, result) {
 ```
 2. 非递归写法
 
+```js
+functoin postorderTraversalIterative(root) {
+    const result = [];
+    let stack = [];
+    let node = root;
+    let pre = null;
+
+    while(stack.length || node) {
+        while(node) {
+            stack.push(node);
+            node = node.left;
+        }
+
+        node = stack[stack.length - 1];
+
+        if (node.right !== null && node.right !== pre) {
+            node = node.right;
+        } else {
+            result.push(node.val);
+            stack.pop();
+            pre = node;
+
+            // 退栈的时候把当前节点置 null，就不会进 while 循环向左了，不用 pre 什么的判断啊！！置 null 就能跳过 while 啊！！不就是想跳过 while 吗
+            node = null;
+        }
+    }
+    
+    return result;
+}
+```
+
+非递归写法2
 ```js
 // https://segmentfault.com/a/1190000008850005
 /**
