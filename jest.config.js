@@ -152,7 +152,7 @@ module.exports = {
     // ],
 
     // The regexp pattern or array of patterns that Jest uses to detect test files
-    // testRegex: [],
+    // testRegex: 'spec/easy/find-tilt.spec.js',
 
     // This option allows the use of a custom results processor
     // testResultsProcessor: null,
