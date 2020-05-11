@@ -20,4 +20,47 @@ function createTree(array, left, right) {
     }
 }
 
-export {createTree}
+function createTreeByLevelTraseval(arr) {
+    if (arr.length === 0) {
+        return null;
+    }
+
+    let pointer = 1;
+    let stackPointer = 0;
+    const root = {
+        val: arr[0],
+        left: null,
+        right: null
+    };
+    let stack = [root];
+    let node = null;
+    
+    while(stackPointer < stack.length && pointer < arr.length) {
+        let nodesInCurrentLevel = [];
+        while(stackPointer < stack.length && pointer < arr.length) {
+            node = stack[stackPointer++];
+
+            let l = arr[pointer++];
+            let r = arr[pointer++];
+            node.left = l !== null ? {
+                val: l,
+                left: null,
+                right: null
+            } : null;
+            node.right = r !== null ? {
+                val: r || null,
+                left: null,
+                right: null
+            } : null;
+    
+            node && node.left && nodesInCurrentLevel.push(node.left);
+            node && node.right && nodesInCurrentLevel.push(node.right);
+        }
+
+        stack = stack.concat(nodesInCurrentLevel);
+    }
+
+    return root;
+}
+
+export {createTree, createTreeByLevelTraseval}
