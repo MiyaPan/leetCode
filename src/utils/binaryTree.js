@@ -42,12 +42,12 @@ function createTreeByLevelTraseval(arr) {
 
             let l = arr[pointer++];
             let r = arr[pointer++];
-            node.left = l !== null ? {
+            node.left = l !== undefined ? {
                 val: l,
                 left: null,
                 right: null
             } : null;
-            node.right = r !== null ? {
+            node.right = r !== undefined ? {
                 val: r || null,
                 left: null,
                 right: null
