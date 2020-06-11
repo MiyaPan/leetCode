@@ -40,7 +40,7 @@ export const distanceK = (root, target, K) => {
     visited.add(target);
 
     while(nodesInLevel.length) {
-        if (K === 0) return nodesInNextLevel.map(node => node.val);
+        if (K === 0) return nodesInLevel.map(node => node.val);
 
         nodesInNextLevel = [];
         for(const node of nodesInLevel) {
@@ -64,8 +64,8 @@ function setParent(root, parent, parentMap){
 
     parentMap.set(root, parent);
 
-    root.left && setParent(root.left, root);
-    root.right && setParent(root.right, root);
+    root.left && setParent(root.left, root, parentMap);
+    root.right && setParent(root.right, root, parentMap);
 }
 
 // huapeng代码
