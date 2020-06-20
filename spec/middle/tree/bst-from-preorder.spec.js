@@ -1,6 +1,6 @@
 
 import { bstFromPreorder } from '../../src/middle/bst-from-preorder';
-import { levelOrder } from '../../src/easy/level-order-base';
+import { levelOrder } from '../../../src/easy/level-order-base';
 
 describe('bstFromPreorder', () => {
 

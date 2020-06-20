@@ -1,6 +1,6 @@
 
 import {verticalTraversal} from '../../src/middle/vertical-traversal';
-import {createTreeByLevelTraseval} from '../../src/utils/binaryTree';
+import {createTreeByLevelTraseval} from '../../../src/utils/binaryTree';
 
 describe('verticalTraversal', () => {
     const tree = createTreeByLevelTraseval([3,9,20,null,null,15,7]);

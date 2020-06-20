@@ -1,6 +1,6 @@
 
 import {flipMatchVoyage, flipMatchVoyage1} from '../../src/middle/flip-match-voyage';
-import {createTreeByLevelTraseval} from '../../src/utils/binaryTree';
+import {createTreeByLevelTraseval} from '../../../src/utils/binaryTree';
 
 describe('flipMatchVoyage', () => {
     const tree = createTreeByLevelTraseval([1,2,3]);

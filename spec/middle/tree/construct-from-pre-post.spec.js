@@ -1,6 +1,6 @@
 
 import {constructFromPrePost} from '../../src/middle/construct-from-pre-post';
-import {levelOrder} from '../../src/easy/level-order-base';
+import {levelOrder} from '../../../src/easy/level-order-base';
 
 describe('constructFromPrePost', () => {
     test("constructFromPrePost return", () => {

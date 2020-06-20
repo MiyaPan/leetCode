@@ -1,6 +1,6 @@
 
 import {widthOfBinaryTree} from '../../src/middle/width-of-binary-tree';
-import {createTreeByLevelTraseval} from '../../src/utils/binaryTree';
+import {createTreeByLevelTraseval} from '../../../src/utils/binaryTree';
 
 describe('widthOfBinaryTree', () => {
     const tree = createTreeByLevelTraseval([1,3,2,5,3,null,9]);

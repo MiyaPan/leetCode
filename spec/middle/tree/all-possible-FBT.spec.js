@@ -1,6 +1,6 @@
 
 import {allPossibleFBT} from '../../src/middle/all-possible-FBT';
-import {levelOrder} from '../../src/easy/level-order-base';
+import {levelOrder} from '../../../src/easy/level-order-base';
 
 describe('allPossibleFBT', () => {
     test("allPossibleFBT return", () => {

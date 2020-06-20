@@ -1,6 +1,6 @@
 
 import {printTree} from '../../src/middle/print-tree';
-import {createTreeByLevelTraseval} from '../../src/utils/binaryTree';
+import {createTreeByLevelTraseval} from '../../../src/utils/binaryTree';
 
 describe('printTree', () => {
     const tree = createTreeByLevelTraseval([1,2]);

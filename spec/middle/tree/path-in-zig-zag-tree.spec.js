@@ -1,6 +1,6 @@
 
 import {pathInZigZagTree} from '../../src/middle/path-in-zig-zag-tree';
-import {createTreeByLevelTraseval} from '../../src/utils/binaryTree';
+import {createTreeByLevelTraseval} from '../../../src/utils/binaryTree';
 
 describe('pathInZigZagTree', () => {
     const tree = createTreeByLevelTraseval([1,2]);
