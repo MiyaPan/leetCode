@@ -132,3 +132,38 @@ export const dynamicProgramming2 = (nums) => {
 
     return max;
 }
+
+export const maxSubArray_2 = (nums) => {
+    if (!nums.length) return 0;
+    let dp = [nums[0]]
+    let max = nums[0];
+    for (let i = 1; i < nums.length; i++){
+        dp[i] = Math.max(dp[i-1]+nums[i], nums[i]);
+        // 因为数组有负数，所以不能直接取 dp[nums.length-1]，像 rob 和 massage 的问题，讨论的都是正收益，中间不会降低，所以可以直接取 dp 最后一个
+        if (dp[i] > max) max = dp[i];
+    }
+
+    return max;
+};
+
+
+// export const maxSubArray_3 = (nums) => {
+//     if (!nums.length) return 0;
+//     let max = nums[0];
+//     let maxPos = 0;
+//     for (let i = 1; i < nums.length; i++){
+//         let max2Cur = 0;
+//         for (let j = maxPos; j<= i; j++) {
+//             max2Cur += nums[j];
+//         }
+//         if (max2Cur > max) {
+//             max = max2Cur;
+//         }
+//         if (max < nums[i]) {
+//             max = nums[i];
+//             maxPos = i;
+//         }
+//     }
+
+//     return max;
+// };
