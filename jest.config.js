@@ -186,5 +186,5 @@ module.exports = {
     // Whether to use watchman for file crawling
     // watchman: true,
     // The regexp pattern or array of patterns that Jest uses to detect test files
-    testRegex: 'spec/middle/dp/can-partition.spec.js',
+    testRegex: 'spec/middle/dp/find-number-of-LIS.spec.js',
 };
