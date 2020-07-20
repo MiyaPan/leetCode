@@ -12,6 +12,8 @@ export const findPaths = (m, n, N, i, j) => {
     if(m==0||n==0||N==0) return 0;
     let mod = Math.pow(10,9) +7;
 
+    // 任意节点 (x,y) 走 0 步，都不会出界，也就是都 为 0 条
+    // 为什么tmd 要都遍历，因为小球 (i,j) 出不出去，依赖它的上下左右的出去路径数，要是 小球在 0，0 开始走，那不用这样全遍历
     let dp = Array(m).fill(null).map(_ => Array(n).fill(0));
 
     for (let k = 1; k <= N; k++) {
