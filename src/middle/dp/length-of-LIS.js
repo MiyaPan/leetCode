@@ -13,7 +13,7 @@
 
 // 说明:
 // 可能会有多种最长上升子序列的组合，你只需要输出对应的长度即可。
-// 你算法的时间复杂度应该为 O(n2) 。
+// 你算法的时间复杂度应该为 O(n^2) 。
 
 export const lengthOfLIS = (nums) => {
     if (nums.length < 2) return nums.length;

@@ -186,5 +186,5 @@ module.exports = {
     // Whether to use watchman for file crawling
     // watchman: true,
     // The regexp pattern or array of patterns that Jest uses to detect test files
-    testRegex: 'spec/easy/binary-search/count-negatives.spec.js',
+    testRegex: 'spec/middle/binary-search/kth-smallest-in-matrix.spec.js',
 };
