@@ -51,6 +51,7 @@ export const nthUglyNumber = (n) => {
         // 这里是 2*dp[p2]，而不是 p2*dp[p2] 啊！
         dp[i] = Math.min(2*dp[p2], 3*dp[p3], 5*dp[p5]);
 
+        // 这里不管哪一步相等，都 ++，保证了不会出现 2*3 和 3*2 这种重复，不要用 else if
         if (dp[i] === 2*dp[p2]) p2++;
         if (dp[i] === 3*dp[p3]) p3++;
         if (dp[i] === 5*dp[p5]) p5++;
@@ -58,4 +59,37 @@ export const nthUglyNumber = (n) => {
     }
 
     return dp[n];
+}
+// 2,3,5
+export const nthUglyNumber2 = (n) => {
+    if (n === 1) return 1;
+    let pa = 1;
+    let pb = 1;
+    let pc = 1;
+    let dp = [0, 1];
+    let pre = 0;
+    // 因为 1 是丑数，所以要少数一个
+    while(n > 1) {
+        // 这里是只包含 2 3 5，就不能有别的因数了，所以只能由 2 3 5 产生的数接着乘，从 dp 中按照每次加 1 的索引去拿被乘数，而不能 px++; 每次加一
+        let min = Math.min(dp[pa]*2, dp[pb]*3, dp[pc]*5);
+        dp.push(min);
+        if (min === dp[pa]*2) {
+            pa++;
+            // if (pre === min) continue;
+            // dp.push(min);
+        }
+        if (min === dp[pb]*3) {
+            pb++;
+            // if (pre === min) continue;
+            // dp.push(min);
+        }
+        if (min === dp[pc]*5) {
+            pc++;
+            // if (pre === min) continue;
+            // dp.push(min);
+        }
+        pre = min;
+        n--;
+    }
+    return pre;
 }
