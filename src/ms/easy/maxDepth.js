@@ -18,18 +18,15 @@
     返回它的最大深度 3 
 */
 
-
-// note: 只要没要求非递归，优先想递归
 export const maxDepth = (root) => {
     if (!root) {
         return 0;
     }
 
-    let leftDepth = maxDepth(root.left);
-    let rightDepth = maxDepth(root.right);
-    return 1 + (leftDepth > rightDepth ? leftDepth : rightDepth);
-    // 这里写了 4 个maxDepth，会调用 4个递归栈，超时，这种递归的就单独存变量吧！
-    // return 1 + (maxDepth(root.left) > maxDepth(root.right) ? maxDepth(root.left) : maxDepth(root.right));
+    let l = maxDepth(root.left);
+    let r = maxDepth(root.right);
+
+    return Math.max(l, r) + 1;
 }
 
 
