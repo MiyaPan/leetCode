@@ -83,7 +83,7 @@ export var search1 = function(nums, target) {
         } else {
             // nums[m] < first， target = 3
             // 5,6,7,0,1,2,3,4
-            // 这个条件其实是 nums[m] < target < last，因为 last 比 first 小，就这么写了
+            // 这个条件其实是 nums[m] < target < last，因为 last 比 first 小，就这么写了!
             // target < first 不带等号，是因为本来该比 last，last 肯定比 first小，所以没了等号
             if (nums[m] < target && target < first) {
                 l = m + 1;

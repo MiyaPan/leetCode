@@ -1,7 +1,7 @@
-import { longestPalindrome } from '../../../src/middle/dp/longest-palindrome';
+import { longestPalindrome } from '../../../src/medium/dp/longest-palindrome';
 
 describe('longestPalindrome', () => {
     test("return 100", () => {
-        expect(longestPalindrome('babad')).toEqual('bab');
+        expect(longestPalindrome('babad')).toEqual('bab'); 
     });
 });
