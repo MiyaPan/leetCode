@@ -19,7 +19,7 @@
 // 输入: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
 // 输出: false
 
-// 思路：一个子串 s 能不能，就等于：从 i=0 遍历 s，看 s[0,i]能不能 && s[i,len]是不是词典中的一个词
+// 思路：一个子串 s 能不能，就等于：从 i=0 遍历 s，看 s[0,i]能不能 && s[i,len]是不是词典中的一个词！！！
 // 在子串 s 长度确定一次遍历中，只要有一个能划分成功的就标志 dp[s.len] 为 true，然后递推到整个问题的答案
 // 初始值：空字符串为 true，才能往下递归呀
 export const wordBreak = (s, wordDict) => {
