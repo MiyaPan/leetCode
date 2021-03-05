@@ -1,7 +1,10 @@
 /**
  * 114. 二叉树展开为链表
  * 给定一个二叉树，原地将它展开为链表。
-    例如，给定二叉树
+链接：https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list
+
+    • 展开后的单链表应该同样使用 TreeNode ，其中 right 子指针指向链表中下一个结点，而左子指针始终为 null 。
+    • 展开后的单链表应该与二叉树 先序遍历 顺序相同。
 
         1
        / \
@@ -58,24 +61,22 @@ export const flatten = (root) => {
         return null;
     }
 
-    const stack = root.right ? [root.right] : [];
-    let node = root.left;
-    let current = root;
+    const left = flatten(root.left);
+    const right = flatten(root.right);
+
+    if (left) {
+        root.right = left;
+        root.left = null;
     
-    while(stack.length || node) {
-        while(node) {
-            node.right && stack.push(node.right);
-
-            current.right = node;
-            current.left = null;
-
-            current = current.right;
-            node = current.left;
+        let node = left;
+        while(node && node.right) {
+            node = node.right;
         }
-
-        node = stack.pop();
-        // node = node.right;
+    
+        node.right = right;
     }
+
+    return root;
 };
 
 // https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/solution/114-er-cha-shu-zhan-kai-wei-lian-biao-by-ming-zhi-/
