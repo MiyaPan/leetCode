@@ -4,6 +4,11 @@
     调用 next() 将返回二叉搜索树中的下一个最小的数。
 
     示例：
+    //     7
+    //    / \
+    //   3   15
+    //      /  \
+    //     9   20
     BSTIterator iterator = new BSTIterator(root);
     iterator.next();    // 返回 3
     iterator.next();    // 返回 7
@@ -32,22 +37,38 @@
 /**
  * @param {TreeNode} root
  */
+// 一次成功，与答案算法二 一致~~
 var BSTIterator = function(root) {
+    if (!root) return null;
 
+    this.stack = [];
+    while(root) {
+        this.stack.push(root);
+        root = root.left;
+    }
 };
 
 /**
  * @return {number}
  */
 BSTIterator.prototype.next = function() {
-
+    if (this.stack.length > 0) {
+        let next = this.stack.pop();
+        let node = next.right;
+        while (node) {
+            this.stack.push(node);
+            node = node.left;
+        }
+        return next.val;
+    }
+    return null;
 };
 
 /**
  * @return {boolean}
  */
 BSTIterator.prototype.hasNext = function() {
-
+    return this.stack.length > 0;
 };
 
 /**
