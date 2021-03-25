@@ -1,4 +1,5 @@
-import { knightProbability } from '../../../src/middle/dp/knight-probability';
+// import { knightProbability } from '../../../src/middle/dp/knight-probability';
+import { knightProbability } from '../../../src/ms/medium/knightProbability';
 
 describe('knightProbability', () => {
     test("return 100", () => {
