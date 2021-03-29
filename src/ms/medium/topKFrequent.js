@@ -27,7 +27,7 @@
 // 1. 桶排序
 // 2. 对 map 的数组进行建堆，建个堆，然后输出前 k 个就可以了，因为建堆的操作，把遍历深度弄成了二叉树的深度，怎么都不会超过 o(nlogn)
 // 此时要思考一下，是使用小顶堆呢，还是大顶堆？
-// 有的同学一想，题目要求前 K 个高频元素，那么果断用大顶堆啊。
+// 有的同学一想，题目要求前 K 个高频元素，那么果断用大顶堆啊。不是的，要用小根堆啊: 因为要留在堆中的是前 k 大的，小根堆的根做守卫，大于它的才可以如，小于它的直接滚
 // 具体步骤如下：
 
 // 遍历数据，统计每个元素的频率，并将元素值（ key ）与出现的频率（ value ）保存到 map 中
@@ -41,6 +41,9 @@
 // 桶排序定义和示例：
 // https://blog.csdn.net/liaoshengshi/article/details/47320023
 // https://zhuanlan.zhihu.com/p/46138077
+
+// 各种排序 动画详解：桶排序一看就明白了：1. 先构造完全二叉树；2. 调整为大根堆；3. 交换根个最后一个节点，最大值就拿到了，再调整堆；4. 重复 3
+// https://blog.csdn.net/weixin_41190227/article/details/86600821
 var topKFrequent = function(nums, k) {
     let n = nums.length;
     if (n <= k) return nums;
@@ -117,8 +120,8 @@ export var topKFrequent = function(nums, k) {
     return heap;
 };
 
-// 基于 shiftDown 的堆化，即 自上而下的堆化
-// 从最后一个非叶子节点开始，挨个堆化【为啥从最后一个非叶子，因为叶子不用调整啊笨！】。最后一个非叶子就是最后一个叶子的父亲
+// 基于 shiftDown 的堆化，即 自上而下的堆化，完全二叉树是用数组存储的
+// 从最后一个非叶子节点开始，挨个堆化【为啥从最后一个非叶子，因为是完全二叉树，剩下的一半的叶子不用调整啊笨！】。最后一个非叶子就是最后一个叶子的父亲
 function buildHeap(heap, heapCapicity, map) {
     let lastIndex = heap.length-1;
     // 要倒着啊
@@ -154,3 +157,81 @@ function swap(heap, i, j) {
     heap[i] = heap[j];
     heap[j] = temp;
 }
+
+// 二刷
+// 输入: nums = [1,1,1,2,2,3], k = 2
+// 输出: [1,2]
+
+// 输入: nums = [1], k = 1
+// 输出: [1]
+export var topKFrequent1 = function(nums, k) {
+    let n = nums.length;
+    if (n <= k) return nums;
+
+    let map = {};
+    for (let i = 0; i < n; i++) {
+        if (map[nums[i]]) {
+            map[nums[i]] += 1;
+        } else {
+            map[nums[i]] = 1;
+        }
+    }
+
+    if (Object.keys(map).length < k) return [...Object.keys(map)];
+
+    let heap = [];
+    // 如果 map = newMap();
+    // 那就可以 map.forEach((value, key) => {});
+    Object.keys(map).forEach(key => {
+        if (heap.length < k) {
+            heap.push(+key);
+            // shiftUp(heap, map, heap.length-1);
+            // push 完了之后一次调用 shiftDown 比 每次插入都 shiftUp 要快不少！
+            if (heap.length === k) {
+                buildHeap(heap, map, k);
+            }
+        } else {
+            let val = map[key];
+            if (val > map[heap[0]]) {
+                // 比小根堆的根大的才进堆
+                heap[0] = +key;
+                shiftDown(heap, map, 0, k);
+            }
+        }
+    });
+    return heap;
+};
+
+// build heap 是从最后一个非叶子开始 shiftDown（当前元素向下移动）
+function buildHeap(heap, map, k) {
+    // 最后一个非叶节点和 parent 一样，要先减 1 ，在 /2，可以举例看下很快
+    for (let i = Math.floor((heap.length-1)/2); i >= 0; i--) {
+        shiftDown(heap, map, i, k);
+    }
+}
+
+function shiftUp(heap, map, i) {
+    // i-1 是先把右子树减掉，再除以 2 ，得父节点的 index
+    let parent = Math.floor((i-1)/2);
+    if (parent >= 0 && map[heap[i]] < map[heap[parent]]) {
+        swap(heap, i, parent);
+        shiftUp(heap, map, parent);
+    }
+}
+
+function shiftDown(heap, map, i, k) {
+    // i-1 是先把右子树减掉，再除以 2 ，得父节点的 index
+    let maxIndex = i;
+    if (2*i+1 < k && map[heap[2*i+1]] < map[heap[i]]) {
+        maxIndex = 2*i+1;
+    }
+    if (2*i+2 < k && map[heap[2*i+2]] < map[heap[i]] && map[heap[2*i+2]] < map[heap[2*i+1]]) {
+        maxIndex = 2*i+2;
+    }
+
+    if (maxIndex !== i) {
+        swap(heap, maxIndex, i);
+        shiftDown(heap, map, maxIndex, k)
+    }
+}
+
