@@ -186,7 +186,7 @@ export var topKFrequent1 = function(nums, k) {
         if (heap.length < k) {
             heap.push(+key);
             // shiftUp(heap, map, heap.length-1);
-            // push 完了之后一次调用 shiftDown 比 每次插入都 shiftUp 要快不少！
+            // push 完了之后一次调用 shiftDown 比 每次插入都 shiftUp 要快不少！--- 并没有，一样的，前 k 个常数个啥也不影响的，是之前打的 log 耗时了，，，，，，log是 io 操作，，，和 cpu 操作不能比
             if (heap.length === k) {
                 buildHeap(heap, map, k);
             }

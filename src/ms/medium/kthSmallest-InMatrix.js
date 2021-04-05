@@ -159,23 +159,18 @@ export var kthSmallest3 = function(matrix, k) {
                 // 从末尾插入的要 shiftUp，从根替换进去的才 shiftDown
                 // shiftUpIteration(heap, heap.length-1);
 
-                // push 完了之后一次调用 shiftDown 比 每次插入都 shiftUp 要快不少！这样就能使最后一个case过了！！！
-                // mdzz，还是不用 shiftUp 好
+                // 关键问题并不在这里，用 shiftUp 也没问题，就前 k 个而已，对整体不起作用的！！是之前调试打的 log 让最后的case超时的，，，，，吐血，，，，
                 if (heap.length === k) {
                     buildHeap(heap);
                 }
             } else if (matrix[i][j] < heap[0]) {
                 heap[0] = matrix[i][j];
                 shiftDownIteration(heap, 0, k);
-                console.log('shiftDown heap===');
-                console.log(heap);
             } else {
                 break;
             }
         }
     }
-    console.log('最终heap===');
-    console.log(heap);
 
     return heap[0];
 };
