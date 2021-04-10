@@ -1,4 +1,5 @@
-import { coinChange } from '../../../src/middle/dp/coin-change';
+// import { coinChange } from '../../../src/middle/dp/coin-change';
+import { coinChange } from '../../../src/ms/medium/coinChange';
 
 describe('coinChange', () => {
     test("return 100", () => {
