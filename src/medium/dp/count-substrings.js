@@ -81,3 +81,22 @@ export const countSubstrings1 = (s) => {
 
     return count;
 }
+
+// 二刷
+export const countSubstrings2 = (s) => {
+    let n = s.length;
+
+    let dp = Array(n).fill(null).map(_ => Array(n).fill(false));
+    let count = 0;
+
+    for (let i = n-1; i >= 0; i--) {
+        for (let j = i; j < n; j++) {
+            // if (s[i] === s[j] && (dp[i+1][j-1] || j - i === 1) || j === i) {
+            if (j === i || s[i] === s[j] && (j - i === 1 || dp[i+1][j-1])) {
+                dp[i][j] = true;
+                count++
+            }
+        }
+    }
+    return count;
+}
