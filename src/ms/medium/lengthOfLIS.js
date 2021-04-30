@@ -16,41 +16,24 @@
 // 你算法的时间复杂度应该为 O(n^2) 。
 
 export const lengthOfLIS = (nums) => {
-    if (nums.length < 2) return nums.length;
-    let dp = [1];
-    let max = 0;
-
-    for (let i = 1; i < nums.length; i++) {
-        // 一个数组是 1，不是 0，不然出现第二个的时候 0+1 = 1 就不对了，应该是 1+1 = 2；跑一下就知道，正好少 1
-        // dp[i] = 0;
-        dp[i] = 1;
-        // 倒着找第一个比它小的，取 dp 值
+    let n = nums.length;
+    if (n <= 1) return n;
+    let dp = Array(n).fill(1);
+    // dp[n-1] 也不一定是最大哦，因为最后一个数可能很小，还不如前面的
+    let max = 1;
+    // 这里是不是从 0 开始，就得记得在前面处理 小于 1 的情况
+    for (let i = 1; i < n; i++) {
+        // 有可能存在多个比 i 小的，但是前面的更大
         for (let j = i-1; j >= 0; j--) {
             if (nums[j] < nums[i]) {
-                dp[i] = Math.max(dp[j]+1, dp[i]);
+                dp[i] = Math.max(dp[i], dp[j] + 1);
             }
         }
         max = Math.max(max, dp[i]);
     }
+
     return max;
 }
-
-var lengthOfLIS = function(nums) {
-    if (nums.length < 2) return nums.length;
-    let dp = Array(nums.length).fill(1);
-    let max = 0;
-
-    for (let i = 1; i < nums.length; i++) {
-        for (let j = 0; j < i; j++) {
-            if (nums[j] < nums[i]) {
-                dp[i] = Math.max(dp[j] + 1, dp[i]);
-            }
-        }
-        max = Math.max(max, dp[i]);
-    }
-
-    return max;
-};
 
 // 带贪心的动态规划+二分
 // https://leetcode-cn.com/problems/longest-increasing-subsequence/solution/zui-chang-shang-sheng-zi-xu-lie-dong-tai-gui-hua-2/
@@ -74,7 +57,7 @@ export const lengthOfLIS1 = (nums) => {
     return max;
 }
 
-var lengthOfLIS = function(nums) {
+var lengthOfLIS2 = function(nums) {
     let n = nums.length;
     if(n <= 1){
         return n;
