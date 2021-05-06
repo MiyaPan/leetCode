@@ -19,6 +19,36 @@
 
     链接：https://leetcode-cn.com/problems/reverse-integer
 */
+/**
+ * =============================
+ * 二刷
+*/
+export var reverse = function(x) {
+    let sign = x > 0;
+    let numArr = Math.abs(x).toString().split('');
+    let i = 0;
+    let j = numArr.length - 1;
+    while (i < j) {
+        let temp = numArr[i];
+        numArr[i] = numArr[j];
+        numArr[j] = temp;
+        i++;
+        j--;
+    }
+    let num = +numArr.join('');
+    // 不能这么比啊，傻啊，321 和 23234234 谁大
+    // let min = (Math.pow(2, 31) - 1).toString();
+    // let max = (Math.pow(2, 31)).toString();
+    // if (sign && numStr > max || !sign && numStr > min) {
+    //     return 0;
+    // }
+    return sign ? (num > 2**31-1 ? 0 : num) : (num > 2**31 ? 0 : -num);
+} 
+
+/**
+ * =============================
+ * 一刷
+*/
 export var reverse = function(x) {
     let s = Math.abs(x).toString().split('');
     let n = s.length;

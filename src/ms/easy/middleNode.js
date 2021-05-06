@@ -29,6 +29,24 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
+/**
+ * =============================
+ * 二刷
+*/
+var middleNode = function(head) {
+    let slow = head;
+    let fast = head;
+    while(fast && fast.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return slow;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 var middleNode = function(head) {
     let slow = head;
     let quick = head;

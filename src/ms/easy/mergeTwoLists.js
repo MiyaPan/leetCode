@@ -16,6 +16,32 @@
  * }
  */
 /**
+ * =============================
+ * 二刷
+*/
+var mergeTwoLists = function(l1, l2) {
+    let dummy = new ListNode();
+    let node = dummy;
+    while (l1 && l2) {
+        if (l1.val <= l2.val) {
+            node.next = l1;
+            l1 = l1.next;
+        } else {
+            node.next = l2;
+            l2 = l2.next;
+        }
+        // 别忘了这里啊
+        node = node.next;
+    }
+    node.next = l1 ? l1 : l2;
+    return dummy.next;
+};
+
+/**
+ * =============================
+ * 一刷
+*/
+/**
  * @param {ListNode} l1
  * @param {ListNode} l2
  * @return {ListNode}

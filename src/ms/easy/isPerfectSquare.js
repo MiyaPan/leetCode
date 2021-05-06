@@ -13,6 +13,30 @@
 
     链接：https://leetcode-cn.com/problems/valid-perfect-square
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const isPerfectSquare = (num) => {
+    // let l = 0;
+    let l = 1;
+    // let r = parseInt(num / 2);
+    // r 可以从向上取整开始，这样就能包含 1 这个 case 了
+    let r = ceil(num / 2);
+    while (l <= r) {
+        let mid = l + parseInt((r-l)/2);
+        let temp = mid*mid;
+        if (temp === num) return true;
+        else if (temp < num) l = mid + 1;
+        else r = mid - 1;
+    }
+    return false;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const isPerfectSquare = (num) => {
     // 不能从 一半以下开始，就 1 这种情况不行啊，没别的了
     // let r = parseInt(num / 2);

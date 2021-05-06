@@ -17,6 +17,30 @@
 
     链接：https://leetcode-cn.com/problems/pascals-triangle
 */
+/**
+ * =============================
+ * 二刷
+*/
+var generate = function(numRows) {
+    if (numRows === 1) return [[1]];
+
+    let ans = [[1], [1, 1]];
+    // i 从 1 开始的，ans 是从 0 开始的
+    for (let i = 2; i < numRows; i++) {
+        let row = [1];
+        for (let j = 1; j <= i; j++) {
+            if (j === i) row.push(1);
+            else row.push(ans[i-1][j-1] + ans[i-1][j]);
+        }
+        ans.push(row);
+    }
+    return ans;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路：反是这种 前一个 + 后一个 的，都可以用自身错位相加~~~好思路
 var generate = function(numRows) {
     if (numRows === 0) return [];

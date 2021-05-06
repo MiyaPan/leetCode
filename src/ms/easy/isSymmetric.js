@@ -18,6 +18,52 @@
      
     进阶：你可以运用递归和迭代两种方法解决这个问题吗
 */
+/**
+ * =============================
+ * 二刷
+*/
+// 递归
+export const isSymmetric = (root) => {
+    return dfs(root.left, root.right);
+}
+function dfs(p, q) {
+    if (!p && !q) return true;
+    if (!p || !q || p.val !== q.val) return false;
+    return dfs(p.left, q.right) && dfs(p.right, q.left);
+}
+// 迭代 - 把 null 也放进去就能比较结构啦
+export const isSymmetric = (root) => {
+    let stack1 = [root.left];
+    let stack2 = [root.right];
+    let p = 0;
+    while (p < stack1.length) {
+        let node1 = stack1[p];
+        let node2 = stack2[p];
+        if (!node1 && !node2) {
+            p++;
+            continue;
+        }
+        if (!node1 || !node2) {
+            return false;
+        }
+        if (node1.val !== node2.val) {
+            return false;
+        }
+        stack1.push(node1.left);
+        stack1.push(node1.right);
+    
+        stack2.push(node2.right);
+        stack2.push(node2.left);
+        p++;
+    }
+    // return true;
+    return p === stack2.length;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const isSymmetric = (root) => {
     if(!root) {
         return true;

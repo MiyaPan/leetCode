@@ -27,6 +27,57 @@
     链接：https://leetcode-cn.com/problems/min-stack
 */
 /**
+ * =============================
+ * 二刷
+*/
+var MinStack = function() {
+    this.stack = [];
+    this.minStack = [];
+};
+
+/** 
+ * @param {number} x
+ * @return {void}
+ */
+MinStack.prototype.push = function(x) {
+    this.stack.push(x);
+    let min = this.minStack[this.minStack.length-1];
+    if (x < min || this.minStack.length === 0) {
+    // if (x < min) {
+        this.minStack.push(x);
+    } else {
+        this.minStack.push(min);
+    }
+};
+
+/**
+ * @return {void}
+ */
+MinStack.prototype.pop = function() {
+    this.stack.pop();
+    this.minStack.pop();
+};
+
+/**
+ * @return {number}
+ */
+MinStack.prototype.top = function() {
+    return this.stack[this.stack.length-1];
+};
+
+/**
+ * @return {number}
+ */
+MinStack.prototype.getMin = function() {
+    // 我靠，不 return 的吗.....
+    return this.minStack[this.minStack.length-1];
+};
+
+/**
+ * =============================
+ * 一刷
+*/
+/**
  * initialize your data structure here.
  */
 var MinStack = function() {

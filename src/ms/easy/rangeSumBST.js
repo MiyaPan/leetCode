@@ -17,7 +17,30 @@
 
     链接：https://leetcode-cn.com/problems/range-sum-of-bst
 */
+/**
+ * =============================
+ * 二刷
+*/
+var rangeSumBST = function(root, L, R) {
+    let sum = 0;
+    const dfs = (root) => {
+        root.left && dfs(root.left, L, R);
+        // 这里会把 val 本身大于 R 的计算进去了
+        // if (root.val >= L) sum += root.val;
+        if (root.val >= L && root.val <= R) sum += root.val;
+        if (root.val > R) return;
+        root.right && dfs(root.right, L, R);
+    }
+    dfs(root, L, R);
 
+    return sum;
+}
+
+
+/**
+ * =============================
+ * 一刷
+*/
 var rangeSumBST = function(root, L, R) {
     let sum = 0;
 

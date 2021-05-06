@@ -18,7 +18,27 @@
 
     链接：https://leetcode-cn.com/problems/path-sum
 */
+/**
+ * =============================
+ * 二刷
+*/
+var hasPathSum = function(root, sum) {
+    // 这样不行，这样判断没有严格判断到叶子节点
+    // [1,2]，1
+    // if (!root) return sum === 0;
+    // 应该是这样，如果走到 null 节点还没走完，当然是 false
+    if (!root) return false;
+    if (!root.left && !root.right) return root.val === sum;
+    let l = hasPathSum(root.left, sum - root.val);
+    if (l) return true;
+    let r = hasPathSum(root.right, sum - root.val);
+    return r;
+}
 
+/**
+ * =============================
+ * 一刷
+*/
 /**
  * Definition for a binary tree node.
  * function TreeNode(val) {

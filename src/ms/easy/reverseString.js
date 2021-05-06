@@ -14,6 +14,27 @@
 
     链接：https://leetcode-cn.com/problems/reverse-string
 */
+/**
+ * =============================
+ * 二刷
+*/
+var reverseString = function(s) {
+    let n = s.length;
+    let l = 0;
+    let r = n-1;
+    while (l < r) {
+        let temp = s[l];
+        s[l] = s[r];
+        s[r] = temp;
+        l++;
+        r--;
+    }
+};
+
+/**
+ * =============================
+ * 一刷
+*/
 var reverseString = function(s) {
     let len = s.length;
     let i = 0;

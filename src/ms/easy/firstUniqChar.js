@@ -14,6 +14,38 @@
     链接：https://leetcode-cn.com/problems/first-unique-character-in-a-string
 */
 /**
+ * =============================
+ * 二刷
+*/
+export var firstUniqChar = function(s) {
+    // object.keys() 返回的顺序和 for...in 一致，取决于浏览器实现，
+    // getOwnPropertyKeys 按照先 数字 key，再字符 key 按照插入顺序，再 symbol key
+    // Map 是按照插入顺序返回的
+
+    // 我们可以用 对象存储啊，先一遍存储频率，再跑一遍，找到第一个频率为 1 的就退出就行啦
+    // let map = new Map();
+    let map = {};
+    let n = s.length;
+    for (let i = 0; i < n; i++) {
+        if (map[s[i]]) {
+            map[s[i]] +=1;
+        } else {
+            map[s[i]] =1;
+        }
+    }
+    for (let i = 0; i < n; i++) {
+        if (map[s[i]] === 1) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
+/**
  * @param {string} s
  * @return {number}
  */

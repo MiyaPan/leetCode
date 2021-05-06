@@ -20,6 +20,24 @@
  * 2.  1 阶 + 2 阶
  * 3.  2 阶 + 1 阶
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const climbStairs = (n) => {
+    let dp = Array(n).fill(0);
+    dp[0] = 1;
+    dp[1] = 2;
+    for (let i = 2; i <= n; i++) {
+        dp[i] = dp[i-1] + dp[i-2];
+    }
+    return dp[n-1];
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 // 超时了
 export const climbStairs = (n) => {
     if (n === 1) return 1;

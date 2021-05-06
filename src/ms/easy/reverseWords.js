@@ -10,6 +10,26 @@
 
     链接：https://leetcode-cn.com/problems/reverse-words-in-a-string-iii
 */
+/**
+ * =============================
+ * 二刷
+*/
+var reverseWords = function(s) {
+    let words = s.split(' ');
+    let ans = [];
+    for (let word of words) {
+        // 字符串本身没有 reverse 方法
+        let chars = word.split('');
+        chars.reverse();
+        ans.push(chars.join(''));
+    }
+    return ans.join(' ');
+};
+
+/**
+ * =============================
+ * 一刷
+*/
 var reverseWords = function(s) {
     let a = s.split(' ');
 

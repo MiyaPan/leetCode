@@ -13,8 +13,33 @@
     说明：
     输出结果中的每个元素一定是唯一的。
     我们可以不考虑输出结果的顺序。
-
+s
     链接：https://leetcode-cn.com/problems/intersection-of-two-arrays
+*/
+/**
+ * =============================
+ * 二刷
+*/
+// 去重最快就是用 set
+export const intersection = (nums1, nums2) => {
+    const map = {};
+    for (let num of nums1) {
+        if (!map[num]) {
+            map[num] = 1;
+        }
+    }
+    let map2 = {};
+    for (let num of nums2) {
+        if (map[num] && !map2[num]) {
+            map2[num] = 1;
+        }
+    }
+    return [...Object.keys(map2)];
+}
+
+/**
+ * =============================
+ * 一刷
 */
 export const intersection = (nums1, nums2) => {
     // return [...new Set(nums1.filter(item => nums2.includes(item)))];

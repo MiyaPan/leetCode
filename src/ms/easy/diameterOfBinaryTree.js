@@ -13,7 +13,33 @@
 
     注意：两结点之间的路径长度是以它们之间边的数目表示。
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const diameterOfBinaryTree = (root) => {
+    // return getMaxDepth(root, 0).curMax;
+    // 是返回路径数，不是路径上的节点数，所以减 1
+    return getMaxDepth(root, 0).curMax - 1;
+}
+function getMaxDepth(root, max) {
+    if (!root) return {
+        depth: 0,
+        curMax: 0
+    }
+    let {depth: l, curMax: lMax} = getMaxDepth(root.left, max);
+    let {depth: r, curMax: rMax} = getMaxDepth(root.right, max);
 
+    return {
+        depth: Math.max(l, r) + 1,
+        curMax: Math.max(max, lMax, rMax, l+r+1)
+    }
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const diameterOfBinaryTree = (root) => {
     let max = 0;
     const getMaxdepth = (root) => {

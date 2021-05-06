@@ -10,6 +10,29 @@
 
     链接：https://leetcode-cn.com/problems/add-strings
 */
+/**
+ * =============================
+ * 二刷
+*/
+var addStrings = function(num1, num2) {
+    let i = num1.length-1;
+    let j = num2.length-1;
+    let carry = 0;
+    let sum = '';
+    while (i >= 0 || j >= 0 || carry) {
+        let n1 = +num1[i--] || 0;
+        let n2 = +num2[j--] || 0;
+        let tempSum = n1 + n2 + carry;
+        sum = tempSum % 10 + sum;
+        carry = parseInt(tempSum / 10);
+    }
+    return sum;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 var addStrings = function(num1, num2) {
     let p1 = num1.length - 1;
     let p2 = num2.length - 1;

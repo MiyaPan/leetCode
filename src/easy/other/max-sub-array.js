@@ -8,6 +8,25 @@
  * 解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
  * 进阶:
  * 如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。
+ * 链接: https://leetcode-cn.com/problems/maximum-subarray/
+*/
+/**
+ * =============================
+ * 二刷
+*/
+export const maxSubArray = (nums) => {
+    let max = Number.MIN_SAFE_INTEGER;
+    let preSum = Number.MIN_SAFE_INTEGER;
+    for (let i = 0; i < nums.length; i++) {
+        preSum = Math.max(nums[i], preSum + nums[i]);
+        max = Math.max(max, preSum);
+    }
+    return max;
+}
+
+/**
+ * =============================
+ * 一刷
 */
 // 1. 暴力求解：9.40%
 export const maxSubArray = (nums) => {

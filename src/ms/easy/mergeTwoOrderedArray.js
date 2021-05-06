@@ -18,10 +18,38 @@
  * 链接：https://leetcode-cn.com/problems/merge-sorted-array
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const merge = (nums1, m, nums2, n) => {
+    let i = m - 1;
+    let j = n - 1;
+    let p = m + n - 1;
+    // [4,5,6,0,0,0]
+    // 3
+    // [1,2,3]
+    // 3
+    while (j >= 0) {
+        if (nums2[j] > nums1[i] || i < 0) {
+            nums1[p--] = nums2[j--];
+        } else {
+            // 这里不需要判断 j 是否 == -1 了，因为 j=-1 的时候拿到的是 undefined
+            // 任何值和 undefined 相比都是 false，所以上面的 if 在 j 越界时就不走了，正好到这个 else 处理 nums2
+            nums1[p--] = nums1[i--];
+        }
+    }
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const merge = (nums1, m, nums2, n) => {
     let p1 = m - 1;
     let p2 = n - 1;
     while(p2 >= 0) {
+        // 这个写法，当 p1 越界的时候，正好 undefined 和 任何数值相比较都是 false，会进到下面的 else，去处理 j
         if (nums1[p1] > nums2[p2]) {
             nums1[p1+p2+1] = nums1[p1--];
         } else {

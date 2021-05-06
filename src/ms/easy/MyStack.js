@@ -14,6 +14,61 @@
     链接：https://leetcode-cn.com/problems/implement-stack-using-queues
 */
 /**
+ * =============================
+ * 二刷
+ * 一刷只用了一个 queue，思路不错哦，把队列的尾巴放到头上，执行 len-1 次，最后一个元素就是队列的头元素啦，就可以 pop 了
+*/
+var MyStack = function() {
+    this.q1 = [];
+    this.q2 = [];
+};
+
+/**
+ * Push element x onto stack. 
+ * @param {number} x
+ * @return {void}
+ */
+MyStack.prototype.push = function(x) {
+    this.q1.push(x);
+};
+
+/**
+ * Removes the element on top of the stack and returns that element.
+ * @return {number}
+ */
+MyStack.prototype.pop = function() {
+    while(this.q1.length > 1) {
+        // this.q2.push(this.q1.pop());
+        // 这里还是 用 shift、js 木有 queue、还是得数组模仿
+        this.q2.push(this.q1.shift());
+    }
+    let result = this.q1.pop();
+    this.q1 = this.q2;
+    this.q2 = [];
+    return result;
+};
+
+/**
+ * Get the top element.
+ * @return {number}
+ */
+MyStack.prototype.top = function() {
+    return this.q1[this.q1.length-1];
+};
+
+/**
+ * Returns whether the stack is empty.
+ * @return {boolean}
+ */
+MyStack.prototype.empty = function() {
+    return this.q1.length === 0;
+};
+
+/**
+ * =============================
+ * 一刷
+*/
+/**
  * Initialize your data structure here.
  */
 var MyStack = function() {

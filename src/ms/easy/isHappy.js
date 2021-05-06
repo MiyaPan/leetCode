@@ -14,9 +14,36 @@
     1^2 + 9^2 = 82
     8^2 + 2^2 = 68
     6^2 + 8^2 = 100
-    1^2 + 0^2 + 02 = 1
+    1^2 + 0^2 + 0^2 = 1
 
     链接：https://leetcode-cn.com/problems/happy-number
+*/
+/**
+ * =============================
+ * 二刷
+*/
+var isHappy = function(n) {
+    let visited = {};
+    while (n !== 1) {
+        n = getSum(n);
+        if (visited[n]) return false;
+        visited[n] = 1;
+    }
+    return true;
+}
+function getSum(num) {
+    let sum = 0;
+    while (num > 0) {
+        let mod = num % 10;
+        sum += mod * mod;
+        num = parseInt(num/10);
+    }
+    return sum;
+}
+
+/**
+ * =============================
+ * 一刷
 */
 // 思路1：用 set 或者 数组检测是否存在循环
 var isHappy = function(n) {

@@ -17,7 +17,24 @@
        15   7
     返回它的最大深度 3 
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const maxDepth = (root) => {
+    return dfs(root);
+}
+function dfs(root) {
+    if (!root) return 0;
+    let l = dfs(root.left);
+    let r = dfs(root.right);
+    return Math.max(l, r) + 1;
+}
 
+/**
+ * =============================
+ * 一刷
+*/
 export const maxDepth = (root) => {
     if (!root) {
         return 0;

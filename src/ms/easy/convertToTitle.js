@@ -27,6 +27,37 @@
 
     链接：https://leetcode-cn.com/problems/excel-sheet-column-title
 */
+/**
+ * =============================
+ * 二刷
+*/
+export var convertToTitle = function(n) {
+    // A：65；a：97！！！！！
+    let s = '';
+    while (n > 0) {
+        // if ( n === 26) {
+        //     s = String.fromCharCode(n + 65 - 1) + s;
+        //     break;
+        // }
+        let cur = n % 26;
+        // 问题是这里面没有 0，得处理余 0 的情况，当前位要留下 26，总数减去 26
+        if (cur === 0) {
+            cur = 26;
+            n -= 26;
+        }
+        // s += fromCharCode(cur + 65);
+        // 65 已经是 A 了，多了一
+        s = String.fromCharCode(cur + 65 - 1) + s;
+        n = parseInt(n/26);
+    }
+
+    return s;
+};
+
+/**
+ * =============================
+ * 二刷
+*/
 // 不就是转 26 进制数吗
 export var convertToTitle = function(n) {
     let result = '';

@@ -33,7 +33,23 @@
 
 链接：https://leetcode-cn.com/problems/same-tree
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const isSameTree = (p, q) => {
+    return dfs(p, q);
+}
+function dfs(p, q) {
+    if (!p && !q) return true;
+    if (!p || !q || p.val !== q.val) return false;
+    return dfs(p.left, q.left) && dfs(p.right, q.right);
+}
 
+/**
+ * =============================
+ * 一刷
+*/
 /**
  * @param {TreeNode} p
  * @param {TreeNode} q
