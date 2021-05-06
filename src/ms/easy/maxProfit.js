@@ -13,6 +13,29 @@
 
     链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock
 */
+/**
+ * =============================
+ * 二刷
+*/
+var maxProfit = function(prices) {
+    let n = prices.length;
+    let dp = Array(n).fill(null).map(_ => Array(2).fill(Number.MIN_SAFE_INTEGER));
+    // dp[i][0]: 当天买入的收益
+    // dp[i][1]: 当天卖出的收益
+    let max = 0;
+    dp[0][0] = -prices[0];
+    for (let i = 1; i < n; i++) {
+        dp[i][0] = Math.max(dp[i-1][0], -prices[i]);
+        dp[i][1] = dp[i-1][0] + prices[i];
+        max = Math.max(max, dp[i][1]);
+    }
+    return max;
+};
+
+/**
+ * =============================
+ * 一刷
+*/
 //     7  1  5  3  6  4
 // 0:  0
 // 1: -7

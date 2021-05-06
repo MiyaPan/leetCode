@@ -33,6 +33,45 @@
     链接：https://leetcode-cn.com/problems/valid-parentheses
     著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
+/**
+ * =============================
+ * 二刷
+*/
+var isValid = function(s) {
+    let stack = [];
+    for (let i = 0; i < s.length; i++) {
+        if (isLeft(s[i])) {
+            stack.push(s[i]);
+        } else {
+            if (isMatch(stack[stack.length-1], s[i])) {
+                stack.pop();
+            } else {
+                return false;
+            }
+        }
+    }
+    // return true;
+    return stack.length === 0;
+};
+
+function isMatch(char1, char2) {
+    switch (char1) {
+        case '(':
+            return char2 === ')';
+        case '[':
+            return char2 === ']';
+        case '{':
+            return char2 === '}';
+    }
+}
+function isLeft(char) {
+    return char === '(' || char === '[' || char === '{';
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 var isValid = function(s) {
     let stack = [];
 

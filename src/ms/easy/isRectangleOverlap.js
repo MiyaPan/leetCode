@@ -20,6 +20,36 @@
 
     链接：https://leetcode-cn.com/problems/rectangle-overlap
 */
+/**
+ * =============================
+ * 二刷
+*/
+var isRectangleOverlap = function(rec1, rec2) {
+    // 矩形 2 在 矩形 1 的：
+    // 右边：2 的 x1 > 1 的 x2
+    // 左边：2 的 x2 < 1 的 x1
+    // 上边：2 的 y1 > 1 的 y2
+    // 下边：2 的 y2 < 1 的 y1
+    // 相等可以！
+    // 坑啊，新加的 case，并且 case 告诉我们，如果有一个面积为 0 ，就认为不重叠呢！
+    // [-1,0,1,1]
+    // [0,-1,0,1]
+    if (rec1[0] === rec1[2] || rec1[1] === rec1[3]
+        || rec2[0] === rec2[2] || rec2[1] === rec2[3]) {
+            return false;
+    }
+    return !(
+        rec2[0] >= rec1[2]
+        || rec2[2] <= rec1[0]
+        || rec2[1] >= rec1[3]
+        || rec2[3] <= rec1[1]
+    );
+};
+
+/**
+ * =============================
+ * 一刷
+*/
 var isRectangleOverlap = function(rec1, rec2) {
     // 在上下左右，不挨着的情况，取反，4 个就够，不用 8 个，1 在 2 上，不就是 2 在 1 下吗，或的条件总能到达
     return !(rec1[1] >= rec2[3]

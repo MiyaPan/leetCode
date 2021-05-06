@@ -25,6 +25,32 @@
    4   4
     返回 false 。
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const isBalanced = (root) => {
+    // 应该是任意一个是 false 就返回 false，不能走到根节点了再说
+    return getHeight(root).isBalance;
+}
+function getHeight(root) {
+    if (!root) return {
+        height: 0,
+        isBalance: true
+    };
+    let {height: l, isBalance: isLBalance} = getHeight(root.left);
+    let {height: r, isBalance: isRBalance} = getHeight(root.right);
+
+    return {
+        height: Math.max(l, r) + 1,
+        isBalance: (isLBalance && isRBalance) ? Math.abs(l-r) <= 1 : false
+    };
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const isBalanced = (root) => {
     let ans = true;
 

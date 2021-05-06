@@ -24,6 +24,33 @@
  * }
  */
 /**
+ * =============================
+ * 二刷
+*/
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+export const deleteDuplicates = (head) => {
+    let pre;
+    let node = head;
+    while (node) {
+        // if (node.val === pre && pre.val) {
+        if (pre && node.val === pre.val) {
+            pre.next = node.next;
+        } else {
+            pre = node;
+        }
+        node = node.next;
+    }
+    return head;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
+/**
  * @param {ListNode} head
  * @return {ListNode}
  */

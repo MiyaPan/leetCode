@@ -18,6 +18,34 @@
  * }
  */
 /**
+ * =============================
+ * 二刷
+*/
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function(head) {
+    // 还是得要个 dummy 节点，不然头节点的 next 指向哪里
+    // dummy 不对，要 null 才行，dummy 不是 null
+    // let dummy = new ListNode();
+    // dummy.next = head;
+    let pre = null;
+    let next = head;
+    while (next) {
+        let newNext = next.next;
+        next.next = pre;
+        pre = next;
+        next = newNext;
+    }
+    return pre;
+};
+
+/**
+ * =============================
+ * 一刷
+*/
+/**
  * @param {ListNode} head
  * @return {ListNode}
  */

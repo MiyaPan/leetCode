@@ -23,7 +23,22 @@
 
     链接：https://leetcode-cn.com/problems/fibonacci-number
 */
+/**
+ * =============================
+ * 二刷
+*/
+var fib = function(N) {
+    let dp = [0,1];
+    for (let i = 2; i <= N; i++) {
+        dp[i] = dp[i-1] + dp[i-2];
+    }
+    return dp[N];
+}
 
+/**
+ * =============================
+ * 二刷
+*/
 var fib = function(N) {
     if (N < 2) return N;
     let prepre = 0;

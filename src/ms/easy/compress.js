@@ -39,8 +39,42 @@
 
     链接：https://leetcode-cn.com/problems/string-compression
 */
+/**
+ * =============================
+ * 二刷
+*/
+var compress = function(chars) {
+    let n = chars.length;
+    let p = 0;
+    let i = 0;
+    let cur;
+    // ["a","a","b","b","c","c","c"]
+    // ["a","a","a","a","a","b"]
+    while (i < n) {
+        cur = chars[i];
+        let count = 0;
+        while (chars[i] === cur) {
+            count++;
+            i++;
+        }
+        chars[p++] = cur;
+        if (count > 1) {
+            countArr = (count + '').split('');
+            for (let j = 0; j < countArr.length; j++) {
+                chars[p++] = countArr[j];
+            }
+        }
+    }
+    return p;
+};
+compress(["a","a","a","a","a","b"]);
+
+/**
+ * =============================
+ * 一刷
+*/
 // 从 1 开始向前判断是不是一致，也可以从 0 开始向后判断是不是一致！！！
-export var compress = function(chars) {
+export var compress1 = function(chars) {
     let n = chars.length;
     let p = 1;
     let count = 1;
@@ -51,8 +85,8 @@ export var compress = function(chars) {
             count++;
         } else {
             if (count > 1) {
-                let s = count.toString().split('');
-                s.forEach(num => {
+                let chars = count.toString().split('');
+                chars.forEach(num => {
                     chars[p++] = num;
                 });
             }
@@ -63,8 +97,8 @@ export var compress = function(chars) {
 
     // 放入最后一个元素
     if (count > 1) {
-        let s = count.toString().split('');
-        s.forEach(num => {
+        let chars = count.toString().split('');
+        chars.forEach(num => {
             chars[p++] = num;
         });
     }

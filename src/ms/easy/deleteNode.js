@@ -21,6 +21,18 @@
     不要从你的函数中返回任何结果。
     链接：https://leetcode-cn.com/problems/delete-node-in-a-linked-list
 */
+/**
+ * =============================
+ * 二刷
+*/
+var deleteNode = function(node) {
+    
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 var deleteNode = function(node) {
     // while(node) {
         node.val = node.next.val;

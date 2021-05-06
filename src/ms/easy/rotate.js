@@ -23,6 +23,47 @@
 
     链接：https://leetcode-cn.com/problems/rotate-array
 */
+/**
+ * =============================
+ * 二刷
+*/
+// 思路大致是对的，就是 index 想和描述不对了
+// 应该是 i 挪到 i + k
+export var rotate = function(nums, k) {
+    let n = nums.length;
+    // 转圈的，不管是链表还是数组啥的，都记得先取模！
+    k = k % n;
+    if (k === 0) return;
+
+    // [-1,-100,3,99], 2
+    // 这个 case 就转圈循环起来了，index 0 和 2 转圈，走不到 1 、3
+    // 只需要记下 start 是多少，在再次走到 start 的时候 +1，并且更新 start，
+    // start只有在再次走到的时候需要更新
+    let i = 0;
+    let loc = 0;
+    let startLoc = 0;
+    let cur = nums[0];
+    while (i < n) {
+        let temp = nums[(loc+k)%n];
+        nums[(loc+k)%n] = cur;
+        // loc = (loc+k) % n;
+        let newLoc = (loc+k) % n;
+        if (newLoc === startLoc) {
+            loc = startLoc + 1;
+            startLoc = loc;
+            cur = nums[startLoc];
+        } else {
+            loc = newLoc;
+            cur = temp;
+        }
+        i++;
+    }
+};
+
+/**
+ * =============================
+ * 一刷
+*/
 export var rotate = function(nums, k) {
     let len = nums.length;
     // 转超过长度，就取模，要不转一圈白转

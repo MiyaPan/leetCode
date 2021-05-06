@@ -25,6 +25,28 @@
 
     链接：https://leetcode-cn.com/problems/find-pivot-index
 */
+/**
+ * =============================
+ * 二刷
+*/
+export var pivotIndex = function(nums) {
+    let n = nums.length;
+    let sum = 0;
+    for (let i = 0; i < n; i++) {
+        sum += nums[i];
+    }
+    let presum = 0;
+    for (let i = 0; i < n; i++) {
+        if (presum === (sum-nums[i])/2) return i;
+        presum += nums[i];
+    }
+    return -1;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export var pivotIndex = function(nums) {
     if (nums.length === 1) return nums[0];
     let total = 0;

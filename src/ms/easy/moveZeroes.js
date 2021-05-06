@@ -12,6 +12,30 @@
 
     链接：https://leetcode-cn.com/problems/move-zeroes
 */
+/**
+ * =============================
+ * 二刷
+*/
+export var moveZeroes = function(nums) {
+    let n = nums.length;
+    let p = 0;
+    // [1]
+    for (let i = 0; i < n; i++) {
+        if (nums[i] !== 0) {
+            nums[p++] = nums[i];
+            // 不要在这里置 0，这样的话，如果数组中没有 0 ，就全置 0 了，可以最后从 p 开始统一刷一下
+            // nums[i] = 0;
+        }
+    }
+    for (let i = p; i < n; i++) {
+        nums[i] = 0;
+    }
+};
+
+/**
+ * =============================
+ * 一刷
+*/
 export var moveZeroes = function(nums) {
     let len = nums.length;
     for (let i = 0; i < len; i++) {
