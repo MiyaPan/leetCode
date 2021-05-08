@@ -20,7 +20,61 @@
     输出: 1
     解释: 在位置1, 4上有两个供暖器。我们需要将加热半径设为1，这样所有房屋就都能得到供暖。
 
+    示例 3：
+    输入：houses = [1,5], heaters = [2]
+    输出：3
+
+    提示：
+    1 <= houses.length, heaters.length <= 3 * 104
+    1 <= houses[i], heaters[i] <= 109
+
     链接：https://leetcode-cn.com/problems/heaters
+*/
+// TODO: 三刷
+/**
+ * =============================
+ * 二刷
+*/
+export const findRadius = (houses, heaters) => {
+    // 贱题，heater 竟然还无序给
+    heaters.sort((a,b) => a-b);
+
+    let max = Number.MIN_SAFE_INTEGER;
+    for (let house of houses) {
+        // 找到 house 左右两边的 heater，取直径小的
+        let radius = getMinRadiusOfOne(house, heaters);
+        max = Math.max(max, radius);
+    }
+    return max;
+}
+function getMinRadiusOfOne(house, heaters) {
+    let n = heaters.length;
+    let l = 0;
+    let r = n - 1;
+    // 找到大于等于 house 的第一个元素
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        let heater = heaters[m];
+        if (house === heater) {
+            return 0;
+        } else if (heater > house) {
+            r = m - 1;
+        } else {
+            l = m + 1;
+        }
+    }
+    // l 是大于等于的最大的一个
+    // 得考虑越界的情况，如果 l-1 已经不存在了
+    if (l-1 < 0) return heaters[0]-house;
+    // 如果 l-1 已经不存在了
+    if (l >= heaters.length) return house-heaters[n-1];
+
+    return Math.min(heaters[l]-house, house-heaters[l-1]);
+}
+
+/**
+ * =============================
+ * 一刷
 */
 export const findRadius = (houses, heaters) => {
     heaters.sort((a,b) => a-b);

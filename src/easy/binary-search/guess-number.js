@@ -2,7 +2,7 @@
  * 374. 猜数字大小
  * 我们正在玩一个猜数字游戏。 游戏规则如下：
     我从 1 到 n 选择一个数字。 你需要猜我选择了哪个数字。
-    每次你猜错了，我会告诉你这个数字是大了还是小了。
+    每次你猜错了，我会告诉你这个数 字是大了还是小了。
     你调用一个预先定义好的接口 guess(int num)，它会返回 3 个可能的结果（-1，1 或 0）：
 
     -1 : 我的数字比较小
@@ -24,7 +24,33 @@
  *                       otherwise return 0
  * var guess = function(num) {}
  */
+/**
+ * =============================
+ * 二刷
+*/
+export const guessNumber = (n) => {
+    let l = 1;
+    let r = n;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        let result = guess(m);
+        // -1 if num is lower than the guess number
+        // 1 if num is higher than the guess number
+        if (result === 0) {
+            return m;
+        } else if (result === 1) {
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+    return -1;
+}
 
+/**
+ * =============================
+ * 一刷
+*/
 /**
  * @param {number} n
  * @return {number}

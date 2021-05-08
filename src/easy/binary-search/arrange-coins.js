@@ -23,6 +23,27 @@
 
     链接：https://leetcode-cn.com/problems/arranging-coins
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const arrangeCoins = (n) => {
+    let sum = 0;
+    let i = 1;
+    let count = 0;
+    while (sum <= n) {
+        if (sum === n) return count;
+        sum += i;
+        i++;
+        count++;
+    }
+    return count - 1;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const arrangeCoins = (n) => {
     let l = parseInt(Math.pow(n, 1/2));
     let r = n;

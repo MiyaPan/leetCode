@@ -14,6 +14,38 @@
     链接：https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof
     本题与主站 154 题相同：https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array-ii/
 */
+// TODO:
+/**
+ * =============================
+ * 二刷
+*/
+export const minArray = (numbers) => {
+    let l = 0;
+    let r = numbers.length - 1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        // [3,1]
+        // [1]
+        if (m-1 < 0) {
+            return Math.min(numbers[l], numbers[r]);
+        }
+        if (numbers[m] < numbers[m-1]) {
+            return numbers[m];
+        }
+        if (numbers[m] === numbers[r]) {
+            r--;
+        } else if (numbers[m] > numbers[r]){
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 // 10，1，10，10，10，10，10 这个 case 决定了不能 m 和 l 比，他俩确定不了
 // 得找个能确定区间的值比
 export const minArray = (numbers) => {

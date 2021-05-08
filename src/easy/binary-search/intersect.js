@@ -21,6 +21,35 @@
 
     链接：https://leetcode-cn.com/problems/intersection-of-two-arrays-ii
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const intersect = (nums1, nums2) => {
+    // nums2 大很多
+    let map = {};
+    for (let num of nums2) {
+        if (map[num]) {
+            map[num] += 1;
+        } else {
+            map[num] = 1;
+        }
+    }
+
+    let ans = [];
+    for (let num of nums1) {
+        if (map[num]) {
+            ans.push(num);
+            map[num] -= 1;
+        }
+    }
+    return ans;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const intersect = (nums1, nums2) => {
     nums1.sort((a,b) => a-b);
     nums2.sort((a,b) => a-b);

@@ -16,6 +16,7 @@
 
     链接：https://leetcode-cn.com/problems/intersection-of-two-arrays
 */
+// 已 2 刷
 export const intersection = (nums1, nums2) => {
     return [...new set(nums1.filter(item => nums2.includes(item)))];
 }

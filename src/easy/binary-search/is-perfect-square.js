@@ -14,6 +14,15 @@
 
     链接：https://leetcode-cn.com/problems/valid-perfect-square
 */
+/**
+ * =============================
+ * 二刷已刷，见 ms 文件夹
+*/
+
+/**
+ * =============================
+ * 一刷
+*/
 export const isPerfectSquare = (num) => {
     let r = num;
     // l 从 2开始?不用，答案是 2 开始的

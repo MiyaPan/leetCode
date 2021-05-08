@@ -11,7 +11,48 @@
     输入：words = ["at", "", "", "", "ball", "", "", "car", "", "","dad", "", ""], s = "ball"
     输出：4
 
+    提示:
+    words的长度在[1, 1000000]之间
+
     链接：https://leetcode-cn.com/problems/sparse-array-search-lcci
+*/
+// TODO: 三刷
+/**
+ * =============================
+ * 二刷
+*/
+// 有序又提示这么长，就是让你用二分啦
+export var findString = function(words, s) {
+    let l = 0;
+    let r = words.length - 1;
+    while (l <= r) {
+        while (words[l] === '' && l <= r) l++;
+        while (words[r] === '' && l <= r) r--;
+    
+        let m = l + parseInt((r-l)/2);
+        // 这里左移右移都行，重点是上面两个 while，保证再 m 移动完之后，迅速切断 ''，能迅速减小时间，当然，没他俩也没事，也能解决
+        while (words[m] === '' && m > l) {
+            m--;
+            // 并不是退到边上就没了，可能左边全是空，答案在右边，这个时候退出就好了
+            // if (m <= l) return -1;
+            // 可以等于 l，因为下面的 if else 会给 l + 1 的，没事
+            // if (m <= l) break;
+            // m++;
+        }
+        if (words[m] === s) {
+            return m;
+        } else if (words[m] < s) {
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+    return -1;
+}
+
+/**
+ * =============================
+ * 一刷
 */
 // m 不空就二分，m 空就线性走，直到不空
 // 下面这个巨长的case不过，不是超时，而是结果不对。加上 l 和 r 的缩进就对了，不然在下面这种case， l 侧都空，不缩进会发福捯？

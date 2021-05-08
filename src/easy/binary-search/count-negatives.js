@@ -29,6 +29,48 @@
 
     链接：https://leetcode-cn.com/problems/count-negative-numbers-in-a-sorted-matrix
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const countNegatives = (grid) => {
+    let count = 0;
+    let n = grid.length;
+    let m = grid[0].length;
+    
+    for (let i = n -1; i >= 0; i--) {
+        if (grid[i][0] < 0) {
+            count += m;
+            continue;
+        }
+        let firstNegIdx = getFirstNeg(grid, i);
+        if (firstNegIdx >= m) {
+            break;
+        } else {
+            count += m - firstNegIdx;
+        }
+    }
+    return count;
+}
+function getFirstNeg(grid, i) {
+    let l = 0;
+    let r = grid[i].length - 1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (grid[i][m] < 0 && grid[i][m-1] > 0) return m;
+        if (grid[i][m] >= 0) {
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+    return l;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const countNegatives = (grid) => {
     let m = grid.length;
     let n = grid[0].length;

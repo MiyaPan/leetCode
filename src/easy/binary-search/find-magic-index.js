@@ -11,8 +11,51 @@
     示例2:
     输入：nums = [1, 1, 1]
     输出：1
+    说明:
+
+    nums长度在[1, 1000000]之间
+    此题为原书中的 Follow-up，即数组中可能包含重复元素的版本
 
     链接：https://leetcode-cn.com/problems/magic-index-lcci
+*/
+// TODO: 三刷
+/**
+ * =============================
+ * 二刷
+*/
+export const findMagicIndex = (nums) => {
+    return helper(0, nums.length-1, nums);
+}
+function helper(l, r, nums) {
+    if (l > r) return -1;
+
+    let m = l + parseInt((r-l)/2);
+
+    // 看左边
+    let left = -1;
+    if (nums[m] < m) {
+        left = helper(l, nums[m], nums);
+    } else {
+        left = helper(l, m-1, nums);
+    }
+    if (left !== -1) return left;
+
+    // 看中间
+    if (nums[m] === m) return m;
+
+    // 看右边
+    let right = -1;
+    if (nums[m] > m) {
+        right = helper(nums[m], r, nums);
+    } else {
+        right = helper(m+1, r, nums);
+    }
+    return right;
+}
+
+/**
+ * =============================
+ * 一刷
 */
 // https://leetcode-cn.com/problems/magic-index-lcci/solution/zheng-que-de-ologn-er-fen-fa-by-user83429423/
 // 因为不是严格递增，即有重复元素的，所以并不能一下舍弃一半，只能找办法提高效率，但是达不到一半

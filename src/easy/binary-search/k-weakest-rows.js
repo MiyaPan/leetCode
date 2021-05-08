@@ -48,6 +48,43 @@
 
     链接：https://leetcode-cn.com/problems/the-k-weakest-rows-in-a-matrix
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const kWeakestRows = (mat, k) => {
+    let n = mat.length;
+    let j = 0;
+    let visitedRows = Array(n).fill(0);
+
+    let ans = [];
+    while (k > 0 && j < mat[0].length) {
+        for (let i = 0; i < n; i++) {
+            if (k <= 0) break;
+            if (mat[i][j] === 0 && !visitedRows[i]) {
+                ans.push(i);
+                k--;
+                visitedRows[i] = 1;
+            }
+        }
+        j++;
+    }
+    // 没找全
+    let i = 0;
+    while (k > 0 && i < n) {
+        if (!visitedRows[i]) {
+            ans.push(i);
+            k--;
+        }
+        i++;
+    }
+    return ans;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 // 是我蠢了，虽然 过了。每行加和，然后排序啊！！！
 export const kWeakestRows = (mat, k) => {
     let m = mat.length;

@@ -12,6 +12,34 @@
 
     链接：https://leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const search = (nums, target) => {
+    let n = nums.length;
+    let l = 0;
+    let r = n - 1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (nums[m] >= target) {
+            r = m - 1;
+        } else {
+            l = m + 1;
+        }
+    }
+    let count = 0;
+    while (nums[l] <= target) {
+        if (nums[l] === target) count++;
+        l++;
+    }
+    return count;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const search = (nums, target) => {
     let n = nums.length;
     let l = 0;

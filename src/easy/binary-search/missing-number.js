@@ -13,6 +13,38 @@
 
     链接：https://leetcode-cn.com/problems/que-shi-de-shu-zi-lcof
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const missingNumber = (nums) => {
+    let n = nums.length;
+    let l = 0;
+    let r = n - 1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (m === nums[m]) {
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+    return l;
+
+    // 无序的可以这样数学求和，有序的可以二分
+    // let n = nums.length;
+    // let sum = (1 + n) / 2 * n;
+    // let sum2 = 0;
+    // for (let num of nums) {
+    //     sum2 += num;
+    // }
+    // return sum -sum2;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const missingNumber = (nums) => {
     let n = nums.length;
     let l = 0;
