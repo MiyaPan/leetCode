@@ -1,6 +1,7 @@
 /**
  * 121. 买卖股票的最佳时机
 */
+// 已二刷
 // 在历史最低点买肯定对，一次遍历
 export const maxProfit = (prices) => {
     let min = prices[0];
