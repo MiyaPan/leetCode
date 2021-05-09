@@ -18,6 +18,10 @@
      
     进阶：你可以运用递归和迭代两种方法解决这个问题吗
 */
+/**
+ * =============================
+ * 二刷，done
+*/
 export const isSymmetric = (root) => {
     if(!root) {
         return true;

@@ -1,4 +1,15 @@
+/**
+ * =============================
+ * 二刷，找不到题目了，反正肯定会写，就是调试时间问题
+*/
+export const getAllAncestor = (node, p) => {
 
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const getAllAncestor = (node, p) => {
     const result = [];
 

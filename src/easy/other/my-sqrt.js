@@ -18,6 +18,31 @@
  * 链接：https://leetcode-cn.com/problems/sqrtx
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const mySqrt = (x) => {
+    if (x <= 1) return x;
+    let l = 1;
+    let r = parseInt(x/2);
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (m * m === x) {
+            return m;
+        } else if (m * m < x) {
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+    return r;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 // 二分查找，递归 - 打败 50.15%
 export const mySqrt = (x) => {
     if (x<2) {

@@ -16,6 +16,25 @@
     / \   / \
    9   6 3   1
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const invertTree = (root) => {
+    if (!root) return null;
+    let temp = root.left;
+    root.left = root.right;
+    root.right = temp;
+    invertTree(root.left);
+    invertTree(root.right);
+    return root;
+}
+
+
+/**
+ * =============================
+ * 一刷
+*/
 export const invertTree = (root) => {
 
     _invertTree(root);

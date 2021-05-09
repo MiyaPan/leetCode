@@ -4,6 +4,31 @@
  * 你可以假设数组中无重复元素。
  * 例子见spec文件。
  */
+/**
+ * =============================
+ * 二刷
+*/
+export const searchInsert = (nums, target) => {
+    let n = nums.length;
+    let l = 0;
+    let r = n - 1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (nums[m] === target) {
+            return m;
+        } else if (nums[m] < target) {
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+    return l;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 // 执行用时 : 72 ms，击败了 35.6%
 export const searchInsert = (nums, target) => {
     if (nums.length === 0 || target <= nums[0]) {

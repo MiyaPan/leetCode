@@ -22,6 +22,30 @@
     任何子树的结点的和不会超过32位整数的范围。
     坡度的值不会超过32位整数的范围。
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const findTilt = (root) => {
+    return dfs(root).abs;
+}
+function dfs(root) {
+    if (!root) return {
+        sum: 0,
+        abs: 0
+    }
+    let l = dfs(root.left);
+    let r = dfs(root.right);
+    return {
+        sum: l.sum + r.sum + root.val,
+        abs: l.abs + r.abs + Math.abs(l.sum-r.sum)
+    }
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路：遍历，边遍历边记录每个节点的 tilt，加到总数中，同时递归 return 左子和+右子和+自己的值 给父节点用
 export const findTilt = (root) => {
 

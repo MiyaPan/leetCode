@@ -12,7 +12,7 @@
 */
 /**
  * =============================
- * 二刷
+ * 二刷, done
 */
 export const maxSubArray = (nums) => {
     let max = Number.MIN_SAFE_INTEGER;

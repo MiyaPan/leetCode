@@ -14,6 +14,22 @@ import { searchInsert } from './search-insert';
  * 链接：https://leetcode-cn.com/problems/length-of-last-word
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const lengthOfLastWord = (s) => {
+    const arr = s.trim().split(' ');
+    if (arr.length === 0) {
+        return 0;
+    }
+
+    return arr[arr.length - 1].length;
+}
+/**
+ * =============================
+ * 一刷
+*/
 // 打败 83.96%
 export const lengthOfLastWord = (s) => {
     const arr = s.trim().split(' ');

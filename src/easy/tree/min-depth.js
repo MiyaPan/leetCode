@@ -13,6 +13,32 @@
        15   7
     返回它的最小深度 2
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const minDepth = (root) => {
+    if (!root) return 0;
+    let min = Number.MAX_SAFE_INTEGER;
+    const dfs = (root, count) => {
+        // 不能遇到空节点就判断，必须到叶子再判断
+        // [2,null,3,null,4,null,5,null,6]
+        count++;
+        if (!root.left && !root.right) {
+            min = Math.min(count, min);
+            return;
+        }
+        root.left && dfs(root.left, count);
+        root.right && dfs(root.right, count);
+    };
+    dfs(root, 0);
+    return min;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 // 和最大深度的区别就是：只有一颗子树的情况，只有一个子树时，不能返回0那边，要返回有子树的那边，对吧，要不就没到叶子节点啊。。。
 /**
  * 最大深度因为算的左右孩子大的+1，所以即使有一个0的时候，不会选0，两个都0的话，选0正确，

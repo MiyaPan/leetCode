@@ -25,6 +25,10 @@
    4   4
     返回 false 。
 */
+/**
+ * =============================
+ * 二刷，done
+*/
 export const isBalanced = (root) => {
     if (!root) {
         return true;

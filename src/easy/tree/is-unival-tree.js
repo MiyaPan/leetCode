@@ -16,6 +16,25 @@
     给定树的节点数范围是 [1, 100]。
     每个节点的值都是整数，范围为 [0, 99] 。
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const isUnivalTree = (root) => {
+    if (!root) return true;
+    let target = root.val;
+    return dfs(root, target);
+}
+function dfs(root, target) {
+    if (!root) return true;
+    if (root.val !== target) return false;
+    return dfs(root.left, target) && dfs(root.right, target);
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const isUnivalTree = (root) => {
     if (!root) {
         return true;

@@ -20,6 +20,32 @@
  * 链接：https://leetcode-cn.com/problems/add-binary
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const addBinary = (a, b) => {
+    let i = a.length - 1;
+    let j = b.length - 1;
+    let carry = 0;
+    let ans = '';
+    // "1010"
+    // "1011"
+    while (i >= 0 || j >= 0 || carry) {
+        let n1 = +a[i--] || 0;
+        let n2 = +b[j--] || 0;
+        let sum = n1 + n2 + carry;
+        let cur = sum % 2;
+        ans = cur + ans;
+        carry = parseInt(sum/2);
+    }
+    return ans;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 // 耗时打败 89.48%，空间打败 11.11%
 export const addBinary = (a, b) => {
     // 让 a 是长的

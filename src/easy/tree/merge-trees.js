@@ -22,6 +22,31 @@
          5   4   7
     注意: 合并必须从两个树的根节点开始。
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const mergeTrees = (t1, t2) => {
+    if (!t1 && !t2) return null;
+    let root = new TreeNode();
+    if (t1 && t2) {
+        root.val = t1.val + t2.val;
+    } else {
+        root.val = t1 && t1.val || t2 && t2.val;
+    }
+    // mergeTrees(t1 && t1.left, t2 && t2.left);
+    // mergeTrees(t1 && t1.right, t2 && t2.right);
+    // 不能给 t1 ，如果给 t1 了会出现，右子树本来是空，现在被 t2 赋值了，又去处理右子树，就被重复计算了
+    // [1,2,null,3]，[1,null,2,null,3] 
+    root.left = mergeTrees(t1 && t1.left, t2 && t2.left);
+    root.right = mergeTrees(t1 && t1.right, t2 && t2.right);
+    return root;
+}   
+
+/**
+ * =============================
+ * 一刷
+*/
 export const mergeTrees = (t1, t2) => {
     /**
     输入: 

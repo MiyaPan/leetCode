@@ -20,6 +20,41 @@
     提示：
     二叉树的节点数介于 2 到 100 之间。每个节点的值都是唯一的、范围为 1 到 100 的整数。
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const isCousins = (root, x, y) => {
+    let stack = [root];
+    let p = 0;
+    let parent = [];
+    while (p < stack.length) {
+        let nodesInNextLevel = [];
+        // 还得限制在同一层
+        parent = [];
+        while (p < stack.length) {
+            let node = stack[p++];
+            if (node.left && (node.left.val === x || node.left.val === y)) {
+                parent.push(node);
+            }
+            if (node.right && (node.right.val === x || node.right.val === y)) {
+                parent.push(node);
+            }
+            if (parent.length === 2) {
+                return parent[0] !== parent[1];
+            }
+            node.left && nodesInNextLevel.push(node.left);
+            node.right && nodesInNextLevel.push(node.right);
+        }
+        stack = stack.concat(nodesInNextLevel);
+    }
+    return false;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const isCousins = (root, x, y) => {
     let stack = [root];
     let node = null;

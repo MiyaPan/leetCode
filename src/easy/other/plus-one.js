@@ -19,6 +19,35 @@
  * 链接：https://leetcode-cn.com/problems/plus-one
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const plusOne = (digits) => {
+    let n = digits.length;
+    let carry = 0;
+    let temp = digits[n-1] + carry + 1;
+    digits[n-1] = temp % 10;
+    carry = parseInt(temp/10);
+    
+    let i = n - 2;
+    while (carry) {
+        let temp = (digits[i] || 0) + carry;
+        if (i < 0) {
+            digits.unshift(temp % 10);
+        } else {
+            digits[i] = temp % 10;
+        }
+        carry = parseInt(temp/10);
+        i--;
+    }
+    return digits;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 // 16.74%
 export const plusOne = (digits) => {
     // 大数运算会失真，比如 [6,1,4,5,3,9,0,1,9,5,1,8,6,7,0,5,5,4,3]

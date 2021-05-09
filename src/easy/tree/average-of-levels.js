@@ -13,6 +13,35 @@
 
     注意：节点值的范围在32位有符号整数范围内。
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const averageOfLevels = (root) => {
+    let stack = [root];
+    let p = 0;
+    let ans = [];
+    while ( p < stack.length) {
+        let nodesInNextLevel = [];
+        let sum = 0;
+        let count = 0;
+        while ( p < stack.length) {
+            let node = stack[p++];
+            sum += node.val;
+            count++;
+            node.left && nodesInNextLevel.push(node.left);
+            node.right && nodesInNextLevel.push(node.right);
+        }
+        ans.push(sum/count);
+        stack = stack.concat(nodesInNextLevel);
+    }
+    return ans;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const averageOfLevels = (root) => {
     if (!root) {
         return 0;

@@ -24,7 +24,40 @@
     输出: -1
     说明: 最小的值是 2, 但是不存在第二小的值。
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const findSecondMinimumValue = (root) => {
+    if (!root) return null;
+    let target = root.val;
+    let l = root.left && dfs(root.left, target);
+    let r = root.right && dfs(root.right, target);
+    if (l !== null && r !== null) {
+        return Math.min(l, r);
+    } else if (l !== null || r !== null) {
+        return l || r;
+    } else {
+        return -1;
+    }
+}
+function dfs(root, target) {
+    if (!root) return null;
+    if (root.val !== target) return root.val;
+    let l = dfs(root.left, target);
+    let r = dfs(root.right, target);
+    // 我靠，+null = 0; +undefined = NaN
+    if (l !== null && r !== null) {
+        return Math.min(l, r);
+    } else {
+        return l || r;
+    }
+}
 
+/**
+ * =============================
+ * 一刷
+*/
 export const findSecondMinimumValue = (root) => {
     if (!root) {
         return -1;

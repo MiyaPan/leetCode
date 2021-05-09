@@ -13,7 +13,18 @@
 
     注意：两结点之间的路径长度是以它们之间边的数目表示。
 */
+/**
+ * =============================
+ * 二刷, done
+*/
+export const diameterOfBinaryTree = (root) => {
 
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const diameterOfBinaryTree = (root) => {
     let max = 0;
     

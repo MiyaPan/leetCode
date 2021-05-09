@@ -1,5 +1,9 @@
 // 执行用时 : 68 ms，击败了 59.44%
 // 内存消耗 : 34.6 MB, 击败了 43.98%
+/**
+ * =============================
+ * 二刷，done - ms 20. 有效的括号
+*/
 export const isValidParentheses = (s) => {
     const stack = []; 
 

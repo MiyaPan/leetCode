@@ -18,6 +18,10 @@
  * 链接：https://leetcode-cn.com/problems/merge-sorted-array
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
+/**
+ * =============================
+ * 二刷, done
+*/
 // 打败 92.03%，最优思路，但是写的不如官方简单，可参考解法3 https://leetcode-cn.com/problems/merge-sorted-array/solution/he-bing-liang-ge-you-xu-shu-zu-by-leetcode/
 // 也是 O(n+m)
 export const merge = (nums1, m, nums2, n) => {

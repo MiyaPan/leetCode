@@ -15,6 +15,30 @@
 
     解释: 所有根节点到叶子节点的路径为: 1->2->5, 1->3
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const binaryTreePaths = (root) => {
+    let path = [];
+    let ans = [];
+    dfs(root, path, ans);
+    return ans;
+}
+function dfs(root, path, ans) {
+    path.push(root.val);
+    if (!root.left && !root.right) {
+        ans.push(path.join('->'));
+    }
+    root.left && dfs(root.left, path, ans);
+    root.right && dfs(root.right, path, ans);
+    path.pop();
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const binaryTreePaths = (root) => {
     let result = [];
 

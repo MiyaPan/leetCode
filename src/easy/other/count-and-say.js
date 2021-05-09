@@ -13,6 +13,33 @@
  * 给定一个正整数 n（1 ≤ n ≤ 30），输出外观数列的第 n 项。
  * 注意：整数序列中的每一项将表示为一个字符串。
  */
+/**
+ * =============================
+ * 二刷
+*/
+export const countAndSay = (n) => {
+    let ans = '1';
+    for (let i = 1; i < n; i++) {
+        let j = 0;
+        let temp = '';
+        while (j < ans.length) {
+            let count = 1;
+            while (ans[j] === ans[j+1]) {
+                count++;
+                j++;
+            }
+            temp += count + ans[j];
+            j++;
+        }
+        ans = temp;
+    }
+    return ans;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 // 打败 36.75%
 export const countAndSay = (n) => {
     if (n === 1) {
