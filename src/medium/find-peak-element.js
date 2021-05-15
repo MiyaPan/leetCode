@@ -20,6 +20,31 @@
     链接：https://leetcode-cn.com/problems/find-peak-element
 */
 /**
+ * =============================
+ * 二刷
+*/
+var findPeakElement = function(nums) {
+    let n = nums.length;
+    let l = 0;
+    let r = n - 1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (m+1 >= n || l === r) {
+            return m;
+        }
+        if (nums[m] < nums[m+1]) {
+            l = m + 1;
+        } else {
+            r = m;
+        }
+    }
+}
+
+/**
+ * =============================
+ * 一刷
+*/
+/**
  * @param {number[]} nums
  * @return {number}
  */

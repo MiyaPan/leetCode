@@ -17,7 +17,59 @@
     1 <= coins[i] <= 231 - 1
     0 <= amount <= 104
 */
+// TODO: 三刷！
+/**
+ * =============================
+ * 二刷
+*/
+// 强行靠 dp 反而影响了自己的思路，本身的递归就是对的
+// 用递归才是思路的根源，记得加备忘，再自下而上的反着考虑，就是 dp 了
+export const coinChange = (coins, amount) => {
+    let dp = Array(amount+1).fill(Number.MAX_SAFE_INTEGER);
+    // amount 可能是 0，此时返回 0
+    dp[0] = 0;
+    for (let i = 1; i <= amount; i++) {
+        if (coins.includes(i)) {
+            dp[i] = 1;
+        } else {
+            // dp 遍历只是为了好找 dp[i-coin]，并不必要每次都要算 dp[i-j]
+            // 每次遍历 dp[i-j] 就太多了，而且里面是包含了一种结果，这种结果是先扣除 coin，再找到 剩余的 dp 
+            for (let coin of coins) {
+                if (dp[i-coin]) {
+                    dp[i] = Math.min(dp[i], dp[i-coin]+1);
+                }
+            }
+        }
+    }
+    return dp[amount] === Number.MAX_SAFE_INTEGER ? -1 : dp[amount];
+}
+// 这个写法，金额大了必然超时啊
+// export const coinChange = (coins, amount) => {
+//     let dp = Array(amount+1).fill(Number.MAX_SAFE_INTEGER);
+//     // amount 可能是 0，此时返回 0
+//     dp[0] = 0;
+//     for (let i = 1; i <= amount; i++) {
+//         if (coins.includes(i)) {
+//             dp[i] = 1;
+//         } else {
+//             for (let j = 1; j < i; j++) {
+//                 if (dp[i-j]) {
+//                     dp[i] = Math.min(dp[i], dp[i-j]+dp[j]);
+//                 }
+//             }
+//         }
+//     }
+//     return dp[amount] === Number.MAX_SAFE_INTEGER ? -1 : dp[amount];
+// }
 
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 export const coinChange = (coins, amount) => {
     // mdzz有病啊，求的是最小值，初始化用 -1，用 max 啊！
     // let dp = Array(amount+1).fill(-1);

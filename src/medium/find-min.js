@@ -15,6 +15,33 @@
 
     链接：https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array
 */
+/**
+ * =============================
+ * 二刷
+*/
+export var findMin = function(nums) {
+    let n = nums.length;
+    let l = 0;
+    let r = n - 1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (l === r) {
+            // return m+1 >= n ? nums[m] : Math.min(nums[m], nums[m+1]);
+            return nums[m];
+        }
+        if (nums[m] < nums[r]) {
+            r = m;
+        } else {
+            l = m + 1;
+        }
+    }
+    return -1;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 // 技巧：这类旋转数组的题目，只要没重复元素，就都跟 first 比，有重复元素就跟 nums[l] 或 nums[r] 比
 export var findMin = function(nums) {
     let n = nums.length;

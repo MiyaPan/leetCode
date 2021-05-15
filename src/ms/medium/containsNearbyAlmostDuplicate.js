@@ -24,6 +24,52 @@
  * @param {number} t
  * @return {boolean}
  */
+// TODO: 三刷！!
+/**
+ * =============================
+ * 二刷，O(n)神仙解法见解法一最后一个
+*/
+export var containsNearbyAlmostDuplicate = function(nums, k, t) {
+    let n = nums.length;
+    // let map = {};
+    // key 可能为负数，还是用 Map 吧
+    let map = new Map();
+    for (let i = 0; i < n; i++) {
+        let key = getBucketId(nums[i], t);
+        if (map.has(key)) return true;
+        if (map.has(key-1) && Math.abs(map.get(key-1)-nums[i]) <= t) return true;
+        if (map.has(key+1) && Math.abs(map.get(key+1)-nums[i]) <= t) return true;
+
+        map.set(key, nums[i]);
+        if (i >= k) {
+            map.delete(getBucketId(nums[i-k], t));
+        }
+    }
+    return false;
+}
+function getBucketId(value, t) {
+    /**
+     *  为什么 size 需要对 t 进行 +1 操作？
+        目的是为了确保差值小于等于 t 的数能够落到一个桶中。
+        举个 🌰，假设 [0,1,2,3]，t = 3，显然四个数都应该落在同一个桶。
+        如果不对 t 进行 +1 操作的话，那么 [0,1,2] 和 [3] 会被落到不同的桶中，那么为了解决这种错误，我们需要对 t 进行 +1 作为 size 。
+        这样我们的数轴就能被分割成：
+        0 1 2 3 | 4 5 6 7 | 8 9 10 11 | 12 13 14 15 | …
+        总结一下，令 size = t + 1 的本质是因为差值为 t 两个数在数轴上相隔距离为 t + 1，它们需要被落到同一个桶中。
+        当明确了 size 的大小之后，对于正数部分我们则有 idx = nums[i] / size。
+        链接：https://leetcode-cn.com/problems/contains-duplicate-iii/solution/gong-shui-san-xie-yi-ti-shuang-jie-hua-d-dlnv/
+    */
+    return Math.floor(value/(t+1));
+}
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 这个倒是没超时
 // 答案解法二：平衡二叉搜索树，又借鉴了一点大小堆的思想，可以看下思路，但是 js 没有 Treeset 这个数据结构，木有办法啊，手写是太麻烦了
 export var containsNearbyAlmostDuplicate = function(nums, k, t) {
@@ -80,7 +126,5 @@ export var containsNearbyAlmostDuplicate = function(nums, k, t) {
 };
 
 function getBucketId(num, t) {
-    // 为啥用 t + 1，不用 t：因为 t 可能是 0 啊！！为了防止除以 0 啊
-    // t 只是个差值，只是个步长，并不影响计算结果，相当于只是把 map[1] 的放到了 map[2] 里，后面都是这么拿的 id，所以没问题
     return Math.floor(num / (t+1));
 }

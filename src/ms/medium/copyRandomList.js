@@ -14,6 +14,45 @@
  * @param {Node} head
  * @return {Node}
  */
+/**
+ * =============================
+ * 二刷
+*/
+var copyRandomList = function(head) {
+    let node = head;
+    let cloned = new Map();
+    let copyNode = new Node();
+    let dummy = copyNode;
+    // copy 一遍
+    while (node) {
+        let temp = new Node(node.val);
+        cloned.set(node, temp);
+        copyNode.next = temp;
+        copyNode = copyNode.next;
+        node = node.next;
+    }
+    node = head;
+    copyNode = cloned.get(node);
+    while (node) {
+        copyNode = cloned.get(node);
+        copyNode.random = cloned.get(node.random);
+        copyNode = copyNode.next;
+        node = node.next;
+    }
+    return dummy.next;
+}
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 难点在 random 指针的处理这
 var copyRandomList = function(head) {
     if (!head) return null;

@@ -41,6 +41,55 @@
     给定 word = "SEE", 返回 true
     给定 word = "ABCB", 返回 false
  */ 
+// TODO: 三刷
+ /**
+ * =============================
+ * 二刷
+*/
+export var exist = function(board, word) {
+    let n = board.length;
+    let m = board[0].length;
+    let visited = Array(n).fill(null).map(_ => Array(m).fill(false));;
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < m; j++) {
+            if (dfs(board, word, 0, i, j, visited)) return true;
+        }
+    }
+    return false;
+}
+// [["a"]], "a"
+function dfs(board, word, p, row, col, visited) {
+    if (p >= word.length) return true;
+    let char = word[p];
+    if (char !== board[row][col]) return false;
+    if (char == board[row][col] && p === word.length-1) return true;
+
+    visited[row][col] = true;
+    let directions = [[-1, 0], [0, 1], [1, 0], [0, -1]];
+    let i = row;
+    let j = col;
+    let n = board.length;
+    let m = board[0].length;
+    for (let direction of directions) {
+        let newR = i + direction[0];
+        let newC = j + direction[1];
+        if (newR >= 0 && newR < n && newC >=0 && newC <m && !visited[newR][newC]) {
+            if (dfs(board, word, p+1, newR, newC, visited)) {
+                return true;
+            }
+        }
+    }
+    visited[row][col] = false;
+    return false;
+}
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 export var exist = function(board, word) {
     let n = board.length;
     if (n <=0) return false;

@@ -48,6 +48,42 @@
  * @param {string[]} tokens
  * @return {number}
  */
+/**
+ * =============================
+ * 二刷
+*/
+export var evalRPN = function(tokens) {
+    let numStack = [];
+    for (let i = 0; i < tokens.length; i++) {
+        if (!isNaN(+tokens[i])) {
+            numStack.push(+tokens[i]);
+        } else {
+            let n2 = numStack.pop();
+            let n1 = numStack.pop();
+            let res = calculate(n1, n2, tokens[i]);
+            numStack.push(res);
+        }
+    }
+    return numStack[0];
+}
+function calculate(n1, n2, opr) {
+    switch (opr) {
+        case '+':
+            return n1 + n2;
+        case '-':
+            return n1 - n2;
+        case '*':
+            return n1 * n2;
+        case '/':
+            return parseInt(n1 / n2);
+    }
+}
+
+
+ /**
+ * =============================
+ * 一刷
+*/
 export var evalRPN = function(tokens) {
     let stack = [];
 

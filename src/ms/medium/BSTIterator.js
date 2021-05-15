@@ -27,6 +27,43 @@
     链接：https://leetcode-cn.com/problems/binary-search-tree-iterator
 */
 /**
+ * =============================
+ * 二刷
+*/
+var BSTIterator = function(root) {
+    this.stack = [];
+    while (root) {
+        this.stack.push(root);
+        root = root.left;
+    }
+};
+
+/**
+ * @return {number}
+ */
+BSTIterator.prototype.next = function() {
+    let node = this.stack.pop();
+    let result = node.val;
+    node = node.right;
+    while (node) {
+        this.stack.push(node);
+        node = node.left;
+    }
+    return result;
+};
+
+/**
+ * @return {boolean}
+ */
+BSTIterator.prototype.hasNext = function() {
+    return this.stack.length > 0;
+};
+
+/**
+ * =============================
+ * 一刷
+*/
+/**
  * Definition for a binary tree node.
  * function TreeNode(val, left, right) {
  *     this.val = (val===undefined ? 0 : val)

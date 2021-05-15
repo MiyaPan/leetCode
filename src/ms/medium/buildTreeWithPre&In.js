@@ -26,6 +26,39 @@
  * 中序 | [4 7 2 1 8 5 9 3 6]
  * 后序 | [7 4 2 8 9 5 6 3 1]
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const buildTree = (preorder, inorder) => {
+    // 前序遍历 preorder = [3,9,20,15,7]
+    // 中序遍历 inorder = [9,3,15,20,7]
+    if (preorder.length === 0) return null;
+    let node = new TreeNode(preorder[0]);
+    let rootIdxInorder = inorder.findIndex(item => item === preorder[0]);
+    node.left = buildTree(preorder.slice(1, rootIdxInorder+1), inorder.slice(0, rootIdxInorder));
+    node.right = buildTree(preorder.slice(rootIdxInorder+1), inorder.slice(rootIdxInorder+1));
+    return node;
+}
+function buildTree2(preorder, inorder) {
+    return build(preorder, inorder, 0, preorder.length-1, 0);
+}
+function build(preorder, inorder, preStart, preEnd, inStart) {
+    // 前序遍历 preorder = [3,9,20,15,7]
+    // 中序遍历 inorder = [9,3,15,20,7]
+    if (preStart > preEnd) return null;
+    let node = new TreeNode(preorder[preStart]);
+    let rootIdxInorder = inorder.findIndex(item => item === preorder[preStart]);
+    let leftCount = rootIdxInorder - inStart;
+    node.left = build(preorder, inorder, preStart+1, preStart+leftCount, inStart);
+    node.right = build(preorder, inorder, preStart+leftCount+1, preEnd, rootIdxInorder+1);
+    return node;
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 export const buildTree4 = (preorder, inorder) => {
     if (preorder.length === 0 || inorder.length === 0) return null;
 

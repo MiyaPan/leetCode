@@ -37,7 +37,39 @@
  * @param {number} target 
  * @return {number[][]}
  */
+/**
+ * =============================
+ * 二刷
+ * 一眼看上去真的很想用 dp，没必要啊，还是先跟着自己的思路想，想完之后看看能不能加备忘，再看能不能用dp
+*/
+var combinationSum = function(candidates, target) {
+    candidates.sort((a, b) => a-b);
+    let ans = [];
+    let path = [];
+    dfs(candidates, target, path, 0, ans);
+    return ans;
+}
+function dfs(candidates, target, path, startIdx, ans) {
+    for (let i = startIdx; i < candidates.length; i++) {
+        if (candidates[i] > target) {
+            return;
+        }
+        if (candidates[i] === target) {
+            ans.push([...path, candidates[i]]);
+            return;
+        }
+        if (candidates[i] < target) {
+            path.push(candidates[i]);
+            dfs(candidates, target-candidates[i], path, i, ans);
+            path.pop();
+        }
+    }
+}
 
+/**
+ * =============================
+ * 一刷
+*/
 // 对于这类寻找所有可行解的题，我们都可以尝试用「搜索回溯」的方法来解决
 // 问题的关键在于如何 去重，这里也是剪枝
 var combinationSum = function(candidates, target) {

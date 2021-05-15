@@ -28,6 +28,76 @@
  * @param {string} s
  * @return {number}
  */
+/**
+ * =============================
+ * 二刷
+*/
+export var calculate = function(s) {
+    let map = {
+        '+': 1,
+        '-': 1,
+        '*': 2,
+        '/': 2
+    };
+    s = s.replace(/\s/g, '');
+    let n = s.length;
+    let numStack = [];
+    let oprStack = [];
+    for (let i = 0; i < n; i++) {
+        let char = s[i];
+        if (!isNaN(+s[i])) {
+            let str = '';
+            while (!isNaN(+s[i]) && i < n) {
+                str += s[i];
+                i++;
+            }
+            // 上面的 i++ 和 for 的重了
+            i--;
+            numStack.push(+str);
+        } else {
+            // 优先级高于或者同级的先计算掉，因为同级的也会被计算掉，所以就相当于同级别的从左向右计算了
+            while (oprStack.length > 0 && map[oprStack[oprStack.length-1]] >= map[char]) {
+                let opr = oprStack.pop();
+                let n2 = numStack.pop();
+                let n1 = numStack.pop();
+                numStack.push(calcul(n1, n2, opr));
+            }
+            oprStack.push(char);
+        }
+    }
+    while (oprStack.length > 0) {
+        let opr = oprStack.pop();
+        let n2 = numStack.pop();
+        let n1 = numStack.pop();
+        numStack.push(calcul(n1, n2, opr));
+    }
+    return numStack[0];
+}
+function calcul(n1, n2, opr) {
+    switch (opr) {
+        case '+':
+            return n1 + n2;
+        case '-':
+            return n1 - n2;
+        case '*':
+            return n1 * n2;
+        case '/':
+            return parseInt(n1 / n2);
+    }
+}
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路是对的，这个算法最后一个 case 超时了，参考【很不错，总结了一整个类型】：https://leetcode-cn.com/problems/basic-calculator-ii/solution/shi-yong-shuang-zhan-jie-jue-jiu-ji-biao-c65k/
 // 为了减少判断运算，开始之前先把能 replace 的 replace 掉，比如空格，比如 ( 左括号后的 -或+ 号，替换成 0-或+
 // 最后剩下的加减法，要从左到右，为了避免从左到右，将 - 号入栈负数是唯一解了！ 
@@ -79,7 +149,7 @@ export var calculate1 = function(s) {
     return numStack[0];
 };
 
-export var calculate = function(s) {
+export var calculate2 = function(s) {
     s.replace(/\s+/g, '');
     let n = s.length;
     const map = {

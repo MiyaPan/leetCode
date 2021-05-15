@@ -21,6 +21,35 @@
  * @param {number} k
  * @return {number[][]}
  */
+/**
+ * =============================
+ * 二刷
+*/
+export var combine = function(n, k) {
+    let path = [];
+    let ans = [];
+    dfs(n, k, 1, path, ans);
+    return ans;
+}
+function dfs(n, k, startIdx, path, ans) {
+    for (let i = startIdx; i <= n; i++) {
+        if (k === 1) {
+            ans.push([...path, i]);
+        } else if (k > 1) {
+            path.push(i);
+            dfs(n, k-1, i+1, path, ans);
+            path.pop();
+        }
+    }
+}
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路很对的，dfs 的 for 那里刚开始的时候还记着 直接剪枝来着，咋就忘了
 // 思路：画树，每个节点的子节点，只能是 大于自己的数，就完了
 export var combine = function(n, k) {

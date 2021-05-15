@@ -32,6 +32,44 @@
  * @param {number} target
  * @return {number[][]}
  */
+// TODO: 三刷！
+/**
+ * =============================
+ * 二刷
+*/
+export var combinationSum2 = function(candidates, target) {
+    candidates.sort((a, b) => a-b);
+    let ans = [];
+    let path = [];
+    dfs(candidates, target, 0, path, ans);
+    return ans;
+}
+function dfs(candidates, target, startIdx, path, ans) {
+    let visited = {};
+    for (let i = startIdx; i < candidates.length; i++) {
+        if (candidates[i] > target) {
+            return;
+        } else if (candidates[i] === target) {
+            ans.push([...path, candidates[i]]);
+            return;
+        } else if (candidates[i] < target) {
+            if (!visited[candidates[i]]) {
+                path.push(candidates[i]);
+                visited[candidates[i]] = true;;
+                dfs(candidates, target-candidates[i], i+1, path, ans);
+                path.pop();
+            }
+        }
+    }
+}
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 /**
  * 总结：
  * 现在思路都是有的，也都是对的，就是细节！！细节！！细节！！

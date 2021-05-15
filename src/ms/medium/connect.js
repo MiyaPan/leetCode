@@ -40,6 +40,37 @@
  * @param {Node} root
  * @return {Node}
  */
+/**
+ * =============================
+ * 二刷
+*/
+var connect = function(root) {
+    // 二叉树和链表怎么能忘了这句话呢
+    if (!root) return null;
+
+    let stack = [root];
+    let p = 0;
+    while (p < stack.length) {
+        let nodesInNextLevel = [];
+        while (p < stack.length) {
+            let node = stack[p];
+            node.next = stack[p+1];
+            p++;
+            node.left && nodesInNextLevel.push(node.left);
+            node.right && nodesInNextLevel.push(node.right);
+        }
+        stack = stack.concat(nodesInNextLevel);
+    }
+    return root;
+}
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 var connect = function(root) {
     if (!root) return null;
     let stack = [root];

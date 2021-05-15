@@ -36,6 +36,49 @@
 
     链接：https://leetcode-cn.com/problems/most-stones-removed-with-same-row-or-column
 */
+// TODO: 三刷！
+/**
+ * =============================
+ * 二刷
+*/
+export var removeStones = function(stones) {
+    let n = stones.length;
+    let uf = new UnionFind(n);
+    for (let i = 1; i < n; i++) {
+        for (let j = i-1; j >= 0; j--) {
+            if (stones[i][0] === stones[j][0] || stones[i][1] === stones[j][1]) {
+                uf.union(i, j);
+            }
+        }
+    }
+    return n - uf.unionCount;
+}
+class UnionFind {
+    constructor(n) {
+        this.parents = Array(n).fill(null).map((_, i) => i);
+        this.unionCount = n;
+    }
+    findParent(x) {
+        if (x !== this.parents[x]) {
+            this.parents[x] = this.findParent(this.parents[x]);
+        }
+        // return x; // 傻啊，又不是写的 while ，x 没变啊，递归就是为了每一层都改变指向，压缩路径
+        return this.parents[x];
+    }
+    union(x, y) {
+        let px = this.findParent(x);
+        let py = this.findParent(y);
+        if (px !== py) {
+            this.parents[py] = px;
+            this.unionCount--;
+        }
+    }
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 /**
  * @param {number[][]} stones
  * @return {number}
@@ -57,7 +100,7 @@ export var removeStones = function(stones) {
     return len - uf.unionComponentCount;
 };
 // 并查集模板
-class UnionFind {
+class UnionFind1 {
     constructor(stones) {
         // 因为并查集维护的是下标，所以用数组就行，不用 map
         // this.parents = new Map();
@@ -86,7 +129,7 @@ class UnionFind {
     }
 }
 // 原始解题思路
-class UnionFind1 {
+class UnionFind11 {
     constructor(stones) {
         // 因为并查集维护的是下标，所以用数组就行，不用 map
         // this.parents = new Map();

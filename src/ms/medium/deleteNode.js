@@ -64,7 +64,67 @@ key = 3
  * @param {number} key
  * @return {TreeNode}
  */
-var deleteNode = function(root, key) {
+// TODO: 三刷
+/**
+ * =============================
+ * 二刷
+*/
+export var deleteNode = function(root, key) {
+    if (!root) return null;
+    
+    let dummy = new TreeNode();
+    dummy.right = root;
+    dfs(root, key, dummy);
+    return dummy.right;
+}
+function dfs(root, key, parent) {
+    if (root.val === key) {
+        if (!root.left && !root.right) {
+            // root = null;
+            if (parent.left === root) {
+                parent.left = null;
+            } else {
+                parent.right = null;
+            }
+        } else if (!root.left || !root.right) {
+            if (parent.left === root) {
+                parent.left = root.left || root.right;;
+            } else {
+                parent.right = root.left || root.right;;
+            }
+        } else {
+            let temp = root.left;
+            let node = root.right;
+            while (node.left) {
+                node = node.left;
+            }
+            node.left = temp;
+            // 传进来的是引用，如果不更改引用，只改里面的值没有问题
+            // 但是一旦修改了引用，就等于这个引用指向了别的地方，而不会影响到外面
+            // root = root.right;
+            if (parent.left === root) {
+                parent.left = root.right;
+            } else {
+                parent.right = root.right;
+            }
+        }
+    } else if (root.val > key) {
+        root.left && dfs(root.left, key, root);
+    } else {
+        root.right && dfs(root.right, key, root);
+    }
+}
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
+var deleteNode1 = function(root, key) {
     if (!root) return null;
 
     if (key > root.val) root.right = deleteNode(root.right, key);

@@ -9,7 +9,8 @@
 
     示例 1：
     输入：
-    accounts = [["John", "johnsmith@mail.com", "john00@mail.com"], ["John", "johnnybravo@mail.com"], ["John", "johnsmith@mail.com", "john_newyork@mail.com"], ["Mary", "mary@mail.com"]]
+    accounts = [["John", "johnsmith@mail.com", "john00@mail.com"], ["John", "johnnybravo@mail.com"],
+        ["John", "johnsmith@mail.com", "john_newyork@mail.com"], ["Mary", "mary@mail.com"]]
     输出：
     [["John", 'john00@mail.com', 'john_newyork@mail.com', 'johnsmith@mail.com'],  ["John", "johnnybravo@mail.com"], ["Mary", "mary@mail.com"]]
     解释：
@@ -29,10 +30,81 @@
  * @param {string[][]} accounts
  * @return {string[][]}
  */
+// TODO: 三刷！
+/**
+ * =============================
+ * 二刷
+*/
+export var accountsMerge = function(accounts) {
+    // accounts = [["John", "johnsmith@mail.com", "john00@mail.com"], ["John", "johnnybravo@mail.com"],
+    //     ["John", "johnsmith@mail.com", "john_newyork@mail.com"], ["Mary", "mary@mail.com"]]
+    let n = accounts.length;
+    let uf = new UnionFind(n);
+    for (let i = 1; i < n; i++) {
+        for (let j = i-1; j >=0; j--) {
+            if (isCross(accounts, i ,j)) {
+                uf.union(i, j);
+            }
+        }
+    }
+
+    return merge(uf, accounts);
+}
+function merge(uf, accounts) {
+    let ans = [];
+    let map = {};
+    let n = accounts.length;
+    for (let i = 0; i < n; i++) {
+        let parent = uf.findParent(i);
+        if (map[parent]) {
+            for (let j = 1; j < accounts[i].length; j++) {
+                map[parent].add(accounts[i][j]);
+            }
+        } else {
+            map[parent] = new Set(accounts[i].slice(1));
+        }
+    }
+    Object.keys(map).forEach(key => {
+        ans.push([accounts[key][0], ...[...map[key]].sort()]);
+    });
+    return ans;
+}
+function isCross(accounts, i ,j) {
+    let leni = accounts[i].length;
+    for (let t = 1; t < leni; t++) {
+        if (accounts[j].includes(accounts[i][t])) {
+            return true;
+        }
+    }
+    return false;
+}
+class UnionFind {
+    constructor(n) {
+        this.parents = Array(n).fill(null).map((_,i) => i);
+    }
+    findParent(x) {
+        if (x !== this.parents[x]) {
+            this.parents[x] = this.findParent(this.parents[x]);
+        }
+        return this.parents[x];
+    }
+    union(x, y) {
+        let px = this.findParent(x);
+        let py = this.findParent(y);
+        if (px !== py) {
+            this.parents[py] = px;
+        }
+    }
+}
+
+/**
+ * =============================
+ * 一刷
+*/
 // 并查集详解：https://blog.csdn.net/liujian20150808/article/details/50848646
 // 并查集不一定要以每个数组元素为一项目，也可以以每个元素的元素为项进行合并，看以什么方便且能解决问题
 // 这个题，union email 比 union account 要快一些
-export var accountsMerge = function(accounts) {
+export var accountsMerge1 = function(accounts) {
     let len = accounts.length;
     let uf = new UnionFind(len);
     for (let i = 0; i < len; i++) {
@@ -45,7 +117,7 @@ export var accountsMerge = function(accounts) {
     return merge(uf.parents, accounts, uf);
 };
 
-function merge (parents, accounts, uf) {
+function merge1 (parents, accounts, uf) {
     let ans = [];
     for (let i = 0; i < parents.length; i++) {
         // 【关键点】union 最后确实能成连通图，但是可能路径长度不是 1 ，比如 test case 1，所以在 merge 过程中要再手动找下 root 是谁，而不能直接去拿 parent
@@ -77,7 +149,7 @@ function isCrossed(accounts, i, j) {
     return false;
 }
 
-class UnionFind {
+class UnionFind1 {
     constructor(n) {
         this.parents = Array(n).fill(0).map((_, i) => i);
     }

@@ -23,6 +23,33 @@
     链接：https://leetcode-cn.com/problems/battleships-in-a-board
 */
 /**
+ * =============================
+ * 二刷
+*/
+var countBattleships = function(board) {
+    let n = board.length;
+    let m = board[0].length;
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < m; j++) {
+            if (board[i][j] === 'X'
+                && (i-1 < 0 || board[i-1][j] !== 'X')
+                && (j-1 < 0 || board[i][j-1] !== 'X')) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
+/**
  * @param {character[][]} board
  * @return {number}
  */

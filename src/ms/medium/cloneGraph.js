@@ -61,6 +61,37 @@
  * @param {Node} node
  * @return {Node}
  */
+/**
+ * =============================
+ * 二刷
+*/
+var cloneGraph = function(node) {
+    // [[2,4],[1,3],[2,4],[1,3]]
+    let visited = new Map();
+    return dfs(node, visited);
+}
+function dfs(node, visited) {
+    if (!node) return null;
+    // if (visited.has(node)) return node;
+    if (visited.has(node)) return visited.get(node);
+
+    let root = new Node(node.val);
+    visited.set(node, root);
+    root.neighbors = node.neighbors.map(neighbor => {
+        if (visited.has(neighbor)) {
+            return visited.get(neighbor);
+        } else {
+            return dfs(neighbor, visited);
+        }
+    });
+    return root;
+}
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 逻辑要撕吧清楚，你的流程是什么，先处理什么，再处理什么：先 new 节点，下个循环处理 neighbor，
 // 所以只要放到栈里了，就一定不会遗漏 neighbor 了啊，自己的逻辑保证了啊，怎么还转不过来，流程一定要理清楚，实在不行就画个流程图吧！
 var cloneGraph = function(node) {

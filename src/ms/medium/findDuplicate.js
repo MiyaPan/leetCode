@@ -19,6 +19,56 @@
 
     链接：https://leetcode-cn.com/problems/find-the-duplicate-number
 */
+// TODO: 三刷
+ /**
+ * =============================
+ * 二刷
+*/
+// 可以不sort数组
+export var findDuplicate = function(nums) {
+    let n = nums.length;
+    let l = 1;
+    let r = n-1;
+    // 不让空间 o(n), 就只能二分的过程中去便利一遍了
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        let count = 0;
+        for (let i = 0; i < n; i++) {
+            if (nums[i] <= m) {
+                count++;
+            }
+        }
+        if (count > m) {
+            r = m - 1;
+        } else {
+            l = m + 1;
+        }
+    }
+    return l;
+}
+export var findDuplicate = function(nums) {
+    nums.sort((a,b) => a-b);
+    let n = nums.length;
+    let l = 0;
+    let r = n-1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (nums[m] === nums[i-1]) {
+            return nums[m];
+        } else if (nums[m] <= m) {
+            r = m - 1;
+        } else {
+            l = m + 1;
+        }
+    }
+}
+
+
+
+ /**
+ * =============================
+ * 一刷
+*/
 // 想要低于 o(n^2), 你直接报 o(nlogn) 名字吧，能达到 o(logn) 的有 堆、二叉树、归并、快排、二分！
 export var findDuplicate = function(nums) {
     let l = 1;

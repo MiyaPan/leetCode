@@ -30,6 +30,35 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
+/**
+ * =============================
+ * 二刷
+*/
+var deleteDuplicates = function(head) {
+    let dummy = new ListNode();
+    dummy.next = head;
+    let pre = dummy;
+    let node = head;
+    while (node) {
+        if (node.next && node.val === node.next.val) {
+            pre.next = node.next.next;
+        } else {
+            if (pre.next !== node.next) {
+                pre = node;
+            }
+        }
+        node = node.next;
+    }
+    return dummy.next;
+}
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 var deleteDuplicates = function(head) {
     if (!head) return head;
     let curDeleted = new ListNode(101); // 题目给了最大是 100
