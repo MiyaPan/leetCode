@@ -28,6 +28,42 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
+/**
+ * =============================
+ * 二刷
+*/
+export var oddEvenList = function(head) {
+    if (!head) return null;
+
+    let odd = head;
+    let even = head.next;
+    let evenHead = even;
+    while (odd.next && odd.next.next || even && even.next) {
+        odd.next = odd.next && odd.next.next;
+        odd = odd.next;
+        even.next = even.next && even.next.next;
+        even = even.next;
+    }
+    odd.next = evenHead;
+    return head;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 唉傻了，都是链表，都是指针，把奇偶单独拎出来并不需要时间啊！！！！看答案
 export var oddEvenList = function(head) {
     if (!head) return null;

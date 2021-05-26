@@ -15,6 +15,32 @@
 
     链接：https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array
 */
+/**
+ * =============================
+ * 二刷
+*/
+export var findMin = function(nums) {
+    // [3,1,2]
+    let n = nums.length;
+    let l = 0;
+    let r = n-1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (l === r) return nums[l];
+        if (nums[m] > nums[r]) {
+            l = m + 1;
+        } else {
+            r = m;
+        }
+    }
+    return -1;
+}
+
+
+/**
+ * =============================
+ * 一刷
+*/
 export var findMin = function(nums) {
     let len = nums.length;
     

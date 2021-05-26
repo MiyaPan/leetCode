@@ -2,6 +2,45 @@
  * 688. “马”在棋盘上的概率
  * https://leetcode-cn.com/problems/knight-probability-in-chessboard/
 */
+/**
+ * =============================
+ * 二刷
+*/
+// 递归超时了，看看能不能剪枝或者 加备忘
+export const knightProbability = (N, K, r, c) => {
+    let note = Array(N).fill(null).map(_ => Array(N).fill(null).map(_ => Array(K).fill(0)));
+    return bfs(N, K, r, c, note);
+}
+function bfs(N, K, r, c, note) {
+    if (r < 0 || r >= N || c < 0 || c >= N) return 0;
+
+    if (K === 0) return 1;
+
+    if (note[r][c][K]) return note[r][c][K];
+
+    let directions = [[-2, -1], [-1, -2], [-2, 1], [-1, 2], [1, 2], [2, 1], [2, -1], [1, -2]];
+    let result = 0;
+    for (let direction of directions) {
+        let newR = r + direction[0];
+        let newC = c + direction[1];
+        let res = bfs(N, K-1, newR, newC, note);
+        result += 1/8 * res;
+    }
+    note[r][c][K] = result;
+
+    return result;
+}
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 题目要的是在棋盘上的概率，所以走 k 步完，棋盘矩阵上所有概率的和就是，因为只要在盘上就算
 
 // 小球是从边界往里走，初始值：边界都设为 1

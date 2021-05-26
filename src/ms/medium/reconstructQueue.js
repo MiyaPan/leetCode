@@ -35,6 +35,79 @@
  * @param {number[][]} people
  * @return {number[][]}
  */
+/**
+ * =============================
+ * 二刷
+*/
+// 哇哦，这次不是从高度考虑的，是从人数考虑的，厉害了，两次都是自己，还想的不一样，，，，，
+export var reconstructQueue = function(people) {
+    let n = people.length;
+    people.sort((a, b) => {
+        if (a[1] === b[1]) {
+            return a[0] - b[0];
+        }
+        return a[1] - b[1];
+    });
+
+    let i = 0;
+    while (i < n) {
+        let {count, tarLoc} = countBigger(people, i);
+        if (count > people[i][1]) {
+            let temp = people[i];
+            move(people, tarLoc, i);
+            people[tarLoc] = temp;
+            // 这里可以不回溯，因为答案保证一定能创建，而我们找到的 tarLoc 是最大的 idx，也就是再向后一个都不行，
+            // 也就是 tarLoc 后面的不存在往前挪，挪到 i 前面的情况
+            // i = tarLoc + 1;
+        }
+        // else {
+        //     i++;
+        // }
+        i++;
+    }
+    return people;
+}
+function move(people, start, end) {
+    for (let i = end; i > start; i--) {
+        people[i] = people[i-1];
+    }
+}
+function countBigger(people, idx) {
+    let count = 0;
+    let shouldBe = people[idx][1];
+    let tarLoc = 0;
+    for (let i = 0; i < idx; i++) {
+        if (people[i][0] >= people[idx][0]) {
+            count++;
+        }
+        if (count === shouldBe) {
+            tarLoc = i + 1;
+        }
+    }
+    return {count, tarLoc};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 一次过，不过效率不高；和答案二思路差不多
 export var reconstructQueue = function(people) {
     // 按 高度 排序， 高度低的人往前挪是不会影响前面的人的，因为只统计比自己高的

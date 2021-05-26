@@ -37,6 +37,87 @@
 /**
  * Initialize your data structure here.
  */
+// TODO: 三刷!
+/**
+ * =============================
+ * 二刷
+*/
+var RandomizedSet = function() {
+    this.arr = [];
+    this.val2Key = {};
+};
+
+/**
+ * Inserts a value to the set. Returns true if the set did not already contain the specified element. 
+ * @param {number} val
+ * @return {boolean}
+ */
+RandomizedSet.prototype.insert = function(val) {
+    if (this.val2Key[val] === undefined) {
+        this.val2Key[val] = this.arr.length;
+        this.arr.push(val);
+        return true;
+    } else {
+        return false;
+    }
+};
+
+/**
+ * Removes a value from the set. Returns true if the set contained the specified element. 
+ * @param {number} val
+ * @return {boolean}
+ */
+RandomizedSet.prototype.remove = function(val) {
+    if (this.val2Key[val] === undefined) {
+        return false;
+    } else {
+        // 获取要移除的项，和最后一项交换，再删除最后一项！
+        const idx = this.val2Key[val];
+        const lastVal = this.arr[this.arr.length-1];
+        // 少了这一步
+        this.arr[idx] = lastVal;
+
+        this.val2Key[lastVal] = idx;
+        // 少了这一步！
+        delete this.val2Key[val];
+        this.arr.length--;
+        return true;
+    }
+};
+
+/**
+ * Get a random element from the set.
+ * @return {number}
+ */
+RandomizedSet.prototype.getRandom = function() {
+    let n = this.arr.length;
+    let randIdx = Math.floor(Math.random() * n);
+    return this.arr[randIdx];
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 var RandomizedSet = function() {
     this.map = {};
     this.arr = [];

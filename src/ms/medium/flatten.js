@@ -1,6 +1,7 @@
 /**
  * 114. 二叉树展开为链表
  * 给定一个二叉树，原地将它展开为链表。
+ * 进阶：你可以使用原地算法（O(1) 额外空间）展开这棵树吗？
 链接：https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list
 
     • 展开后的单链表应该同样使用 TreeNode ，其中 right 子指针指向链表中下一个结点，而左子指针始终为 null 。
@@ -56,6 +57,37 @@
      / \   \
     3   4   6
  */
+/**
+ * =============================
+ * 二刷
+*/
+export const flatten = (root) => {
+    // 二叉树和链表这句话怎么能忘呢！
+    if (!root) return null;
+
+    let node = root;
+    while (node) {
+        if (node.left) {
+            let cur = node.left;
+            while (cur.right) {
+                cur = cur.right;
+            }
+            cur.right = node.right;
+            node.right = node.left;
+            node.left = null;
+        }
+        node = node.right;
+    }
+}
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 export const flatten = (root) => {
     if (!root) {
         return null;

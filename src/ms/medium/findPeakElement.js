@@ -25,6 +25,33 @@
  * @param {number[]} nums
  * @return {number}
  */
+// TODO: 三刷一下也行
+/**
+ * =============================
+ * 二刷
+*/
+var findPeakElement = function(nums) {
+    let n = nums.length;
+    let l = 0;
+    let r = n - 1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (m+1 >= n || l === r) return m;
+        if (nums[m] < nums[m+1]) {
+            l = m + 1;
+        } else {
+            r = m;
+        }
+    }
+}
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 啧啧啧，看了答案思路还写了个屎，答案的线性搜索都比你强，，，
 var findPeakElement = function(nums) {
     let n = nums.length;

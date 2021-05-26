@@ -12,6 +12,33 @@
     输出: [1,3,2]
     进阶: 递归算法很简单，你可以通过迭代算法完成吗
 */
+// TODO: 三刷
+/**
+ * =============================
+ * 一刷
+*/
+export const inorderTraversal = (root) => {
+    let stack = [];
+    let ans = [];
+    let node = root;
+    while (stack.length > 0 || node) {
+        while (node) {
+            stack.push(node);
+            node = node.left;
+        }
+        let temp = stack.pop();
+        ans.push(temp.val);
+        node = temp.right;
+    }
+    return ans;
+}
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 啥也别说了，刷吧！！！生做也能做出来，就是难看啊
 export const inorderTraversal = (root) => {
     // 这句判断怎么能少呢！

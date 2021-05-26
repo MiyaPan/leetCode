@@ -30,6 +30,36 @@
  * @param {number[]} nums
  * @return {string}
  */
+/**
+ * =============================
+ * 二刷
+*/
+export var largestNumber = function(nums) {
+    nums.sort((a, b) => {
+        let lena = (a+'').length;
+        let lenb = (b+'').length; 
+        let newA = a * Math.pow(10,lenb) + b;
+        let newB = b * Math.pow(10,lena) + a;
+        if (newA === newB) {
+            return lena - lenb;
+        }
+        return newB - newA;
+    });
+    while (nums[0] === 0) nums.shift();
+    return nums.length === 0 ? '0' : nums.join('');
+}
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路：逐位比较，如果短的走完了，就从头走，循环比下去，直到某一位字符不同了。
 // 特殊 case: 43243 432 这种，长的都走完了，也没比出不一样的，就把短的下一个该比的和长的 [0] 比
 export var largestNumber = function(nums) {

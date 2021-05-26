@@ -21,6 +21,43 @@
  * @param {string[]} strs
  * @return {string[][]}
  */
+// TODO: 三刷
+/**
+ * =============================
+ * 二刷
+*/
+export var groupAnagrams = function(strs) {
+    let ans = [];
+    // {} 对象也可以用数组做 key ，只不过会自动转换为 string，比如
+    // let b = [1,2,3,0,null,4,5]
+    // a[n] = 2
+    // 输出：{1,2,3,0,: 1, 1,2,3,0,,4,5: 2}
+    let map = {};
+    strs.forEach(s => {
+        let key = s.split('').sort().join('');
+        if (map[key]) {
+            map[key].push(s);
+        } else {
+            map[key] = [s];
+        }
+    });
+    Object.keys(map).forEach(key => {
+        ans.push(map[key]);
+    });
+    return ans;
+}
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 和答案思路 2 一致的，但是答案 2 直接用 数组当 key了，没有像我这么麻烦的 去处理成 字符串。map 真灵活啊，直接用数组啊，唉，不用处理的啊
 // https://leetcode-cn.com/problems/group-anagrams/solution/zi-mu-yi-wei-ci-fen-zu-by-leetcode-solut-gyoc/
 // 这个时间复杂度分析有点厉害啊

@@ -26,6 +26,15 @@
     输出: 0
     解释: endWord "cog" 不在字典中，所以无法进行转换。
 
+    提示：
+        1 <= beginWord.length <= 10
+        endWord.length == beginWord.length
+        1 <= wordList.length <= 5000
+        wordList[i].length == beginWord.length
+        beginWord、endWord 和 wordList[i] 由小写英文字母组成
+        beginWord != endWord
+        wordList 中的所有字符串 互不相同
+
     链接：https://leetcode-cn.com/problems/word-ladder
 */
 /**
@@ -34,9 +43,84 @@
  * @param {string[]} wordList
  * @return {number}
  */
+// TODO: 三刷!，分清这是 bfs 还是 dfs
+// set has 比数组性能好不要太多：https://zhuanlan.zhihu.com/p/62178971
+/**
+ * =============================
+ * 二刷
+*/
+export var ladderLength = function(beginWord, endWord, wordList) {
+    // ["cog", "dog", "dot", "hot", "log", "lot"]
+    // 用 set 都不用 sort 再二分，因为 set 是键值对，检索复杂度 o(1)
+    // wordList.sort((a, b) => a < b ? -1 : 1);
+    let stack = [beginWord];
+    let arrSet = new Set(wordList);
+    let visited = new Set();
+    let p = 0;
+    let nodesInNextlevel = [];
+    let level = 0;
+    while (p < stack.length) {
+        nodesInNextlevel = [];
+        while (p < stack.length) {
+            let cur = stack[p++];
+            for (let i = 0; i < cur.length; i++) {
+                // A：65；a：97！！！！！
+                for (let j = 0; j < 26; j++) {
+                    // 傻啊，replace 第一个参数是正则或者 string，那是啥！
+                    // let temp = cur.replace(i, String.fromCharCode(97+j));
+                    // 不能用 replace，如果 word 中有重复的字符，会 replace 第一个啊啊啊啊啊啊！！
+                    // let temp = cur.replace(cur.charAt(i), String.fromCharCode(97+j));
+                    let temp = cur.substring(0,i) + String.fromCharCode(97+j) + cur.substring(i+1);
+
+                    if (arrSet.has(temp)) {
+                        // if (temp === endWord) return level+1;
+                        // 第一个 +1 是因为提前判断了，而没有放到下一层再判断，level 还没加；第二个是 答案长度包含 startWord
+                        if (temp === endWord) return level+1+1;
+    
+                        if (!visited.has(temp)) {
+                            visited.add(temp);
+                            nodesInNextlevel.push(temp);
+                        }
+                    }
+                }
+            }
+        }
+        level++;
+        stack = stack.concat(nodesInNextlevel);
+    }
+    return 0;
+}
+
+function find(wordList, target) {
+    let l = 0;
+    let r = wordList.length;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (wordList[m] === target) {
+            return true;
+        }
+        else if (wordList[m] < target) {
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+    return false;
+}
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 大佬啊，思路就是清晰 https://leetcode-cn.com/problems/word-ladder/solution/shou-hua-tu-jie-127-dan-ci-jie-long-bfsde-dian-x-2/
 // 虽然思路自己也想到了，但是存储结构没想到，用队列啊！！！不要递归啊
-export var ladderLength = function(beginWord, endWord, wordList) {
+export var ladderLength1 = function(beginWord, endWord, wordList) {
     if (!wordList.includes(endWord)) return 0;
     let wordSet = new Set(wordList);
 

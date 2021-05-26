@@ -34,6 +34,94 @@
 
     链接：https://leetcode-cn.com/problems/design-circular-queue
 */
+// TODO: 三刷！
+/**
+ * =============================
+ * 二刷
+*/
+var MyCircularQueue = function(k) {
+    this.arr = Array(k).fill(0);
+    this.head = -1;
+    this.tail = -1;
+    this.capacity = k;
+};
+
+/** 
+ * @param {number} value
+ * @return {boolean}
+ */
+MyCircularQueue.prototype.enQueue = function(value) {
+    if (this.isFull()) return false;
+
+    // 这里 tail 不能盲加，超过环的要考虑
+    // this.arr[++this.tail] = value;
+    this.tail = (this.tail + 1) % this.capacity;
+    this.arr[this.tail] = value;
+    if (this.head === -1) this.head++;
+    return true;
+};
+
+/**
+ * @return {boolean}
+ */
+MyCircularQueue.prototype.deQueue = function() {
+    if (this.isEmpty()) return false;
+
+    // 这里 head 也不能盲加，超过环的要考虑，所以可以先
+    // this.head++;
+    this.head = (this.head + 1) % this.capacity;
+    // 如果移没了，就都滚回开头
+    if ((this.head - this.tail + this.capacity) % this.capacity === 1) {
+        this.tail = -1;
+        this.head = -1;
+    }
+    return true;
+};
+
+/**
+ * @return {number}
+ */
+MyCircularQueue.prototype.Front = function() {
+    if (this.isEmpty()) return -1;
+    return this.arr[this.head];
+};
+
+/**
+ * @return {number}
+ */
+MyCircularQueue.prototype.Rear = function() {
+    if (this.isEmpty()) return -1;
+    return this.arr[this.tail];
+};
+
+/**
+ * @return {boolean}
+ */
+MyCircularQueue.prototype.isEmpty = function() {
+    return this.tail === -1 && this.head === -1;
+};
+
+/**
+ * @return {boolean}
+ */
+MyCircularQueue.prototype.isFull = function() {
+    // return this.tail !== -1 && this.head  !== -1 && (this.tail - this.head + 1) % this.capacity === 0;
+    // 这个可以简写避免 k = 1 进入到 (this.tail - this.head + 1) % this.capacity === 0 的 case
+    // 从语义化的角度去写就可以了，full 就是 tail 再 +1 就等于 head，+1 的时候考虑环，也就是对 capacity 取模
+    return (this.tail + 1) % this.capacity === this.head;;
+};
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 /**
  * @param {number} k
  */

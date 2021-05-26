@@ -23,8 +23,62 @@
 */
 /**
  * @param {string[][]} tickets
- * @return {string[]}
+ * @return {string[]}n    
  */
+// TODO: 三刷
+/**
+ * =============================
+ * 二刷
+*/
+export var findItinerary = function(tickets) {
+    let n = tickets.length;
+    let map = {};
+    for (let i = 0; i < n; i++) {
+        if (map[tickets[i][0]]) {
+            map[tickets[i][0]].push({to: tickets[i][1], index: i});
+        } else {
+            map[tickets[i][0]] = [{to: tickets[i][1], index: i}];
+        }
+    }
+    Object.keys(map).forEach(from => {
+        map[from].sort((a,b) => a.to < b.to ? - 1 : 1);
+    });
+
+    let ans = ['JFK'];
+    let path = [];
+    let visited = [];
+    dfs(tickets, map, 'JFK', path, ans, visited, 0);
+    return ans;
+}
+function dfs(tickets, map, from, path, ans, visited, count) {
+    if (!map[from]) return false;
+
+    let tos = map[from];
+    for (let to of tos) {
+        if (!visited[to.index]) {
+            path.push(to.to);
+            count++;
+            visited[to.index] = true;
+            if (count === tickets.length) {
+                ans.push(...path);
+                return true;
+            }
+            if (dfs(tickets, map, to.to, path, ans, visited, count)) return true;
+            visited[to.index] = false;
+            // 这里别忘了啊
+            count--;
+            path.pop();
+        }
+    }
+}
+
+
+
+
+/**
+ * =============================
+ * 二刷
+*/
 // 思路：mdzz 强行回溯也能通过的，还超 61%呢！麻烦就麻烦在数据结构的设计上了，好多细节点，值得二刷。
 // 👍 自己真的可以强行做出来啊，自己的思路正好和已 java 大佬一样的：https://leetcode-cn.com/problems/reconstruct-itinerary/solution/java-bu-yong-ou-la-zhi-yong-hui-su-si-lu-4v83/
 // 但是，其实这个类型叫 欧拉通路，有套路的，另见 753. 破解保险箱：https://leetcode-cn.com/problems/cracking-the-safe/
@@ -67,7 +121,7 @@ export var findItinerary1 = function(tickets) {
     return ans;
 };
 
-function dfs(map, from, count, path, ans, ansLen) {
+function dfs1(map, from, count, path, ans, ansLen) {
     path.push(from);
     count++;
 
@@ -116,7 +170,7 @@ function dfs(map, from, count, path, ans, ansLen) {
 // 性质：
 // 若图 G 为连通图，且有 2k 个奇度顶点，则图需要用 k 笔画成，且至少需要k笔才能画成。https://www.cxyxiaowu.com/962.html
 // 可参考js：https://leetcode-cn.com/problems/reconstruct-itinerary/solution/shou-hua-tu-jie-liang-chong-jie-fa-zui-ji-ben-de-h/
-export var findItinerary = function(tickets) {
+export var findItinerary2 = function(tickets) {
     // 二刷再说吧
     // 害，这个回溯和 hierholzer 算法一样的，不过 hierholzer 算法没有设置 visited 标记，而是直接在数组里删除了元素，频繁用到了 shift 和 unshift，只是你没敢用而已
 };

@@ -20,6 +20,50 @@
  * @param {number[]} nums
  * @return {number[]}
  */
+/**
+ * =============================
+ * 二刷
+*/
+var productExceptSelf = function(nums) {
+    // 输入: [1,2,3,4]
+    // 输出: [24,12,8,6]
+    let n = nums.length;
+    let prefixProd = 1;
+    let ans = [];
+    for (let i = 0; i < n; i++) {
+        // 不存 o(n) 是不可能同时记住前缀和后缀的，但是 ans 是不算的，就放 ans 啊！
+        ans[i] = prefixProd * nums[i];
+        prefixProd = ans[i];
+    }
+    let suffixProd = 1;
+    for (let j = n-1; j >= 0; j--) {
+        // 不存 o(n) 是不可能同时记住前缀和后缀的，但是 ans 是不算的，就放 ans 啊！
+        // 这里不能这么兜底，这样出现 0 的时候也会进兜底
+        // ans[j] = (ans[j-1] || 1) * suffixProd;
+        ans[j] = (j-1 >= 0 ? ans[j-1] : 1) * suffixProd;
+        suffixProd *= nums[j];
+    }
+    return ans;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 卧槽，全凭题目里的前缀、后缀两个词给思路了
 // 下面这个满足时间复杂度 o(n)了，空间还不是 o(1)，可以把 prefixProduct 和 suffixProduct 直接用 ans 数组存，边计算
 var productExceptSelf = function(nums) {
