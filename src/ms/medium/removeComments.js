@@ -24,13 +24,24 @@
     示例 1:
 
     输入: 
-    source = ["/*Test program *\/", "int main()", "{ ", "  // variable declaration ", "int a, b, c;", "/* This is a test", "   multiline  ", "   comment for ", "   testing *\/", "a = b + c;", "}"]
+    source = ["/*Test program *\/",
+              "int main()", 
+              "{ ", 
+              "  // variable declaration ", 
+              "int a, b, c;", 
+              "/* This is a test",
+              "   multiline  ", 
+              "   comment for ",
+              "   testing *\/", 
+              "a = b + c;", 
+              "}"
+            ]
 
     示例代码可以编排成这样:
     /*Test program *\/
     int main()
     { 
-    // variable declaration 
+       // variable declaration 
     int a, b, c;
     /* This is a test
     multiline  
@@ -51,8 +62,8 @@
 
     解释: 
     第 1 行和第 6-9 行的字符串 /* 表示块注释。第 4 行的字符串 // 表示行注释。
+    
     示例 2:
-
     输入: 
     source = ["a/*comment", "line", "more_comment*\/b"]
     输出: ["ab"]
@@ -70,8 +81,84 @@
  * @param {string[]} source
  * @return {string[]}
  */
-// 有两个巨长的 case 没过，太难分析原因了，直接按官方思路写
+/**
+ * =============================
+ * 二刷
+*/
+// source = ["/*Test program *\/",
+//               "int main()", 
+//               "{ ", 
+//               "  // variable declaration ", 
+//               "int a, b, c;", 
+//               "/* This is a test",
+//               "   multiline  ", 
+//               "   comment for ",
+//               "   testing *\/", 
+//               "a = b + c;", 
+//               "}"
+//             ]
 export var removeComments = function(source) {
+    let n = source.length;
+    let ans = [];
+    let inBlock = false;
+    let temp = '';
+    for (let i = 0; i < n; i++) {
+        temp = inBlock ? temp : '';
+        let cur = source[i];
+        for (let j = 0; j < cur.length; j++) {
+            if (inBlock && cur[j] === '*' && cur[j+1] === '/') {
+                inBlock = false;
+                // 向后调整一位
+                // j++;
+                // 得调整 2 位，不然会把结束的 / 计入
+                j += 2;
+            }
+
+            if (inBlock) continue;
+
+            // 这不能直接 break 呢，如果在块注释中要忽略才对，所以要把上面这行提到本行前面
+            // if (cur[j] === '/' && cur[j+1] === '/') break;
+            if (cur[j] === '/' && cur[j+1] === '/') break;
+
+            if (cur[j] === '/' && cur[j+1] === '*') {
+                inBlock = true;
+                // 向后调整一位
+                j++;
+                continue;
+            }
+            
+            if (j < cur.length) temp += cur[j];
+        }
+        // 块注释，跨行的要拼接到一起
+        if (temp.length > 0 && !inBlock) ans.push(temp);
+    }
+    return ans;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
+// 有两个巨长的 case 没过，太难分析原因了，直接按官方思路写
+export var removeComments1 = function(source) {
     if (source.length === 0) return [];
 
     let ans = [];
@@ -108,7 +195,7 @@ export var removeComments = function(source) {
     return ans;
 };
 
-export var removeComments1 = function(source) {
+export var removeComments11 = function(source) {
     if (source.length === 0) return [];
 
     let ans = [];

@@ -38,10 +38,13 @@
 /**
  * Initialize your data structure here.
  */
-// 思路：前缀树。你想的 map 按照长度分类的也行，也能 ac 。题目应该用前缀树做，另见 208 题：https://leetcode-cn.com/problems/implement-trie-prefix-tree/
-// 可见：https://leetcode-cn.com/problems/design-add-and-search-words-data-structure/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by--43/
+// TODO: 三刷!!
+/**
+ * =============================
+ * 二刷
+*/
 export var WordDictionary = function() {
-    this.next = [];
+    this.nodes = [];
     this.isEnd = false;
 };
 
@@ -50,6 +53,77 @@ export var WordDictionary = function() {
  * @return {void}
  */
 WordDictionary.prototype.addWord = function(word) {
+    let cur = this;
+    // 是 n + 1 那层才是 node 本身，比如：
+    // ["WordDictionary","addWord","search"]，[[],["a"],["."]]
+    for (let char of word) {
+        let idx = char.charCodeAt() - 97;
+        if (!cur.nodes[idx]) {
+            cur.nodes[idx] = new WordDictionary();
+        }
+        cur = cur.nodes[idx];
+    }
+    cur.isEnd = true;
+};
+
+/** 
+ * @param {string} word
+ * @return {boolean}
+ */
+WordDictionary.prototype.search = function(word) {
+    let cur = this;
+    return find(cur, word, 0);
+};
+function find(cur, word, start) {
+    if (start === word.length) return cur.isEnd;
+    // for (let i = start; i < word.length; i++) {
+        let char = word[start];
+        if (char === '.') {
+            // 如果 . 后面都没找到，这里会导致走到最后的 return cur.isEend,但这个 cur 是不对的，是当前层的
+            for (let i = 0; i < 26; i++) {
+                if (cur.nodes[i] && find(cur.nodes[i], word, start+1)) return true;
+            }
+            // 所以要加这个
+            return false;
+        } else {
+            let idx = char.charCodeAt() - 97;
+            if (!cur.nodes[idx]) return false;
+            return find(cur.nodes[idx], word, start+1);
+        }
+    // }
+    return cur.isEnd;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
+// 思路：前缀树。你想的 map 按照长度分类的也行，也能 ac 。题目应该用前缀树做，另见 208 题：https://leetcode-cn.com/problems/implement-trie-prefix-tree/
+// 可见：https://leetcode-cn.com/problems/design-add-and-search-words-data-structure/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by--43/
+export var WordDictionary1 = function() {
+    this.next = [];
+    this.isEnd = false;
+};
+
+/** 
+ * @param {string} word
+ * @return {void}
+ */
+WordDictionary1.prototype.addWord = function(word) {
     let node = this;
     for (let char of word) {
         let idx = char.charCodeAt() - 'a'.charCodeAt();
@@ -65,13 +139,13 @@ WordDictionary.prototype.addWord = function(word) {
  * @param {string} word
  * @return {boolean}
  */
-WordDictionary.prototype.search = function(word) {
+WordDictionary1.prototype.search = function(word) {
     let node = this;
     
     return this.dfs(node, 0, word);
 };
 
-WordDictionary.prototype.dfs = function(node, charIndex, word) {
+WordDictionary1.prototype.dfs = function(node, charIndex, word) {
     let len = word.length;
     // 这个判断条件好好想想，因为下面的 else，只要数组有节点就会向下，所以到达这里的，当超过 word 长度时，看看是不是树到底了
     // 树节点因为是用 next 判断的，所以比 char 慢一层

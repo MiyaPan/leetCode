@@ -34,6 +34,72 @@
  * @param {number[]} nums
  * @return {void} Do not return anything, modify nums in-place instead.
  */
+// TODO: 三刷?
+/**
+ * =============================
+ * 二刷
+*/
+export var nextPermutation = function(nums) {
+    let n = nums.length;
+    let found = false;
+    for (let i = n-2; i >= 0; i--) {
+        let targetIdx = -1;
+        for (let j = n-1; j > i; j--) {
+            // 数字超过 1 位数了，所以不能比大小，而应该直接比字典序 - 咋不对了
+            // [8,11,3]: 我[8,3,11],答案[11,3,8] ?? 不对啊，咋直接比数字大小了？，TODO: 问问华鹏
+            // if (nums[j]+'' > nums[i]+'') {
+            if (nums[j] > nums[i]) {
+                targetIdx = j;
+                break;
+            }
+        }
+        // 如果找到了比 i 大的数 targetIdx，就把 targetIdx后面的逆序放到前面
+        // 其实就是交换 i 和 target 之后，把 i+1 及后面的逆序一下
+        if (targetIdx !== -1) {
+            found = true;
+            swap(nums, i, targetIdx);
+            // 傻啊，这里写 n 
+            // reverse(nums, i+1, n);
+            reverse(nums, i+1, n-1);
+            break;
+        }
+    }
+    if (!found) {
+        reverse(nums, 0, n-1);
+    }
+    return nums
+}
+function reverse(arr, start, end) {
+    while (start < end) {
+        swap(arr, start, end);
+        start++;
+        end--;
+    }
+}
+function swap(arr, i, j) {
+    let temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路：和答案一样的，大哥你能不能好好仔细做
 // 1. 从后向前找到最靠前的一个使数列下降的元素，把这个元素和 它后面的第一个比它大的元素交换，然后把它 后面这些组成最小的数字，字典顺序sort就行？
 // 2. 如果没找到下降的元素，即整个数列从前到后是单减的，逆序返回
@@ -45,7 +111,7 @@
 // 如果第一个字母一样，那么比较第二个、第三个乃至后面的字母。 
 // 如果比到最后两个单词不一样长（比如，sigh 和sight），那么把短者排在前。
 // 那么字典和数字比较其实是一样的
-export var nextPermutation = function(nums) {
+export var nextPermutation1 = function(nums) {
     let len = nums.length;
     let loc = -1;
     for (let i = len-2; i >= 0; i--) {
@@ -80,7 +146,7 @@ export var nextPermutation = function(nums) {
 // 具体来说，loc2 后面的肯定都比 交换的数小，loc2 前面的都比它大，其实就是个逆序嘛！再逆回来就好了啊
 // 对两位数和一位数混合的成立吗？[1,13] 应该选 113，[4,43] 应该选 434，而不是 443，所以重点就落在了比较大小这个函数上，包括第一个 for 也要用这个比较
 // 用了 isSmall(nums, i, j) 之后其实就惟一的确定了顺序，这里就不用判断了，单纯逆序就行
-function reverse(nums, start, end) {
+function reverse1(nums, start, end) {
     let mid = start + parseInt((end-start)/2);
     let isOdd = (end-start+1) % 2 === 0;
     for (let i = start; i <= mid; i++) {
@@ -90,7 +156,7 @@ function reverse(nums, start, end) {
 }
 // [1,13] 应该选 113，[4,43] 应该选 434，而不是 443
 // 怎么比较呢，按真实脑子想的算，如果把 4 放前面就是把 4 放大了 100倍，就是 10 的 (43).length
-function isSmall(nums, i, j) {
+function isSmall1(nums, i, j) {
     let n1 = nums[i];
     let n2 = nums[j];
     let len1 = (n1 + '').length;
@@ -98,13 +164,13 @@ function isSmall(nums, i, j) {
     return (n1 * Math.pow(10, len2) + n2) < (n2 * Math.pow(10, len1) + n1);
 }
 
-function swap(nums, i, j) {
+function swap1(nums, i, j) {
     let temp = nums[i];
     nums[i] = nums[j];
     nums[j] = temp;
 }
 
-export var nextPermutation1 = function(nums) {
+export var nextPermutation11 = function(nums) {
     let len = nums.length;
     let loc = -1;
     for (let i = len-2; i >= 0; i--) {

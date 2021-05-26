@@ -20,6 +20,40 @@
 
 链接：https://leetcode-cn.com/problems/binary-tree-level-order-traversal
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const levelOrder = (root) => {
+    if (!root) return [];
+    let stack = [root];
+    let ans = [[root.val]];
+    let p = 0;
+    let nodesInNextLevel = [];
+    let nodesValInNextLevel = [];
+    while (p < stack.length) {
+        nodesInNextLevel = [];
+        nodesValInNextLevel = [];
+        while (p < stack.length) {
+            let node = stack[p++];
+            if (node.left) {
+                nodesInNextLevel.push(node.left);
+                nodesValInNextLevel.push(node.left.val);
+            }
+            if (node.right) {
+                nodesInNextLevel.push(node.right);
+                nodesValInNextLevel.push(node.right.val);
+            }
+        }
+        stack = stack.concat(nodesInNextLevel);
+        nodesValInNextLevel.length > 0 && ans.push(nodesValInNextLevel);
+    }
+    return ans;
+}
+/**
+ * =============================
+ * 一刷
+*/
 export const levelOrder = (root) => {
     /**
      *            5

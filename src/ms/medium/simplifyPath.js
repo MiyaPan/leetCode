@@ -42,6 +42,52 @@
  * @param {string} path
  * @return {string}
  */
+/**
+ * =============================
+ * 二刷
+*/
+var simplifyPath = function(path) {
+    let arr = path.split('/');
+    let stack = [];
+    for (let str of arr) {
+        if (str === '.' || str === '') {
+            continue;
+        } else if (str === '..') {
+            stack.pop();
+        } else {
+            stack.push(str);
+        }
+    }
+    return '/' + stack.join('/');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 var simplifyPath = function(path) {
     let paths = path.replace(/\/+/g, '/').split('/');
     let stack = [];

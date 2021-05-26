@@ -33,6 +33,195 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
+// TODO: 三刷!
+/**
+ * =============================
+ * 二刷
+*/
+// 这个递归栈其实还占 了 o(logn) 的空间复杂度
+// 这个是自顶向下的递归,可以做成自底向上的递归,以获得 o(1) 的空间复杂度,参考:https://leetcode-cn.com/problems/sort-list/solution/sort-list-gui-bing-pai-xu-lian-biao-by-jyd/
+// 太晚了,三刷做自底向上吧
+export var sortList = (head) => {
+    if (!head || !head.next) return head;
+
+    let node = head;
+    let len = 0;
+    while (node) {
+        node = node.next;
+        len++;
+    }
+
+    let dummy = new ListNode(0, head);
+
+    for (let step = 1; step < len; step *= 2) {
+        // h1 = head 就不对了，head 可能已经被调整到中间的位置了
+        // let h1 = head;
+        let pre = dummy;
+        let h1 = dummy.next;
+        while (h1) {
+            let p = h1;
+            // 找到 h2 的头, 断开 h1 的尾
+            // for (let i = 1; i < step && p; i++) {
+            for (let i = 1; i < step && p.next; i++) {
+                p = p.next;
+            }
+            let h2 = p.next;
+            p.next = null;
+    
+            // 断开 h2 的尾
+            p = h2;
+            for (let i = 1; i < step && p && p.next; i++) {
+                p = p.next;
+            }
+
+            let newh1;
+            if (p) {
+                newh1 = p.next;
+                p.next = null;
+            }
+
+            // 合并这一小段
+            let merged = merge(h1, h2);
+
+            // 连起来,这里不能直接连到 newh1, newh1 merge 的时候会混乱
+            // 应该是让前一个排序好的指向现在 merge 的头
+            // while (merged.next) {
+            //     merged = merged.next;
+            // }
+            // merged.next = newh1;
+            pre.next = merged;
+            while (pre.next) {
+                pre = pre.next;
+            }
+
+            h1 = newh1;
+        }
+
+    }
+
+    // head 已经不在开头了，这也是 必须 dummy 的原因
+    // return head;
+    return dummy.next;
+}
+// export var sortList = (head) => {
+//     if (!head || !head.next) return head;
+
+//     let fast = head;
+//     let slow = head;
+//     while (fast.next && fast.next.next) {
+//         fast = fast.next.next;
+//         slow = slow.next;
+//     }
+
+//     // 只剩一个元素的情况,❎ 不能在这里判断还,在这里的话 2 个元素的也是 相等的
+//     // if (fast === slow) return head;
+
+//     let right = slow.next;
+//     slow.next = null;
+
+//     let l = sortList(head);
+//     let r = sortList(right);
+
+//     return merge(l, r);
+// }
+function merge(l, r) {
+    let dummy = new ListNode();
+    let node = dummy;
+    while (l && r) {
+        if (l.val < r.val) {
+            node.next = l;
+            l = l.next;
+        } else {
+            node.next = r;
+            r = r.next;
+        }
+        node = node.next;
+    }
+
+    node.next = l || r;
+    return dummy.next;
+}
+
+
+
+const merge = (head1, head2) => {
+    const dummyHead = new ListNode(0);
+    let temp = dummyHead, temp1 = head1, temp2 = head2;
+    while (temp1 !== null && temp2 !== null) {
+        if (temp1.val <= temp2.val) {
+            temp.next = temp1;
+            temp1 = temp1.next;
+        } else {
+            temp.next = temp2;
+            temp2 = temp2.next;
+        }
+        temp = temp.next;
+    }
+    if (temp1 !== null) {
+        temp.next = temp1;
+    } else if (temp2 !== null) {
+        temp.next = temp2;
+    }
+    return dummyHead.next;
+}
+
+var sortList = function(head) {
+    if (head === null) {
+        return head;
+    }
+    let length = 0;
+    let node = head;
+    while (node !== null) {
+        length++;
+        node = node.next;
+    }
+    const dummyHead = new ListNode(0, head);
+    for (let subLength = 1; subLength < length; subLength <<= 1) {
+        let prev = dummyHead, curr = dummyHead.next;
+        while (curr !== null) {
+            let head1 = curr;
+            for (let i = 1; i < subLength && curr.next !== null; i++) {
+                curr = curr.next;
+            }
+            let head2 = curr.next;
+            curr.next = null;
+            curr = head2;
+            for (let i = 1; i < subLength && curr != null && curr.next !== null; i++) {
+                curr = curr.next;
+            }
+            let next = null;
+            if (curr !== null) {
+                next = curr.next;
+                curr.next = null;
+            }
+            const merged = merge(head1, head2);
+            prev.next = merged;
+            while (prev.next !== null) {
+                prev = prev.next;
+            }
+            curr = next;
+        }
+    }
+    return dummyHead.next;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 /*
 思路：常见的 ologn 的排序有：堆、归并、快排。插入、选择和冒泡都是 n^2，堆排序最后还要链接起来，反正不太好，用归并
     归并有两种方式：

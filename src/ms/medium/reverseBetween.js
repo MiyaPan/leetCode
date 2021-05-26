@@ -10,8 +10,72 @@
 
     链接：https://leetcode-cn.com/problems/reverse-linked-list-ii
 */
-// 和答案思路一样，没答案写的简洁：https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/fan-zhuan-lian-biao-ii-by-leetcode/
+/**
+ * =============================
+ * 二刷
+*/
+
 export var reverseBetween = function(head, m, n) {
+    let dummy = new ListNode();
+    dummy.next = head;
+    let node = dummy;
+    let count = 0;
+    let pre = dummy;
+    let start;
+    let end;
+
+    while (node && count < m) {
+        pre = node;
+        node = node.next;
+        count++;
+    }
+
+    let preStart = pre;
+    start = node;
+    while (node && count <= n) {
+        let next = node.next;
+        node.next = pre;
+        if (count === n) end = node;
+        pre = node;
+        node = next;
+        count++;
+    }
+    start.next = node;
+    preStart.next = end;
+
+    return dummy.next;
+}
+ function ListNode(val, next) {
+     this.val = (val===undefined ? 0 : val)
+     this.next = (next===undefined ? null : next)
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
+// 和答案思路一样，没答案写的简洁：https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/fan-zhuan-lian-biao-ii-by-leetcode/
+export var reverseBetween1 = function(head, m, n) {
     if (!head) return null;
     if (m === n) return head;
     let count = 0;

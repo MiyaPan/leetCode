@@ -32,6 +32,63 @@
  * @param {number} target
  * @return {boolean}
  */
+// TODO: 三刷回忆一下套路
+/**
+ * =============================
+ * 二刷
+*/
+// [1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1]，2
+// [1,3], 3
+// [1,3,1,1,1], 3
+// [2,5,6,0,0,1,2], target = 3
+var search = function(nums, target) {
+    let n = nums.length;
+    let l = 0;
+    let r = n-1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (nums[m] === target) return true;
+
+        if (nums[m] === nums[r]) {
+            r--;
+        } else if (nums[m] < nums[r]) {
+            if (nums[m] < target && target <= nums[r]) {
+                l = m + 1;
+            } else {
+                r = m - 1;
+            }
+        } else if (nums[m] > nums[r]) {
+            if (nums[l] <= target && target <= nums[m]) {
+                r = m - 1;
+            } else {
+                l = m + 1;
+            }
+        }
+    }
+    return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路：就分类讨论呗，先确定哪个区间单调【怎么区分，就拿 mid 和 r 或者 l 比较都行，两种都一样的，看当时想到了啥】
 // ，只去单调上看元素是不是在这，在就操作，不在肯定就在另一边不单调的区间上，即 else 就反向操作。
 // 确定不了的就 r-1 或者 l+1 缩小范围。

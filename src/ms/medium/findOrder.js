@@ -33,6 +33,59 @@
  * @param {number[][]} prerequisites
  * @return {number[]}
  */
+// TODO: 三刷一下也行
+/**
+ * =============================
+ * 二刷
+*/
+// 输入: 4, [[1,0],[2,0],[3,1],[3,2]]
+// 输出: [0,1,2,3] or [0,2,1,3]
+var findOrder = function(numCourses, prerequisites) {
+    let stack = [];
+    let map = {};
+    let indegree = [];
+    // 3，[[0,1],[0,2],[1,2]]
+    // 3, [[1,0],[1,2],[0,1]]
+    for (let i = 0; i < prerequisites.length; i++) {
+        let from = prerequisites[i][1];
+        let to = prerequisites[i][0];
+        if (map[from]) {
+            map[from].push(to);
+        } else {
+            map[from] = [to];
+        }
+        indegree[to] = (indegree[to] || 0) + 1;
+    }
+
+    for (let i = 0; i < numCourses; i++) {
+        if (!indegree[i]) {
+            stack.push(i);
+        }
+    }
+    let p = 0;
+    let ans = [];
+    while (p < stack.length) {
+        let course = stack[p++];
+        ans.push(course);
+        // 终点的课程出度为 0 ，已经不存在在 map 里了
+        map[course] && map[course].forEach(item => {
+            indegree[item]--;
+            if (indegree[item] === 0) {
+                stack.push(item);
+            }
+        });
+    }
+    return ans.length === numCourses ? ans : [];
+}
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 典型的“拓扑排序”问题。
 // 拓扑排序适用场景：对有依赖关系的事务进行排序。【就针对这个来的！】
 /**

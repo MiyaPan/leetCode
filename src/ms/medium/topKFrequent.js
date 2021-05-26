@@ -18,6 +18,90 @@
 
     链接：https://leetcode-cn.com/problems/top-k-frequent-elements
 */
+/**
+ * =============================
+ * 二刷
+*/
+var topKFrequent = function(nums, k) {
+    let map = new Map();
+    for (let num of nums) {
+        if (map.has(num)) {
+            map.set(num, map.get(num)+1);
+        } else {
+            map.set(num, 1);
+        }
+    }
+
+    let heap = [];
+    let count = 0;
+    map.forEach((value, key) => {
+        if (count < k) {
+            heap.push(key);
+            shiftUp(heap, map);
+            count++;
+        } else {
+            if (value > map.get(heap[0])) {
+                heap[0] = key;
+                shiftDown(heap, map);
+            }
+        }
+    });
+    return heap;
+};
+function shiftUp(heap, map) {
+    let i = heap.length - 1;
+    while (i > 0) {
+        let parentIdx = parseInt((i-1)/2);
+        if (map.get(heap[parentIdx]) <= map.get(heap[i])) break;
+        swap(heap, i, parentIdx);
+        i = parentIdx;
+    }
+}
+function shiftDown(heap, map) {
+    let n = heap.length;
+    let i = 0;
+    let max = i;
+    while (i < n) {
+        let leftIdx = 2*i+1;
+        if (leftIdx < n && map.get(heap[leftIdx]) < map.get(heap[max])) {
+            max = leftIdx;
+        }
+        let rightIdx = 2*i+2;
+        if (rightIdx < n && map.get(heap[rightIdx]) < map.get(heap[max])) {
+            max = rightIdx;
+        }
+        if (max === i) break;
+        swap(heap, i, max);
+        i = max;
+    }
+}
+function swap(heap, i, j) {
+    let temp = heap[i];
+    heap[i] = heap[j];
+    heap[j] = temp;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路：用 map 记录每个元素的出现频率无疑。
 // 但是，对 map 按照频率排序的时候，在每个元素都不同的情况下，会达到 o(nlogn)
 // ❌所以，可以遍历 map 的key数组，弄个双向队列，大于就往数组头插，小于就往后？不行，插了几个之后，再插就得遍历所有的，还是不行

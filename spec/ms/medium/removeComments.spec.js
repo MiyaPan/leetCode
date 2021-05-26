@@ -22,4 +22,14 @@ describe('removeComments', () => {
             "more_comment*/b"
         ])).toEqual(["ab"]);
     });
+    test("701", () => {
+        expect(removeComments([
+            "main() {",
+            "/* here is commments", 
+            "  // still comments */", 
+            "   double s = 33;", 
+            "   cout << s;", 
+            "}"
+        ])).toEqual(["main() {","   double s = 33;","   cout << s;","}"]);
+    });
 });

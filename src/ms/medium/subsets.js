@@ -22,6 +22,46 @@
  * @param {number[]} nums
  * @return {number[][]}
  */
+// TODO: 可以三刷下
+/**
+ * =============================
+ * 二刷
+*/
+var subsets = function(nums) {
+    let ans = [[]];
+    let path = [];
+    dfs(nums, 0, path, ans);
+    return ans;
+}
+function dfs(nums, start, path, ans) {
+    let n = nums.length;
+    for (let i = start; i < n; i++) {
+        path.push(nums[i]);
+        ans.push([...path]);
+        dfs(nums, i+1, path, ans);
+        path.pop();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 var subsets = function(nums) {
     let len = nums.length;
     let result = [[]];

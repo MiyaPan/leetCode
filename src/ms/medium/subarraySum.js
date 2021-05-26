@@ -1,6 +1,65 @@
 /**
  * 560. 和为K的子数组
+ * 给定一个整数数组和一个整数 k，你需要找到该数组中和为 k 的连续的子数组的个数。
+    示例 1 :
+
+    输入:nums = [1,1,1], k = 2
+    输出: 2 , [1,1] 与 [1,1] 为两种不同的情况。
+    
+    说明 :
+    数组的长度为 [1, 20,000]。
+    数组中元素的范围是 [-1000, 1000] ，且整数 k 的范围是 [-1e7, 1e7]。
  * https://leetcode-cn.com/problems/subarray-sum-equals-k/
+*/
+// TODO: 三刷!!
+/**
+ * =============================
+ * 二刷
+*/
+// 这种数字组中找 k 的套路：前缀和 + map要么取模，要么放 sum！！
+export var subarraySum = function(nums, k) {
+    let n = nums.length;
+    let map = {'0': 1};
+    let count = 0;
+    let sum = 0;
+    for (let i = 0; i < n; i++) {
+        sum += nums[i];
+        let key = sum - k;
+        if (map[key]) count += map[key];
+        // key 可能重复出现的，所以要计算出现次数，每次加上次数，相当于把那些重复的逐一和当前组合，而不能只加一次
+        // map[key] = 1;
+        // if (map[key]) { !!!
+        if (map[sum]) {
+            map[sum] += 1;
+        } else {
+            map[sum] = 1;
+        }
+    }
+
+    return count;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
 */
 export var subarraySum = function(nums, k) {
     let len = nums.length;

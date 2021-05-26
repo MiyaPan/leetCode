@@ -29,6 +29,58 @@
  * @param {number} k
  * @return {ListNode}
  */
+/**
+ * =============================
+ * 二刷
+*/
+var rotateRight = function(head, k) {
+    if (!head) return head;
+
+    let node = head;
+    let len = 0;
+    while (node) {
+        node = node.next;
+        len++;
+    }
+
+    k = k % len;
+    if (k === 0) return head;
+
+    node = head;
+    let rest = len - k;
+    // 为了获取到指定节点的前一个，所以 rest > 1
+    while (node && rest > 1) {
+        node = node.next;
+        rest--;
+    }
+    let newHead = node.next;
+    node.next = null;
+
+    node = newHead;
+    while (node.next) {
+        node = node.next;
+    }
+    node.next = head;
+
+    return newHead;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 二刷
+*/
 // 方法很多，也都很好，要看下：https://leetcode-cn.com/problems/rotate-list/solution/java-da-kai-ni-de-si-lu-4chong-jie-fa-qu-q1l6/
 var rotateRight = function(head, k) {
     if (!head) return null;

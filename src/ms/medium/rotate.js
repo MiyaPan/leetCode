@@ -38,8 +38,81 @@
 
     链接：https://leetcode-cn.com/problems/rotate-image
 */
+/**
+ * =============================
+ * 二刷
+*/
+export var rotate = function(matrix) {
+    let n = matrix.length;
+    let m = matrix[0].length;
+    let l = 0;
+    let r = m-1;
+    let top = 0;
+    let bottom = n-1;
+    while (l < r) {
+        let temp = [...matrix[l]];
+        // 左边往上边挪
+        for (let i = bottom, j = l; i > top; i--, j++) matrix[top][j] = matrix[i][l];
+        // 底边往左边挪
+        for (let j = l+1, i = top+1; j <= r; i++, j++) matrix[i][l] = matrix[bottom][j];
+        // 右边往底边挪
+        for (let i = bottom-1, j = l+1; i >= top; i--, j++) matrix[bottom][j] = matrix[i][r];
+        // 上边往右边挪
+        for (let j = l, i = top; j < r; j++, i++) matrix[i][r] = temp[j];
+
+        l++;
+        r--;
+        top++;
+        bottom--;
+    }
+    // return matrix;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路：每个元素挪，会发现规律，转着圈的挪的。和答案的解法 1 是一样的
-var rotate = function(matrix) {
+var rotate11 = function(matrix) {
     let end = matrix.length - 1;
     let start = 0;
     let rotateNum = parseInt(end/2);
@@ -63,7 +136,7 @@ var rotate = function(matrix) {
 // 图解见：https://leetcode-cn.com/problems/rotate-image/solution/man-hua-xuan-zhuan-tu-xiang-by-ivan1/
 // 上下翻转这步：就相当于把解法 1 中每圈 的四个角弄好了
 // 再沿着左上-右下对角线，一翻，就等于把剩余的翻了，靠想象啊
-var rotate = function(matrix) {
+var rotate2 = function(matrix) {
     let len = matrix.length;
     
     // 上线对折

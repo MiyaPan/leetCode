@@ -2,7 +2,8 @@
  * 529. 扫雷游戏
  * 让我们一起来玩扫雷游戏！
     给定一个代表游戏板的二维字符矩阵。 'M' 代表一个未挖出的地雷，'E' 代表一个未挖出的空方块，
-    'B' 代表没有相邻（上，下，左，右，和所有4个对角线）地雷的已挖出的空白方块，数字（'1' 到 '8'）表示有多少地雷与这块已挖出的方块相邻，
+    'B' 代表没有相邻（上，下，左，右，和所有4个对角线）地雷的已挖出的空白方块，
+    数字（'1' 到 '8'）表示有多少地雷与这块已挖出的方块相邻，
     'X' 则表示一个已挖出的地雷。
 
     现在给出在所有未挖出的方块中（'M'或者'E'）的下一个点击位置（行和列索引），根据以下规则，返回相应位置被点击后对应的面板：
@@ -55,6 +56,74 @@
  * @param {number[]} click
  * @return {character[][]}
  */
+// TODO: 三刷下，今天困，不知道到时候怎么样
+/**
+ * =============================
+ * 二刷
+*/
+var updateBoard = function(board, click) {
+    let n = board.length;
+    let m = board[0].length;
+    // let visited = Array(n).fill(null).map(_ => Array(m).fill(false));
+    bfs(board, click[0], click[1], visited);
+
+    return board;
+};
+function bfs(board, row, col, visited) {
+    let n = board.length;
+    let m = board[0].length;
+    // if (visited[row][col]) return;
+    if (board[row][col] === 'M') {
+        board[row][col] = 'X';
+        return;
+    }
+    const dirX = [-1, -1, -1, 0, 0, 1, 1, 1];
+    const dirY = [-1, 0, 1, -1, 1, -1, 0, 1];
+    if (board[row][col] === 'E') {
+        let mineNum = 0;
+        let stack = [];
+        for (let i = 0; i < 8; i++) {
+            let newR = row + dirX[i];
+            let newC = col + dirY[i];
+            if (newR < n && newR >= 0 && newC < m && newC >= 0) {
+                if (board[newR][newC] === 'M') {
+                    mineNum++;
+                }
+                if (board[newR][newC] === 'E') {
+                    stack.push([newR, newC]);
+                }
+            }
+        }
+        if (mineNum !== 0) {
+            board[row][col] = mineNum + '';
+        } else {
+            board[row][col] = 'B';
+            // visited[row][col] = true;
+            for (let node of stack) {
+                let [newR, newC] = node;
+                bfs(board, newR, newC, visited);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 整体思路和答案的 DFS 是一样的，可以优化的是 forEach 
 // 既用了 stack，又去深度搜索，有点浪费了，既然有了satck，可以广度搜索，一个 while 搞定
 var updateBoard = function(board, click) {

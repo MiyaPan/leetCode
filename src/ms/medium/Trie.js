@@ -32,6 +32,105 @@
 
     链接：https://leetcode-cn.com/problems/implement-trie-prefix-tree
 */
+// TODO: 三刷下，回忆下细节
+/**
+ * =============================
+ * 二刷
+*/
+/**
+ * Initialize your data structure here.
+ */
+var Trie = function() {
+    this.node = Array(26).fill(null);
+    this.isEnd = false;
+};
+
+/**
+ * Inserts a word into the trie. 
+ * @param {string} word
+ * @return {void}
+ */
+Trie.prototype.insert = function(word) {
+    let n = word.length;
+    let i = 0;
+    let cur = this;
+    while (i < n) {
+        let char = word[i];
+        let idx = char.charCodeAt()-97;
+        if (cur.node[idx]) {
+            cur = cur.node[idx];
+        } else {
+            cur.node[idx] = new Trie();
+            cur = cur.node[idx];
+        }
+        i++;
+    }
+    cur.isEnd = true;
+};
+
+/**
+ * Returns if the word is in the trie. 
+ * @param {string} word
+ * @return {boolean}
+ */
+Trie.prototype.search = function(word) {
+    let n = word.length;
+    let i = 0;
+    let cur = this;
+    while (i < n) {
+        let char = word[i];
+        let idx = char.charCodeAt()-97;
+        if (!cur.node[idx]) return false;
+        cur = cur.node[idx];
+        i++;
+    }
+    return cur.isEnd;
+};
+
+/**
+ * Returns if there is any word in the trie that starts with the given prefix. 
+ * @param {string} prefix
+ * @return {boolean}
+ */
+Trie.prototype.startsWith = function(prefix) {
+    let n = prefix.length;
+    let i = 0;
+    let cur = this;
+    while (i < n) {
+        let char = prefix[i];
+        let idx = char.charCodeAt()-97;
+        if (!cur.node[idx]) return false;
+        cur = cur.node[idx];
+        i++;
+    }
+    return true;
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * var obj = new Trie()
+ * obj.insert(word)
+ * var param_2 = obj.search(word)
+ * var param_3 = obj.startsWith(prefix)
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 var Trie = function() {
     this.next = [];
     this.isEnd = false;

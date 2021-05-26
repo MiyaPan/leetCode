@@ -18,6 +18,57 @@
 
     链接：https://leetcode-cn.com/problems/search-in-rotated-sorted-array
 */
+/**
+ * =============================
+ * 二刷
+*/
+export var search = function(nums, target) {
+    let n = nums.length;
+    let l = 0;
+    let r = n-1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (target === nums[m]) return m;
+
+        // nums = [4,5,6,7,0,1,2], target = 0
+        // [1,3]，3
+        if (nums[m] > nums[r]) {
+            // 这种旋转的就要用两个数去卡范围啊，一个 r 或 一个 m 是无法确定的
+            if (target > nums[r] && target < nums[m]) {
+                r = m - 1;
+            } else {
+                l = m + 1;
+            }
+        } else {
+            if (target > nums[m] && target <= nums[r]) {
+                l = m + 1;
+            } else {
+                r = m - 1;
+            }
+        }
+    }
+    return -1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 二刷
+*/
 export var search = function(nums, target) {
     let n = nums.length;
     if (n === 0) return -1;

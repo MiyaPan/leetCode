@@ -34,6 +34,45 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
+/**
+ * =============================
+ * 二刷
+*/
+var swapPairs = function(head) {
+    let dummy = new ListNode();
+    dummy.next = head;
+    let pre = dummy;
+    let cur = dummy.next;
+    while (cur && cur.next) {
+        let next = cur.next;
+        pre.next = next;
+        let newNext = next.next;
+        next.next = cur;
+        cur.next = newNext;
+
+        pre = cur;
+        cur = newNext;
+    }
+    return dummy.next;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 var swapPairs = function(head) {
     let preNode = new ListNode(101);
     preNode.next = head;

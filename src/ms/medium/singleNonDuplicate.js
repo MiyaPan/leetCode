@@ -17,6 +17,57 @@
  * @param {number[]} nums
  * @return {number}
  */
+// TODO: 可以三刷下玩玩,自己的思路很棒啊
+/**
+ * =============================
+ * 二刷
+*/
+var singleNonDuplicate = function(nums) {
+    let n = nums.length;
+    let l = 0;
+    let r = n-1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if ((m-1 < 0 || nums[m] !== nums[m-1]) && nums[m] !== nums[m+1]) return nums[m];
+        if (m % 2 === 0) {
+            if (nums[m] !== nums[m+1]) {
+                r = m - 1;
+            } else {
+                l = m + 1;
+            }
+        } else {
+            if (nums[m] !== nums[m-1]) {
+                r = m - 1;
+            } else {
+                l = m + 1;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 var singleNonDuplicate = function(nums) {
     let len = nums.length;
     let l = 0;

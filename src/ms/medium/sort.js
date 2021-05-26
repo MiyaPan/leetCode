@@ -1,7 +1,7 @@
 /**
  * 各类排序算法
 */
-// TODO: 三刷！！！
+// TODO: 三刷！！！!    
 /**
  * 1. 快速排序
  * 思路：
@@ -14,7 +14,56 @@
 // pivot 每次选数组的第一个元素，index 指向它的下一个
 // 遍历数组，小于它的挪到 index 位置，然后 index++
 // 循环上述直到末尾，然后交换 pivot(第一个元素) 和 index-1 位置的元素
-export function quickSort(arr, left, right) {
+// 二刷：https://juejin.cn/post/6844903910772047886
+export function quickSort(arr) {
+    sort(arr, 0, arr.length-1);
+    return arr;
+}
+function sort(arr, left, right) {
+    if (left >= right) return;
+    // 我们想办法保证 i 总是指向小的，不会指到大的
+    // 怎么保证？先移动 j 就好啦！
+    let i = left;
+    let j = right;
+    let pivot = arr[left];
+    while (i < j) {
+        while (arr[j] >= pivot && i < j) j--;
+        while (arr[i] <= pivot && i < j) i++;
+        swap(arr, i, j);
+    }
+    swap(arr, i, left);
+
+    sort(arr, left, i-1);
+    sort(arr, i+1, right);
+}
+function sort1(arr, left, right) {
+    if (left >= right) return;
+
+    // [1, 3] 这个不从 0 开始就会导致移错了
+    // let i = left+1;
+    let i = left;
+    let j = right;
+    let pivot = arr[left];
+    while (i < j) {
+        // while (arr[i] <= pivot && i < j) i++;
+        // while (arr[j] >= pivot && i < j) j--;
+        // 颠倒一下，先找右边的小的，再找大的，这样能保证 i 是对的，while 外面的交换能保证
+        while (arr[j] >= pivot && i < j) j--;
+        while (arr[i] <= pivot && i < j) i++;
+        // while (arr[j] > pivot && i < j) j--;
+        swap(arr, i, j);
+        // 这两步就不该要，全交给 while
+        // i++;
+        // j--;
+    }
+    // let p = i-1;
+    swap(arr, left, i);
+
+    sort(arr, left, i-1);
+    sort(arr, i+1, right);
+}
+// 一刷
+export function quickSort1(arr, left, right) {
     left = left === undefined ? 0 : left;
     right = right === undefined ? arr.length-1 : right;
 
@@ -81,7 +130,39 @@ export function quickSort2(arr) {
  * 
  * 就 slice 就行，管啥性能啊，反正复杂度能保证，越易读越好，不用非得计较那点空间，易读比空间重要
 */
+// 尽管每次递归都要申请新的空间，但 cpu 同一时刻只有一个栈在运行，退出栈的空间会被回收
+// 所以总体上，最多会占用 n 的空间
 export function mergeSort(arr) {
+    let n = arr.length;
+    if (n <= 1) return arr;
+    let m = parseInt(n/2);
+    let left = mergeSort(arr.slice(0, m));
+    let right = mergeSort(arr.slice(m));
+
+    return _merge(left, right);
+}
+function _merge(left, right) {
+    let n = left.length;
+    let m = right.length;
+    let i = 0;
+    let j = 0;
+    let ans = [];
+    while (i < n && j < m) {
+        if (left[i] <= right[j]) {
+            ans.push(left[i++]);
+        } else {
+            ans.push(right[j++]);
+        }
+    }
+    while (i < n) {
+        ans.push(left[i++])
+    }
+    while (j < m) {
+        ans.push(right[j++])
+    }
+    return ans;
+}
+export function mergeSort11(arr) {
     let len = arr.length;
     if (len <= 1) return arr;
 
@@ -126,7 +207,7 @@ function merge(left, right) {
  *          3. 递归的调整就完了
  *          最后一个非叶是 parseInt(len/2) - 1 哦，先向下取整，还要减 1 哦，不信就举个数组试试，想不明白就记住吧
  *      2. 排序
- *          1. 因为是构建的大根堆，所以最大值的能确定的，就是根，所以每次把根放到数组末尾，即个数组末尾元素交换
+ *          1. 因为是构建的大根堆，所以最大值的能确定的，就是根，所以每次把根放到数组末尾，即和数组末尾元素交换
  *          2. 然后调整除最后一个外的剩余项，调整成堆
  *          3. 每次交换根到末尾再调整
 */
@@ -142,6 +223,49 @@ function merge(left, right) {
 
 // 下面两步骤只是构建了一个合格的堆，想堆排序的话，还要将最大堆的根节点移到最后，再调整除最后外剩余范围的堆
 export function HeapSort(arr) {
+    let n = arr.length;
+    let heap = [];
+    for (let num of arr) {
+        heap.push(num);
+        shiftUp(heap);
+    }
+    // console.log(heap)
+    for (let i = n-1; i >= 0; i--) {
+        swap(heap, 0, i);
+        shiftDown(heap, i);
+    }
+    // console.log(heap)
+    return heap;
+}
+function shiftUp(heap) {
+    let n = heap.length;
+    let i = n-1;
+    while (i > 0) {
+        let parentIdx = parseInt((i-1)/2);
+        if (heap[parentIdx] >= heap[i]) break;
+        swap(heap, i , parentIdx);
+        i = parentIdx;
+    }
+}
+function shiftDown(heap, end) {
+    let i = 0;
+    let max = i;
+    while (i < end) {
+        let lIdx = 2*i+1;
+        if (lIdx < end && heap[lIdx] > heap[max]) {
+            max = lIdx;
+        }
+        let rIdx = 2*i+2;
+        if (rIdx < end && heap[rIdx] > heap[max]) {
+            max = rIdx;
+        }
+        if (i === max) break;
+        swap(heap, i, max);
+        i = max;
+    }
+}
+
+export function HeapSort1(arr) {
     let len = arr.length;
     if (len <= 1) return arr;
 

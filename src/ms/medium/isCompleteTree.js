@@ -20,7 +20,42 @@
   /     / \
  4     6   5
 */
+// TODO: 三刷
+/**
+ * =============================
+ * 二刷
+*/
+export const isCompleteTree = (root) => {
+    let stack = [root];
+    let nodesInNextLevel = [];
+    let p = 0;
+    let shouldBeNull = false;
+    while (p < stack.length) {
+        nodesInNextLevel = [];
+        while (p < stack.length) {
+            let node = stack[p++];
+            if (node && shouldBeNull) return false;
+            if (!node) {
+                shouldBeNull = true;
+            }
+            node && nodesInNextLevel.push(node.left);
+            node && nodesInNextLevel.push(node.right);
+        }
+        stack = stack.concat(nodesInNextLevel);
+    }
+    return true;
+}
 
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 要再刷一次，看了下之前的思路才想通的
 // 思路：就按照直观看到的，如果当前层前面有一个节点是 null 了，它层序后面就不能是 null 了，而不用统计个数再看左右子，就最直观的就行啊
 export const isCompleteTree = (root) => {

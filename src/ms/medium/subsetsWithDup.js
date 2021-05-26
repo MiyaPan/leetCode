@@ -21,6 +21,54 @@
  * @param {number[]} nums
  * @return {number[][]}
  */
+// TODO: 可以三刷下
+/**
+ * =============================
+ * 二刷
+*/
+// 时间复杂度：O(n * 2^n):
+// 排序 nlogn，最坏情况下，数组中无重复元素，需要枚举 2^n 个**子集**，每个子集 copy 进 ans 又需要 o(n) 的复杂度
+var subsetsWithDup = function(nums) {
+    let ans = [[]];
+    let path = [];
+    nums.sort((a,b) => a-b);
+    dfs(nums, 0, path, ans);
+    return ans;
+}
+function dfs(nums, start, path, ans) {
+    let n = nums.length;
+    let pre;
+    for (let i = start; i < n; i++) {
+        if (nums[i] === pre) {
+            continue;
+        } else {
+            path.push(nums[i]);
+            ans.push([...path]);
+            dfs(nums, i+1, path, ans);
+            path.pop();
+            pre = nums[i];
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 这个思路主要参考了自己 78. 子集 的思路，
 // 最开始想到的是递归，其实递归也行的唉！在仔细想一下就行了唉，看二刷用了啥思路吧，二刷要是先想到了画树递归，那一定要做会
 var subsetsWithDup = function(nums) {

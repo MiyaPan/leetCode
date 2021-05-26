@@ -46,9 +46,58 @@
 
     链接：https://leetcode-cn.com/problems/string-to-integer-atoi
 */
+/**
+ * =============================
+ * 二刷
+*/
+export var myAtoi = function(s) {
+    let i = 0;
+    let str = '';
+    let isNeg = false;
+    while (s[i] === ' ') i++;
+    if (s[i] === '-'){
+        isNeg = true;
+        i++;
+    } else if (s[i] === '+'){
+        i++;
+    } else if (!isNum(s[i])) {
+         return 0;
+    }
 
+    while (isNum(s[i])) {
+        str += s[i++];
+    }
+    let ans = isNeg ? -str : +str;
+    // console.log(isNeg, ans)
+    let max = Math.pow(2, 31) - 1;
+    let min = -Math.pow(2, 31);
+    // console.log(max, min)
+    return ans > max
+        ? max
+        : ans < min
+            ? min
+            : ans;
+}
+function isNum(s) {
+    return /^[0-9]+.?[0-9]*$/.test(s);
+}
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // md 这题太多细节了！！！面试碰到就惨了！请想办法一次写全！
-var myAtoi = function(s) {
+var myAtoi1 = function(s) {
     let numStr = '';
     let oprator = '';
     // "42"

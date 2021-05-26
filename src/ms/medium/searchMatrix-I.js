@@ -26,6 +26,81 @@
 
     链接：https://leetcode-cn.com/problems/search-a-2d-matrix
 */
+/**
+ * =============================
+ * 二刷
+*/
+// 可以看成一维数组啊，[2,1] 和 [1,2] 是不同的鸭!不是 i+j 啊，是 i*n + j，是唯一的啊
+export const searchMatrix = function(matrix, target) {
+    let n = matrix.length;
+    let m = matrix[0].length;
+    let l = 0;
+    let r = n-1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (matrix[m][0] === target) return true;
+        if (matrix[m][0] < target) {
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+    if (r < 0) return false;
+
+    let row = r;
+    l = 0;
+    r = m-1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (matrix[row][m] === target) return true;
+        if (matrix[row][m] < target) {
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+    return false;
+}
+
+export const searchMatrix = function(matrix, target) {
+    let n = matrix.length;
+    let m = matrix[0].length;
+    let l = 0;
+    let r = n*m - 1;
+    while (l <= r) {
+        let mid = l + parseInt((r-l)/2);
+        let i = parseInt(mid/m);
+        let j = mid%m;
+        if (matrix[i][j] === target) return true;
+        if (matrix[i][j] < target) {
+            l = mid + 1;
+        } else {
+            r = mid - 1;
+        }
+    }
+    return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 export const searchMatrix = function(matrix, target) {
     let n = matrix.length;
     if (n === 0) return false;

@@ -11,6 +11,70 @@
 // 输出: false
 // 解释: 输入为: [5,1,4,null,null,3,6]。
 //      根节点的值为 5 ，但是其右子节点值为 4 。
+// TODO: 三刷
+/**
+ * =============================
+ * 二刷
+*/
+// 递归可以换一个更好读的写法：规定 lower 和 upper ，每个节点去校验就行了
+var isValidBST = function(root) {
+    return dfs(root).isValid;
+}
+function dfs(root) {
+    if (!root) return {
+        isValid: true,
+        min: Number.MAX_SAFE_INTEGER,
+        max: Number.MIN_SAFE_INTEGER
+    }
+    let {min: lMin, max: lMax, isValid: lValid} = dfs(root.left);
+    let {min: rMin, max: rMax, isValid: rValid} = dfs(root.right);
+    return {
+        isValid: lValid && rValid && root.val > lMax && root.val < rMin,
+        min: Math.min(root.val, lMin),
+        max: Math.max(root.val, rMax)
+    }
+}
+// 上面的递归无非就是看前驱和后继是不是合法，所以直接中序遍历就行了
+var isValidBST = function(root) {
+    let path = [];
+    return dfs(root, path);
+}
+function dfs(root, path) {
+    if (!root) return true;
+    let l = dfs(root.left, path);
+
+    if (root.val <= path[path.length-1]) return false;
+
+    path.push(root.val);
+// 这里干啥要 pop，又不是走跟到叶子的路径，而是中序遍历啊，遍历啊，就是要拿到所有值啊
+    let r = dfs(root.right, path);
+
+    return l && r;
+}
+// 迭代，上面的递归无非就是看前驱和后继是不是合法，所以直接中序遍历就行了
+var isValidBST = function(root) {
+    let stack = [];
+    let ans = [];
+    let node = root
+    while (stack.length || node) {
+        while (node) {
+            stack.push(node);
+            node = node.left;
+        }
+        let temp = stack.pop();
+        if (temp.val <= ans[ans.length-1]) return false;
+        ans.push(temp.val);
+
+        node = temp.right;
+    }
+    return true;
+}
+
+
+/**
+ * =============================
+ * 一刷
+*/
 var isValidBST = function(root) {
     return dfs(root, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
 };

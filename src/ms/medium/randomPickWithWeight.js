@@ -49,6 +49,57 @@
 /**
  * @param {number[]} w
  */
+/**
+ * =============================
+ * 二刷
+*/
+var Solution = function(w) {
+    let n = w.length;
+    let prefixSum = [w[0]];
+    for (let i = 1; i < n; i++) {
+        prefixSum[i] = prefixSum[i-1] + w[i];
+    }
+    this.prefixSum = prefixSum;
+    this.w = w;
+}
+Solution.prototype.pickIndex = function() {
+    let n = this.w.length;
+    let rand = Math.floor(Math.random() * this.prefixSum[n-1]);
+    // 尽快找到，二分了
+    let l = 0;
+    let r = n-1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (this.prefixSum[m] > rand) {
+            r = m - 1;
+        } else {
+            l = m + 1;
+        }
+    }
+    return l;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 var Solution = function(w) {
     this.sum = 0;
     // 不用sort？是不能 sort 啊大姐，人家返回的是下标志，sort 了返回就不对啊

@@ -19,6 +19,50 @@
  * @param {number[]} nums
  * @return {number[][]}
  */
+/**
+ * =============================
+ * 二刷
+*/
+export var permute = function(nums) {
+    let visited = [];
+    let path = [];
+    let ans = [];
+    bfs(nums, path, ans, visited)
+    return ans;
+}
+function bfs(nums, path, ans, visited) {
+    if (path.length === nums.length) {
+        ans.push([...path]);
+        return;
+    }
+    for (let i = 0; i < nums.length; i++) {
+        if (!visited[i]) {
+            path.push(nums[i]);
+            visited[i] = true;
+            bfs(nums, path, ans, visited);
+            visited[i] = false;
+            path.pop();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 这个题就是返回值格式细节和递归出口的细节问题。
 export var permute = function(nums) {
     let len = nums.length;

@@ -2,6 +2,53 @@
  * 143. 重排链表
  * https://leetcode-cn.com/problems/reorder-list/
 */
+/**
+ * =============================
+ * 二刷
+*/
+export var reorderList = function(head) {
+    let slow = head;
+    let fast = head;
+    while (fast.next && fast.next.next) {
+        fast = fast.next.next;
+        slow = slow.next;
+    }
+    let node = slow.next;
+    slow.next = null;
+    let pre = null;
+    while (node) {
+        let temp = node.next;
+        node.next = pre;
+        pre = node;
+        node = temp;
+    }
+
+    let node1 = head;
+    let node2 = pre;
+    // 合并
+    while (node1 && node2) {
+        let next1 = node1.next;
+        node1.next = node2;
+        let next2 = node2.next;
+        node2.next = next1;
+        node1 = next1;
+        node2 = next2;
+    }
+    return head;
+}
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 解法1：用空间，数组栈存储
 export var reorderList = function(head) {
     if (!head) return null;

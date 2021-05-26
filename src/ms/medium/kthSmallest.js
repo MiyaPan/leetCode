@@ -15,6 +15,44 @@
  * @param {number} k
  * @return {number}
  */
+/**
+ * =============================
+ * 二刷
+*/
+var  kthSmallest= function(root, k) {
+    let stack = [];
+    let node = root;
+    while (stack.length || node) {
+        while (node) {
+            stack.push(node);
+            node = node.left;
+        }
+        let temp = stack.pop();
+        if (k === 1) {
+            return temp.val;
+        } else {
+            k--;
+        }
+
+        node = temp.right;
+    }
+    return -1;
+}
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 都不会写中序的非递归了
 var  kthSmallest= function(root, k) {
     if (!root) return 0;

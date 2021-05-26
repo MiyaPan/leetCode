@@ -23,6 +23,74 @@
  * @param {string} num2
  * @return {string}
  */
+/**
+ * =============================
+ * 二刷
+*/
+export var multiply = function(num1, num2) {
+    // "9133", "0" - 输出了 '0000'
+    if (num1 === '0' || num2 === '0') return '0';
+
+    let len1 = num1.length;
+    let len2 = num2.length;
+    let total = '';
+    for (let i = len2-1; i >= 0 ; i--) {
+        let carry = 0;
+        let j = len1 - 1;
+        let sum = '';
+        while (j >= 0 || carry) {
+            let n1 = +num1[j] || 0;
+            let n2 = +num2[i] || 0;
+            let cur = n1 * n2 + carry;
+            carry = parseInt(cur / 10);
+            sum = (cur % 10) + sum;
+            j--;
+        }
+        // 错位补零
+        let t = len2 - 1 - i;
+        while (t > 0) {
+            sum += '0';
+            t--;
+        }
+
+        total = add(total, sum);
+    }
+    return total;
+}
+function add(s1, s2) {
+    let len1 = s1.length;
+    let len2 = s2.length;
+    let carry = 0;
+    let i = len1 - 1;
+    let j = len2 - 1;
+    let sum = '';
+    while (j >= 0 || i >=0 || carry) {
+        let n1 = +s1[i] || 0;
+        let n2 = +s2[j] || 0;
+        let cur = n1 + n2 + carry;
+        carry = parseInt(cur / 10);
+        sum = (cur % 10) + sum;
+        j--;
+        i--;
+    }
+    return sum;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 export var multiply = function(num1, num2) {
     if (num1 === '0' || num2 === '0') return '0';
     let sum = '';

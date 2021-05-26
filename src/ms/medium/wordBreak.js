@@ -1,5 +1,10 @@
 /**
  * 139. 单词拆分
+ * 给定一个非空字符串 s 和一个包含非空单词的列表 wordDict，判定 s 是否可以被空格拆分为一个或多个在字典中出现的单词。
+
+    说明：
+    拆分时可以重复使用字典中的单词。
+    你可以假设字典中没有重复的单词。
  * https://leetcode-cn.com/problems/word-break/
 */
 
@@ -18,7 +23,63 @@
 
 // 输入: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
 // 输出: false
+// TODO: 三刷!!!!
+/**
+ * =============================
+ * 二刷
+*/
+// 超时了，看哪里能优化：
+// "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
+// ["a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"]
+export var wordBreak = function(s, wordDict) {
+    let words = new Set(wordDict);
+    let n = s.length;
+    let dp = Array(n+1).fill(false);
+    dp[0] = true;
+    for (let i = 1; i <= n; i++) {
+        for (let j = i-1; j >= 0; j--) {
+            if (dp[j] && words.has(s.substring(j, i))) {
+                dp[i] = true;
+                break;
+            }
+        }
+    }
+    return dp[n];
+};
+function dfs(words, s, start) {
+    let n = s.length;
+    if (start >= n) return true;
+    let str = '';
+    for (let i = start; i < n; i++) {
+        str += s[i];
+        if (words.has(str)) {
+            if (dfs(words, s, i+1)) return true;
+        }
+    }
+    return false;
+}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 这其实也是一道 dp，二刷请再看透 dp 算法
 export const wordBreak = (s, wordDict) => {
     let possibleIndex = [0];

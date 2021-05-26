@@ -27,6 +27,67 @@
     提示：0 <= s.length <= 3000；s 仅由数字组成
     链接：https://leetcode-cn.com/problems/restore-ip-addresses
 */
+/**
+ * =============================
+ * 二刷
+*/
+// 遇到这种拼接字符的，ip 啊 Excel 字符转换啊啥的，判断能拼成多少种情况的，就 dfs 递归~~~
+export var restoreIpAddresses = function(s) {
+    let path = [];
+    let ans = [];
+    dfs(0, s.length-1, s, 0, path, ans);
+
+    return ans;
+}
+function dfs(start, end, s, count, path, ans) {
+    if (count >= 4) return;
+    if (count === 3) {
+        let str = s.substring(start, end+1);
+        let isLastValid = isValid(str);
+        if (isLastValid) ans.push([...path, str].join('.'));
+    }
+
+    
+    
+    let str = '';
+    for (let i = start; i < start + 3 && start <= end; i++) {
+        str += s[i];
+        // 这里可以提前多剪枝一下，如果剩下的为数超过 3 * 个数了，就提前退出
+        // 咋加了这句效率反而低了呢，神奇
+        // if (end-i > (4-1-count) * 3) continue; 
+        if (isValid(str)) {
+            path.push(str);
+            dfs(i+1, end, s, count+1, path, ans);
+            path.pop();
+        }
+    }
+}
+function isValid(str) {
+    if (str.length === 0 || str.length > 3 || str.length > 1 && str[0] === '0') return false;
+    if (str.length === 1) return true;
+    return 0 <= +str && +str <= 255;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 export var restoreIpAddresses = function(s) {
     if (s.length < 4) return [];
     let ans = [];

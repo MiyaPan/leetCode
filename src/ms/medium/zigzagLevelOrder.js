@@ -20,6 +20,54 @@
 
     链接：https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const zigzagLevelOrder = (root) => {
+    if (!root) return [];
+
+    let stack = [root];
+    let p = 0;
+    let ans = [];
+    let count = 0;
+    while (p < stack.length) {
+        let nodesInNextLevel = [];
+        let nodesInCurLevel = [];
+        while (p < stack.length) {
+            let node = stack[p++];
+            nodesInCurLevel.push(node.val);
+            node.left && nodesInNextLevel.push(node.left);
+            node.right && nodesInNextLevel.push(node.right);
+        }
+
+        if (count % 2 === 0) {
+            ans.push(nodesInCurLevel);
+        } else {
+            ans.push(nodesInCurLevel.reverse());
+        }
+    
+        count++;
+        stack = stack.concat(nodesInNextLevel);
+    }
+    return ans;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 二刷
+*/
 // 也是BFS和DFS两种：
 /**
  * BFS：深度遍历，用递归，每递归一层，level++，从左到右的遍历，会把元素挨个放到result[level]中

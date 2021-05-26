@@ -25,9 +25,69 @@
  * "baaba"
  * "ababa"
 */
+// TODO: 三刷
+/**
+ * =============================
+ * 二刷
+*/
+export var reorganizeString = function(S) {
+    let n = S.length;
+    let map = new Map();
+    for (let i = 0; i < n; i++) {
+        if (map.has(S[i])) {
+            map.set(S[i], map.get(S[i]) + 1);
+        } else {
+            map.set(S[i], 1);
+        }
+    }
+    let arr = Array.from(map.keys());
+    arr.sort((a,b) => map.get(b) - map.get(a));
+
+    if (map.get(arr[0]) > parseInt((n+1)/2)) return '';
+
+    let i = 0;
+    let start = 0;
+    let j = 0;
+    let ans = [];
+    let count = 0;
+    // start 只会是 0 或者 1 ，不会出现 2 的，因为 0 1 就循环完了唉，，
+    while (i < n && start < parseInt((n+1)/2) && count < n) {
+        if (map.get(arr[j]) === 0) j++;
+        ans[i] = arr[j];
+        map.set(arr[j], map.get(arr[j]) -1);
+        count++;
+        if (i + 2 < n) {
+            i += 2;
+        } else {
+            start += 1;
+            i = start;
+        }
+    }
+    return ans.join('');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路：贪心思想。按照出现频率排序。如果想间隔不同，出现频率最高的不能超过 (n+1)/2【偶数个是：n/2, 奇数个是 (n+1)/2，都可以统一成(n+1)/2】
 // 超过了一半就直接返回''，没超过就先把高频的间隔放上，先放奇数位还是偶数位呢，奇数位，因为 奇数位 >= 偶数位
-export var reorganizeString = function(S) {
+export var reorganizeString1 = function(S) {
     // map 可以用 Array.from 或者 ... 直接转换成数组，数组是二维的键值对 [[key, value], ...]，比 对象好使
     // let map = {};
     let map = new Map();

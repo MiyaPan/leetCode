@@ -15,10 +15,67 @@
     你能想出一个仅使用常数空间的一趟扫描算法吗？
     链接：https://leetcode-cn.com/problems/sort-colors
 */
+// TODO: 绝对三刷!!!!
 /**
  * @param {number[]} nums
  * @return {void} Do not return anything, modify nums in-place instead.
  */
+/**
+ * =============================
+ * 二刷
+*/
+var sortColors = function(nums) {
+    let n = nums.length;
+    let i = 0;
+    let p0 = 0;
+    let p2 = n-1;
+    while (i <= p2) {
+        // if (nums[i] === 2) {
+        // while (nums[i] === 2) {
+        while (i <= p2 && nums[i] === 2) {
+            swap(nums, i, p2);
+            p2--;
+        }
+        if (nums[i] === 0) {
+            swap(nums, i, p0);
+            p0++;
+        }
+        i++;
+    }
+}
+function swap(arr, i, j) {
+    let temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // i j 可以独立于数组遍历的指针之外啊啊啊！！！本身和本身也换，就能避免处理很多case
 // 思路 p0 指向 0 的位置，从左边开始，找到一个 0 就和 p0 交换并增加 p0，p2 从右边开始，碰到 2 就换到 p2 的位置
 var sortColors = function(nums) {

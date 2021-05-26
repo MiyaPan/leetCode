@@ -9,12 +9,12 @@ describe('WordDictionary', () => {
     // test("701", () => {
     //     expect(wordDictionary.search("pad")).toEqual(false);
     // });
-    // test("701", () => {
-    //     expect(wordDictionary.search("bad")).toEqual(true);
-    // });
     test("701", () => {
-        expect(wordDictionary.search(".ad")).toEqual(true);
+        expect(wordDictionary.search("bad")).toEqual(true);
     });
+    // test("701", () => {
+    //     expect(wordDictionary.search(".ad")).toEqual(true);
+    // });
     // test("701", () => {
     //     expect(wordDictionary.search("b..")).toEqual(true);
     // });

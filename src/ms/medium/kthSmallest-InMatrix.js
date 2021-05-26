@@ -15,6 +15,81 @@
     提示：你可以假设 k 的值永远是有效的，1 ≤ k ≤ n^2 。
     链接：https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix
 */
+// TODO: 三刷
+/**
+ * =============================
+ * 二刷
+*/
+export var kthSmallest1 = function(matrix, k) {
+    let n = matrix.length;
+    let count = 0;
+    let heap = [];
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            if (count < k) {
+                heap.push(matrix[i][j]);
+                shiftUp(heap, heap.length-1);
+                count++;
+            } else {
+                if (matrix[i][j] < heap[0]) {
+                    heap[0] = matrix[i][j];
+                    shiftDown(heap, 0);
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+    return heap[0];
+}
+function shiftUp(heap, i) {
+    while (i >= 0) {
+        let parentIdx = parseInt((i-1)/2);
+        if (parentIdx < 0 || heap[parentIdx] >= heap[i]) break;
+        swap(heap, i, parentIdx);
+        i = parentIdx;
+    }
+}
+function shiftDown(heap, i) {
+    let n = heap.length;
+    while (i < n) {
+        let leftIdx = 2*i + 1;
+        let rightIdx = 2*i + 2;
+        let max = i;
+        if (leftIdx < n) {
+            max = heap[leftIdx] > heap[i] ? leftIdx : i;
+        }
+        if (rightIdx < n) {
+            max = heap[rightIdx] > heap[max] ? rightIdx : max;
+        }
+    
+        // 千万注意 while 里的 if ，别有分支不改循环条件导致死循环
+        // if (max === i) {
+        //     swap(heap, i, max);
+        // }
+        // i = max;
+        if (max === i) break;
+        swap(heap, i, max);
+        i = max;
+    }
+}
+function swap(arr, i, j) {
+    let temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路一：最原始自己的思路其实是对的，多指针对比，但是实现不了，原因是没用堆啊！用小根堆实现原始思路多好！！
 // https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix/solution/shi-yong-dui-heapde-si-lu-xiang-jie-ling-fu-python/
 // 小/大根堆专门处理 "top K" 问题，但是 js 没有堆这个数据结构，要手写
@@ -183,7 +258,7 @@ function buildHeap(heap) {
 
 // 递归和迭代都是循环中的一种。 递归是重复调用函数自身实现循环。 迭代是函数内某段代码实现循环
 // shiftUp就是元素向上走，一直和父元素换
-function shiftUp(arr, i) {
+function shiftUp1(arr, i) {
     let parentIdx = Math.floor((i-1)/2);
     if (parentIdx >= 0 && arr[i] > arr[parentIdx]){
         swap(arr, i, parentIdx);
@@ -192,7 +267,7 @@ function shiftUp(arr, i) {
 }
 
 // shiftDown就是元素向下走，一直和子元素换
-function shiftDown(arr, i, end) {
+function shiftDown1(arr, i, end) {
     let maxIndex = i;
     if (2*i+1 < end && arr[2*i+1] > arr[i]) {
         maxIndex = 2*i+1;
@@ -208,7 +283,7 @@ function shiftDown(arr, i, end) {
     }
 }
 
-function swap(arr, i, j) {
+function swap1(arr, i, j) {
     let temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;

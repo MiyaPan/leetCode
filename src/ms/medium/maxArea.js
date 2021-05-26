@@ -31,6 +31,42 @@
  * @param {number[]} height
  * @return {number}
  */
+/**
+ * =============================
+ * 二刷
+*/
+var maxArea = function(height) {
+    let n = height.length;
+    let l = 0;
+    let r = n-1;
+    let max = 0;
+    while (l < r) {
+        let cur = Math.min(height[l], height[r]) * (r-l);
+        max = Math.max(max, cur);
+        if (height[l] < height[r]) {
+            l++;
+        } else {
+            r--;
+        }
+    }
+    return max;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 我靠，竟然瞎写一把过，，，虽然自己都没怎么证明好，就是隐约觉得，如果两个竖线的面积定了，那么他俩中间任何短的线都不应该被考虑了
 // 如果被短边限制了，就应该去找下一个长的试试，试成功了就成功，不成功则还是短边的值
 // 如果左指针高定好了，那右边指针只要挪小了就会减小面积

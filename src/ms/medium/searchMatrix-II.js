@@ -20,6 +20,44 @@
 
     链接：https://leetcode-cn.com/problems/search-a-2d-matrix-ii
 */
+/**
+ * =============================
+ * 二刷
+*/
+var searchMatrix = function(matrix, target) {
+    let n = matrix.length;
+    let m = matrix[0].length;
+    let i = n-1;
+    let j = 0;
+    while (i >= 0 && j < m) {
+        if (target === matrix[i][j]) return true;
+        if (target < matrix[i][j]) {
+            i--;
+        } else {
+            j++;
+        }
+    }
+    return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // https://leetcode-cn.com/problems/search-a-2d-matrix-ii/solution/sou-suo-er-wei-ju-zhen-ii-by-leetcode-2/
 var searchMatrix = function(matrix, target) {
     if (matrix.length === 0) return false;

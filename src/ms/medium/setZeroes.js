@@ -6,6 +6,61 @@
  * @param {number[][]} matrix
  * @return {void} Do not return anything, modify matrix in-place instead.
  */
+// TODO: 三刷
+/**
+ * =============================
+ * 二刷
+*/
+var setZeroes = function(matrix) {
+    let n = matrix.length;
+    let m = matrix[0].length;
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < m; j++) {
+            if (matrix[i][j] === 0) {
+                for (let t = 0; t < n; t++) {
+                    if (matrix[t][j] !== 0) {
+                        matrix[t][j] === '';
+                    }
+                }
+                for (let t = 0; t < m; t++) {
+                    if (matrix[i][t] !== 0) {
+                        matrix[i][t] === '';
+                    }
+                }
+            }
+        }
+    }
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < m; j++) {
+            if (matrix[i][j] === '') {
+                matrix[i][t] === 0;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路1： 最差的情况空间复杂度其实是 O(M+N), 不行，这题不要时间复杂度，要的是空间
 var setZeroes = function(matrix) {
     let m = matrix.length;

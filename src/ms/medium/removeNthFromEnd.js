@@ -36,6 +36,46 @@
  * @param {number} n
  * @return {ListNode}
  */
+/**
+ * =============================
+ * 二刷
+*/
+var removeNthFromEnd = function(head, n) {
+    // head = [1,2,3,4,5], n = 2
+    let dummy = new ListNode();
+    dummy.next = head;
+    let fast = dummy;
+    let slow = dummy;
+    let count = 0;
+    while (count < n) {
+        fast = fast.next;
+        count++;
+    }
+
+    let pre = head;
+    while (fast) {
+        fast = fast.next;
+        pre = slow;
+        slow = slow.next;
+    }
+
+    pre.next = slow.next;
+    return dummy.next;
+}
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路：害，两遍就计数，一遍就快满指针呗
 // ！！链表一定要记得快慢指针，快满指针就为链表题目而生！！
 // 一把过~

@@ -6,6 +6,53 @@
  * @param {number[][]} matrix
  * @return {number[]}
  */
+/**
+ * =============================
+ * 二刷
+*/
+export var spiralOrder = function(matrix) {
+    let n = matrix.length;
+    let m = matrix[0].length;
+    let top = 0;
+    let bottom = n-1;
+    let left = 0;
+    let right = m-1;
+    let ans = [];
+    while (left <= right && top <= bottom) {
+        for (let j = left; j <= right && top <= bottom; j++) ans.push(matrix[top][j]);
+        top++;
+        for (let i = top; i <= bottom && left <= right; i++) ans.push(matrix[i][right]);
+        right--;
+        for (let j = right; j >= left && top <= bottom; j--) ans.push(matrix[bottom][j]);
+        bottom--;
+        for (let i = bottom; i >= top && left <= right; i--) ans.push(matrix[i][left]);
+        left++;
+        // 最后统一操作，比如只剩一行的时候，第一个 for 走完就应该更新以阻止进入别的 for，这样就是 for 循环的条件要改下❌
+        // 也可以最后统一操作，上面这句话的问题，是出现在 for 的控制条件上了，答案也免不了要判断控制条件的
+        // top++;
+        // bottom--;
+        // left++;
+        // right--;
+    }
+    return ans;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 二刷
+*/
 export var spiralOrder = function(matrix) {
     if (matrix.length === 0) return [];
 

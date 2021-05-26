@@ -28,9 +28,59 @@
  * @param {number} k
  * @return {string}
  */
+// TODO: 三刷，千万不要看之前的，你第一次做出来了，第二次错了(主要是11点了着急回家)=.=看看三刷咋样
+/**
+ * =============================
+ * 二刷
+*/
+export var removeKdigits = function(num, k) {
+    // num = "1432219", k = 3
+    // num = "10200", k = 1
+    let n = num.length;
+    let ans = [];
+    let i = 0;
+    let rest = n - k;
+    while (i < n && rest > 0) {
+        let min = Number.MAX_SAFE_INTEGER;
+        let minLoc = i;
+        for (let j = i; j <= n-rest; j++) {
+            if (+num[j] < min) {
+                min = +num[j];
+                minLoc = j;
+            }
+        }
+        ans.push(min);
+        rest--;
+        i = minLoc + 1;
+    }
+
+    console.log('ans:',ans)
+    while (ans[0] === 0) ans.shift();
+
+    return ans.length > 0 ? ans.join('') : '0';
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路：去掉 k 位，也就是对剩下的 len-k 位进行填充，只是这个填充是有顺序要求的，不是随意选择的
 // 思路倒是和答案异曲同工，但是答案有优化，下面这个效率确实不高，答案借助了栈
-export var removeKdigits = function(num, k) {
+export var removeKdigits1 = function(num, k) {
     let len = num.length;
     if (len === k) return '0';
 
