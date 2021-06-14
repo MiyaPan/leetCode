@@ -64,6 +64,62 @@ d = 3
  * @param {number} d
  * @return {TreeNode}
  */
+/**
+ * =============================
+ * 二刷
+*/
+var addOneRow = function(root, val, depth) {
+    if (depth === 1) {
+        let node = new TreeNode(val);
+        node.left = root;
+        return node;
+    }
+    let stack = [root];
+    let p = 0;
+    let level = 0;
+    while (p < stack.length) {
+        level++;
+        let nodesInNextLevel = [];
+        while (p < stack.length) {
+            let node = stack[p++];
+            if (level === depth-1) {
+                let l = new TreeNode(val);
+                let r = new TreeNode(val);
+                let left = node.left;
+                let right = node.right;
+                l.left = left;
+                r.right = right;
+                node.left = l;
+                node.right = r;
+            } else {
+                node.left && nodesInNextLevel.push(node.left);
+                node.right && nodesInNextLevel.push(node.right);
+            }
+        }
+        if (level === depth-1) break;
+
+        stack = stack.concat(nodesInNextLevel);
+    }
+    return root;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 export const addOneRow = (root, v, d) => {
     if (d === 1) {
         return {

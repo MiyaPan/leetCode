@@ -21,6 +21,71 @@
 
     链接：https://leetcode-cn.com/problems/divide-two-integers
 */
+/**
+ * =============================  
+ * 二刷
+*/
+// 一下加一半 能二分一下，不然逐次加太耗时了
+var divide = function(dividend, divisor) {
+    if (dividend === 0) return 0;
+
+    // 除数是 1 的话会因为被二分，减少统计次数，单独处理
+    if (divisor === 1) return dividend;
+    if (divisor === -1) {
+        if (dividend > -Math.pow(2, 31)) {
+            return -dividend;
+        }
+        return Math.pow(2, 31) - 1;
+    };
+
+    // 处理符号问题
+    let sign = dividend > 0 && divisor > 0 || dividend < 0 && divisor < 0 ? 1 : 0;
+
+    let x = Math.abs(dividend);
+    let y = Math.abs(divisor);
+    let ans = 0;
+
+    while (x >= y) {
+        let {count, rest} = getCount(x, y);
+        ans += count;
+        x = rest;
+    }
+    return sign ? ans : -ans;
+};
+function getCount(x, y) {
+    if (x < y) return 0;
+
+    let count = 1;
+    // 一下加一半 能二分一下，不然逐次加太耗时了
+    while (x >= (y + y)) {
+        y += y;
+        count += count;
+    }
+    return {
+        count,
+        rest: x-y
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================  
+ * 二刷
+*/
 // 思路：看 10 比 3 大，那 10 比 3 的 2 倍【2倍用加法】大吗，大的话就看比 3的2倍 + 3的2倍 = 6 大吗，如果小了，就锁定在 3 的 2 倍 和 4 倍中间了
 // 此时，看 10 - (3+3) = 4，看 4 是 3 的几倍，如上类推，因为锁定的倍数是 2 分找到的，可能相差很多，中间差了很多 3，所以还要继续分解
 export const divide = (dividend, divisor) => {

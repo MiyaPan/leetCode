@@ -3,6 +3,59 @@
  * 1339. 分裂二叉树的最大乘积
  * https://leetcode-cn.com/problems/maximum-product-of-splitted-binary-tree/
 */
+/**
+ * =============================
+ * 二刷
+*/
+export var maxProduct = function(root) {
+    let sum = getSum(root);
+
+    let max = Number.MIN_SAFE_INTEGER;
+    const dfs = (root) => {
+        if (!root) return 0;
+        let lsum = dfs(root.left);
+        let rsum = dfs(root.right);
+
+        // 这个不是看一个节点的左右字数之积，而是去掉右子树的另一半
+        // let l = root.left ? lsum : 1;
+        // let r = root.right ? rsum : 1;
+
+        let cur = lsum + root.val + rsum;
+        max = Math.max(max, cur*(sum-cur));
+        return lsum + root.val + rsum;
+    }
+
+    dfs(root);
+    return max % (Math.pow(10, 9) +7);
+};
+function getSum(root) {
+    if (!root) return 0;
+    return getSum(root.left) + root.val + getSum(root.right);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路：每个节点的子树+自己的 sum 可以的 dfs 得到，那成绩就是它 * 剩下的，
 // 所以先获得总和，再对每个节点算一个乘积 = 它的子树合 * (综合 - 它的子树合)
 // 思路不错，只有一个case没过，超长的

@@ -21,6 +21,52 @@
 
     链接：https://leetcode-cn.com/problems/delete-and-earn
 */
+// TODO: 三刷~
+/**
+ * =============================  
+ * 二刷
+*/
+var deleteAndEarn = function(nums) {
+    let max = nums[0];
+    for (let num of nums) {
+        if (num > max) {
+            max = num;
+        }
+    }
+    let arr = Array(max+1).fill(0);
+    for (let num of nums) {
+        arr[num] += num;
+    }
+
+    // 还不能直接用 key 做数组，因为 key 可能数轴上不相临，比如：[3,1]，这两个是都可以取的，
+    // let arr = Object.keys(map).map(item => +item).sort((a,b) => a-b);
+    let dp = Array(arr.length).fill(0);
+    // 再理解下题意，不存在减的，都是取和不取的值，比如选 3 删掉 2 和 4 其实就是不能选 2 和 4 而已，不是石头消除，石头消除是转化成 01 背包做
+    dp[0] = arr[0];
+    dp[1] = arr[1];
+
+    for (let i = 2; i < arr.length; i++) {
+        dp[i] = Math.max(dp[i-1], dp[i-2] + arr[i]);
+    }
+    return dp[arr.length-1];
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================  
+ * 1刷
+*/
 // 递归，每个数都要标记一遍，删完又要不标记，复杂度高
 // 没写完，太tm复杂了
 // export const deleteAndEarn = (nums) => {

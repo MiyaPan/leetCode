@@ -22,11 +22,46 @@
     链接：https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal
     著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
-
-
 /**
  * 中序遍历 inorder = [9,3,15,20,7]
  * 后序遍历 postorder = [9,15,7,20,3]
+*/
+/**
+ * =============================
+ * 二刷
+*/
+var buildTree = function(inorder, postorder) {
+    let n = postorder.length;
+    if (n === 0) return null;
+    if (n === 1) return new TreeNode(inorder[0]);
+
+    let root = new TreeNode(postorder[n-1]);
+    let rootIdx = inorder.indexOf(postorder[n-1]);
+
+    let l = buildTree(inorder.slice(0, rootIdx), postorder.slice(0, rootIdx));
+    // let r = buildTree(inorder.slice(rootIdx), postorder.slice(rootIdx, n-1));
+    let r = buildTree(inorder.slice(rootIdx+1), postorder.slice(rootIdx, n-1));
+    root.left = l;
+    root.right = r;
+    return root;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
 */
 export const buildTree = (inorder, postorder) => {
     const result = [];

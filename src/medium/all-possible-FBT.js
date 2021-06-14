@@ -19,6 +19,61 @@
  * @param {number} N
  * @return {TreeNode[]}
  */
+/**
+ * =============================
+ * 二刷
+*/
+var allPossibleFBT = function(n) {
+    if (n % 2 === 0) return [];
+    let map = {};
+    return generate(n, map)
+};
+function generate(n, map) {
+    if (n === 1) return [new TreeNode()];
+    
+    if (map[n]) return map[n];
+
+    let ans = [];
+    for (let i = 2; i <= n; i = i+2) {
+        let l = generate(i-1, map);
+        let r = generate(n-i, map);
+        l.forEach(lnode => {
+            r.forEach(rnode => {
+                let root = new TreeNode();
+                root.left = lnode;
+                root.right = rnode;
+                ans.push(root);
+            });
+        });
+    }
+    map[n] = ans;
+    return ans;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // 思路：N 肯定奇数，因为是满二叉树，只有根是一个，其他都成对出现
 // “枚举”肯定用动态规划
 // 每个迭代，遍历 N-2 的result数组中的树，对于每棵树，给所有叶子节点依次加 2 个节点

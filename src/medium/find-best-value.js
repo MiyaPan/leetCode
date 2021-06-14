@@ -1,6 +1,7 @@
 /**
  * 1300. 转变数组后最接近目标值的数组和
- * 给你一个整数数组 arr 和一个目标值 target ，请你返回一个整数 value ，使得将数组中所有大于 value 的值变成 value 后，
+ * 给你一个整数数组 arr 和一个目标值 target ，请你返回一个整数 value ，
+ * 使得将数组中所有大于 value 的值变成 value 后，
  * 数组的和最接近  target （最接近表示两者之差的绝对值最小）。
 
     如果有多种使得和最接近 target 的方案，请你返回这些整数中的最小值。
@@ -25,7 +26,83 @@
     1 <= arr[i], target <= 10^5
     链接：https://leetcode-cn.com/problems/sum-of-mutated-array-closest-to-target
 */
+/**
+ * =============================  
+ * 二刷
+*/
 export var findBestValue = function(arr, target) {
+    arr.sort((a, b) => a-b);
+    let n = arr.length;
+    if (parseInt(target/n) < arr[0]) {
+        return Math.abs(Math.floor(target/n) *n - target) <= Math.abs(Math.ceil(target/n) *n - target)
+            ? Math.floor(target/n) : Math.ceil(target/n);
+    }
+
+    let sum = Array(n).fill(0);
+    let ans = arr[0];
+    for (let i = 0; i < n; i++) {
+        sum[i] = arr[i] + (sum[i-1] || 0);
+        let num = sum[i] + arr[i] * (n-1-i);
+        if (Math.abs(num-target) === 0) return arr[i];
+    }
+    console.log(sum)
+
+    let l = 0;
+    let r = n-1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        let num = sum[m] + arr[m]*(n-m-1);
+        if (num === target) return arr[m];
+        if (num < target) {
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+    console.log('r:', r, 'arr[r]',arr[r], 'l:', l)
+
+    if (r >= n-1) return arr[r];
+
+    let prefixSum = sum[r] || 0;
+    
+    let start = arr[r];
+    let end = arr[l];
+    console.log('prefixSum:', prefixSum, 'start:',start, 'end:', end)
+    while (start <= end) {
+        let m = start + parseInt((end-start)/2);
+        let num = prefixSum + m*(n-r-1);
+        if (num === target) return m;
+        if (num < target) {
+            start = m + 1;
+        } else {
+            end = m - 1;
+        }
+    }
+    console.log('start:',start, 'end:', end)
+    ans = Math.abs(prefixSum + end*(n-r-1) - target) <= Math.abs(prefixSum + (end+1)*(n-r-1) - target) ? end : end+1;
+    return ans;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================  
+ * 1刷
+*/
+export var findBestValue1 = function(arr, target) {
     let n = arr.length;
     arr.sort((a,b) => a-b);
     if (parseInt(target/n) < arr[0]) {

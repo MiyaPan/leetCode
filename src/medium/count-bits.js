@@ -12,6 +12,38 @@
     输入: 5
     输出: [0,1,1,2,1,2]
 */
+/**
+ * =============================  
+ * 二刷
+*/
+export const countBits = (num) => {
+    let ans = [0];
+    for (let i = 1; i <= num; i++) {
+        let prod = parseInt(i / 2);
+        let mod = i % 2;
+        if (mod === 0) {
+            ans.push(ans[prod]);
+        } else {
+            ans.push(ans[prod]+1);
+        }
+    }
+    return ans;
+}
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================  
+ * 一刷
+*/
 // 列出来找规律发现 dp[i] = dp[int(i/2)] + dp[i%2]，实质规律应该是，将当前数字右移一位，看去掉的尾巴是 0 还是 1 ，再加上右移后的数字即可
 export const countBits = (num) => {
     let dp = [0];

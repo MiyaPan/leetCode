@@ -16,6 +16,27 @@
 
     输出: 6
 */
+// TODO: 三刷
+export const countNodes = (root) => {
+    let lDepth = 0;
+    let lh = root;
+    while (lh) {
+        lh = lh.left;
+        lDepth++;
+    }
+    let rDepth = 0;
+    let rh = root;
+    while (lh) {
+        rh = rh.right;
+        rDepth++;
+    }
+    if (lDepth == rDepth) {
+        // 位移比加减优先级还低，需要加括号
+        return (1<<lDepth)-1;
+    } else {
+        return countNodes(root.left) + countNodes(root.right) +1;
+    }
+}
 export const countNodes = (root) => {
     if (!root) {
         return 0;

@@ -22,6 +22,7 @@
     链接：https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal
     著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
+// 二刷，done
 // 也是BFS和DFS两种：
 /**
  * BFS：深度遍历，用递归，每递归一层，level++，从左到右的遍历，会把元素挨个放到result[level]中

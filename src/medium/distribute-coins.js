@@ -28,7 +28,48 @@
     0 <= node.val <= N
     链接：https://leetcode-cn.com/problems/distribute-coins-in-binary-tree
 */
+// TODO: 三刷！
+/**
+ * =============================  
+ * 二刷
+*/
+var distributeCoins = function(root) {
+    let ans = 0;
+    const dfs = () => {
+        if (!root) return 0;
+        let l = distributeCoins(root.left);
+        let r = distributeCoins(root.right);
 
+        // ans 是左右要移动的量，而不管当前节点能不能消化，能不能消化是当前节点向父节点汇报的值，用以计算的
+        // 在最小子树里进行消化是最小的代价
+        ans += Math.abs(l) + Math.abs(r);
+
+        return l + (root.val -1) + r;
+    }
+    dfs(root);
+    return ans;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================  
+ * 一刷
+*/
 // 思路：题目就是很好的提示，题目需要构造出每个节点都为 1 的树吗，不用，题目只要统计次数
 // 所以不需要真的挪，所以子往父和父往子挪是一样的，可以一样对待，反正都是加 1 次
 // 肯定不是从树根开始判，而要自底向上，那方法就固定了，就是递归的 DFS

@@ -18,6 +18,45 @@
     数组的长度不会超过 10,000 。
     你可以认为所有数字总和在 32 位有符号整数范围内。
 */
+/**
+ * =============================  
+ * 二刷
+*/
+export const checkSubarraySum = (nums, k) => {
+    let n = nums.length;
+    let sum = 0;
+    let map = new Map();
+    map.set(0, -1);
+    for (let i = 0; i < n; i++) {
+        sum += nums[i];
+        let key = sum % k;
+        if (map.has(key)) {
+            if (i-map.get(key) >= 2) return true;
+        } else {
+            map.set(key, i);
+        }
+    }
+    return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 export const checkSubarraySum = (nums, k) => {
     let n = nums.length;
     // let dp = Array(n).fill(null).map(_ => Array(n).fill(0));

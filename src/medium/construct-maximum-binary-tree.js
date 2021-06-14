@@ -24,6 +24,37 @@
     提示：
     给定的数组的大小在 [1, 1000] 之间。
 */
+/**
+ * =============================  
+ * 二刷
+*/
+export const constructMaximumBinaryTree = (nums) => {
+    let n = nums.length;
+    if (n === 0) return null;
+    let idx = 0;
+    for (let i = 0; i < n; i++) {
+        if (nums[i] > nums[idx]) {
+            idx = i;
+        }
+    }
+    let root = new TreeNode(nums[idx]);
+    root.left = constructMaximumBinaryTree(nums.slice(0, idx));
+    root.right = constructMaximumBinaryTree(nums.slice(idx+1));
+    return root;
+}
+
+
+
+
+
+
+
+
+
+/**
+ * =============================  
+ * 一刷
+*/
 export const constructMaximumBinaryTree = (nums) => {
     if (nums.length === 0) {
         return null;

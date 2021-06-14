@@ -18,7 +18,51 @@
 
 // 要区别于 516. 最长回文子序列
 // https://leetcode-cn.com/problems/longest-palindromic-subsequence/
+/**
+ * =============================  
+ * 二刷
+*/
+var countSubstrings = function(s) {
+    let n = s.length;
+    let dp = Array(n).fill(null).map(_ => Array(n).fill(false));
 
+    let count = 0;
+    for (let i = n-1; i >= 0; i--) {
+        for (let j = i; j < n; j++) {
+            if (i === j) {
+                dp[i][j] = true;
+                count++;
+            } else {
+                if (s[i] === s[j]) {
+                    if (j-i < 2 || dp[i+1][j-1]) {
+                        dp[i][j] = true;
+                        count++;
+                    }
+                }
+            }
+        }
+    }
+    return count;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================  
+ * 一刷
+*/
 // 516 是区间，不用连续，这个是连续的，所以转移方程不是：
 // if (s[i] === s[j]) {
 //     dp[i][j] = dp[i+1][j-1] + 2;

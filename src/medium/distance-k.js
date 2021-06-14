@@ -21,17 +21,141 @@
 
     链接：https://leetcode-cn.com/problems/all-nodes-distance-k-in-binary-tree
  */ 
+// TODO: 三刷! 好的思路真是省时间又省力气
+/**
+ * =============================  
+ * 二刷
+*/
+// setParent 不想也不该修改源数据，用 map 映射啊
+// 只用树的广度遍历思路就不对，比如：[0,null,1,2,5,null,3,null,null,null,4]，2，2，答案 [4,5,0] 还包含 5
+// 并不是只从根去找哦！！！！！还是的 seetParent 再广度
+export var distanceK = function(root, target, k) {
+    let ans = [];
+    let children = getChildren(target, k);
+    ans = ans.concat(children);
 
- /**
- * @param {TreeNode} root
- * @param {TreeNode} target
- * @param {number} K
- * @return {number[]}
- */
+    let parents = getParents(root,target);
+
+    let cur = target;
+    let pre = target;
+    for (let i = parents.length-1; i >= 0; i--) {
+        let parent = parents[i];
+        pre = cur;
+        cur = parent.find(node => node.left === cur || node.right === cur);
+        k--;
+        if (k === 0) {
+            ans.push(cur.val);
+            return ans;
+        }
+    }
+    let newtar = pre === cur.left ? cur.right : cur.left;
+    if (newtar) {
+        let others = getChildren(newtar, k-1);
+        ans = ans.concat(others);
+    }
+    return ans;
+};
+function getParents(root, target) {
+    let stack = [root];
+    let stackByLevel = [[root]];
+    let p = 0;
+    while(p < stack.length) {
+        let nodesInNextLevel = [];
+        while(p < stack.length) {
+            let node = stack[p++];
+            if (node && (node.left === target || node.right === target)) return stackByLevel;
+            node.left && nodesInNextLevel.push(node.left);
+            node.right && nodesInNextLevel.push(node.right);
+        }
+        stack = stack.concat(nodesInNextLevel);
+        stackByLevel.push(nodesInNextLevel);
+    }
+    return [];
+}
+function getChildren(root, k) {
+    if (k === 0) return [root.val];
+    let stack = [root];
+    let p = 0;
+    let level = 0;
+    while(p < stack.length) {
+        let nodesInNextLevel = [];
+        while(p < stack.length) {
+            let node = stack[p++];
+            node.left && nodesInNextLevel.push(node.left);
+            node.right && nodesInNextLevel.push(node.right);
+        }
+        level++;
+
+        if (level === k) return nodesInNextLevel.map(node => node.val);;
+        stack = stack.concat(nodesInNextLevel);
+    }
+    return [];
+}
+
+export var distanceK = function(root, target, k) {
+    if (k === 0) return [target.val];
+
+    // setParent 不修改元数据，用 map 映射啊
+    let parentMap = new Map();
+
+    root.left && setParent(root, root.left, parentMap);
+    root.right && setParent(root, root.right, parentMap);
+
+    let visited = new Map();
+    let stack = [target];
+    let p = 0;
+    let level = 0;
+    while(p < stack.length) {
+        let nodesInNextLevel = [];
+        while(p < stack.length) {
+            let node = stack[p++];
+            visited.set(node, true);
+            if (node.left && !visited.has(node.left)) {
+                nodesInNextLevel.push(node.left);
+            }
+            if (node.right && !visited.has(node.right)) {
+                nodesInNextLevel.push(node.right);
+            }
+            let parent = parentMap.get(node);
+            if (parent && !visited.has(parent)) {
+                nodesInNextLevel.push(parent);
+            }
+        }
+        level++;
+
+        if (level === k) return nodesInNextLevel.map(node => node.val);;
+        stack = stack.concat(nodesInNextLevel);
+    }
+    return [];
+}
+function setParent(parent, cur, parentMap) {
+    parentMap.set(cur, parent);
+    cur.left && setParent(cur, cur.left, parentMap);
+    cur.right && setParent(cur, cur.right, parentMap);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================  
+ * 二刷
+*/
 // // 思路：距离为k的，无非：在左子树上 || 在右子树上 || 父节点网上，找距离他为 k 的，其实就是找距离这三个 k-1 的，依次递归
 // // 最终找的是 距离为 0 的，也就是退出递归的节点的left、right和root
 // // 父节点这里，不能递归中回溯，不然拿到的是距离 target 是 k-1 的节点，反而近了一个，用个 set 来保存已访问节点处理
-export const distanceK = (root, target, K) => {
+export const distanceK1 = (root, target, K) => {
     let parentMap = new Map();
     setParent(root, null, parentMap);
     

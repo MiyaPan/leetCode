@@ -42,7 +42,39 @@
     新增第i位时，长度为i位的所有数字不同的个数 = 长度为i-1位所有数字不同的个数 * 剩余可供选择的个数；
     类似10重for循环遍历；
 */
+// TODO: 三刷
+/**
+ * =============================  
+ * 二刷
+*/
+export const countNumbersWithUniqueDigits = (n) => {
+    if (n === 0) return 1;
+    if (n === 1) return 10;
 
+    let dp = [1, 9];
+    let sum = 10;
+    for (let i = 2; i <= n; i++) {
+        dp[i] = dp[i-1] * (10-i+1);
+        sum += dp[i];
+    }
+    return sum;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================  
+ * 一刷
+*/
 // 题意：当 n=3，122，133 也不行，因为有重复的，只要有重复就不行
 export const countNumbersWithUniqueDigits = (n) => {
     if (n === 0) return 1;

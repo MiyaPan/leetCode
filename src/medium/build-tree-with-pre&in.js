@@ -38,7 +38,46 @@
  * @param {number[]} inorder
  * @return {TreeNode}
  */
+/**
+ * =============================
+ * 二刷
+*/
+// 前序遍历 preorder = [3,9,20,15,7]
+// 中序遍历 inorder = [9,3,15,20,7]
+export const buildTree = (preorder, inorder) => {
+    let n = preorder.length;
+    if (n === 0) return null;
 
+    let root = new TreeNode(preorder[0]);
+    if (n === 1) return root;
+
+    let rootIdx = inorder.indexOf(preorder[0]);
+
+    let l = buildTree(preorder.slice(1,rootIdx+1), inorder.slice(0, rootIdx));
+    let r = buildTree(preorder.slice(rootIdx+1), inorder.slice(rootIdx+1));
+    root.left = l;
+    root.right = r;
+    return root;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
  // 耗时打败 5.07%, 因为多操作了 preorder 啊，preorder 每次都取头就行，不用 slice，因为会递归的先把所有左孩子创建完再创建右孩子，元素在创建左子的时候都背 shift 掉了
 export const buildTree = (preorder, inorder) => {
     if (!preorder || preorder.length === 0 || !inorder || inorder.length === 0) {

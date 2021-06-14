@@ -17,7 +17,7 @@
 */
 /**
  * =============================
- * 二刷
+ * 二刷,done
 */
 export var bestSeqAtIndex = function(height, weight) {
     // height = [65,70,56,75,60,68] weight = [100,150,90,190,95,110]

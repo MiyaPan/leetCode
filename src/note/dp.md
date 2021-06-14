@@ -2,6 +2,47 @@
 ## 背包问题：
 
 参考：https://leetcode-cn.com/problems/combination-sum-iv/solution/xi-wang-yong-yi-chong-gui-lu-gao-ding-bei-bao-wen-/
+参考：https://leetcode-cn.com/problems/partition-equal-subset-sum/solution/yi-pian-wen-zhang-chi-tou-bei-bao-wen-ti-a7dd/
+
+## 界定是不是背包 - 选或不选组成XX
+1. 只要给一堆东西，让你**这样选或者那样选**，组成啥，就是背包问题！
+2. 背包问题一定是某个元素**选或不选**，不会强制都用上，才能用背包的模板，所以要转化下，比如：494. 目标和，常见的就是求和取一半
+3. 组成的多数是个固定值，少数是不高于 XX 的最大值(最原始的背包或者1049. 最后一块石头的重量 II)
+
+## 背包分类
+01 背包：元素不可重用；
+完全背包：可重用；
+组合背包：元素顺序不同算不同结果，前两者不考虑顺序问题，只需挑出元素
+
+## 分类解题模板
+背包问题大体的解题模板是两层循环，1.物品nums；2.背包容量target。然后写转移方程，
+根据背包的分类我们确定物品和容量遍历的先后顺序，根据问题的分类我们确定状态转移方程的写法
+
+### 首先是背包分类的模板：一层物品，一层背包
+1、0/1背包：外循环nums,内循环target,target **倒序**且 target>=nums[i];
+2、完全背包：外循环nums,内循环target,target **正序**且 target>=nums[i];
+3、组合背包：外循环target,内循环nums,target **正序**且 target>=nums[i];
+4、分组背包：这个比较特殊，需要三重循环：最外层为分组 k, 然后遍历 target，最后遍历 nums【固定的！！！不用分析是否与顺序有关】
+
+即：
+1.如果是0-1背包，即数组中的元素不可重复使用，nums放在外循环，target在内循环，且内循环倒序；
+for num in nums:
+    for i in range(target, nums-1, -1): // -1　是逆序的意思
+2.如果是完全背包，即数组中的元素可重复使用，nums放在外循环，target在内循环。且内循环正序。
+for num in nums:
+    for i in range(nums, target+1):
+3.如果组合问题需考虑元素之间的顺序，需将target放在外循环，将nums放在内循环。
+for i in range(1, target+1):
+    for num in nums:
+
+
+### 然后是问题分类的模板：
+1、最值问题: dp[i] = max/min(dp[i], dp[i-nums]+1)或dp[i] = max/min(dp[i], dp[i-num]+nums);
+2、存在问题(bool)：dp[i]=dp[i] || dp[i-num];
+3、"组合"问题：dp[i]+=dp[i-num];【这个组合就是排列组合的意思，不是组合背包的组合】
+
+作者：eh-xing-qing
+链接：https://leetcode-cn.com/problems/partition-equal-subset-sum/solution/yi-pian-wen-zhang-chi-tou-bei-bao-wen-ti-a7dd/
 
 ### 当然拿到问题后，需要做到以下几个步骤：
 1.分析是否为背包问题，有 3 中： 0-1 背包【元素不可重用】，完全背包【可重用】，组合背包【元素顺序不同算不同结果，前两者不考虑顺序问题，只需挑出元素】。
@@ -63,13 +104,13 @@ for i in range(1, target+1):
 1、组合背包问题：
 (377. 组合总和 Ⅳ)[https://leetcode-cn.com/problems/combination-sum-iv/description/]
 (494. 目标和)[https://leetcode-cn.com/problems/target-sum/]
-(518. 零钱兑换 II)[https://leetcode-cn.com/problems/coin-change-2/description/]
+(518. 零钱兑换 II)[https://leetcode-cn.com/problems/coin-change-2/description/] 【兑换的种数】
 2、True、False问题：
 (139. 单词拆分)[https://leetcode-cn.com/problems/word-break/]【完全背包】
 (416. 分割等和子集)[https://leetcode-cn.com/problems/partition-equal-subset-sum/description/]【0-1 背包】
 3、最大最小问题：
 (474. 一和零)[https://leetcode-cn.com/problems/ones-and-zeroes/description/]【0-1 背包】
-(322. 零钱兑换)[https://leetcode-cn.com/problems/coin-change/description/]
+(322. 零钱兑换)[https://leetcode-cn.com/problems/coin-change/description/] 【兑换使用的最少硬币数】
 
 1. 组合背包公式
 

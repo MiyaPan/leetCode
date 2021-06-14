@@ -23,8 +23,133 @@
     第二个玩家可以通过选择整数 10（那么累积和为 11 >= desiredTotal），从而取得胜利.
     同样地，第一个玩家选择任意其他整数，第二个玩家都会赢。
 */
+// TODO: 三刷！！！！！
+/**
+ * =============================
+ * 二刷
+*/
+// 好，超时了，这怎么加备忘呢，每次选择的顺序都不同
+// 顺序的确不同，但是选 312 和 选 123 结果是一样的，所以可以用二进制数来做 key 备忘！！！！
+// 也就是把 visited 序列化一下啊傻啊
+export var canIWin = function(maxChoosableInteger, desiredTotal) {
+    if (desiredTotal <= maxChoosableInteger) return true;
+    let sum = (1+maxChoosableInteger)*maxChoosableInteger/2;
+    if (sum < desiredTotal) return false;
+
+    let visited = Array(maxChoosableInteger+1).fill(false);
+    // for (let i = 1; i <= maxChoosableInteger; i++) {
+    //     visited[i] = true;
+    //     if (!dfs(visited, i, maxChoosableInteger, 1, desiredTotal)) return true;
+    //     visited[i] = false;
+    // }
+    // return false;
+    for (let i = 1; i <= maxChoosableInteger; i++) {
+        visited[i] = true;
+        if (dfs(visited, i, maxChoosableInteger, desiredTotal)) return true;
+        visited[i] = false;
+    }
+    return false;
+};
+// 当前这个状态下, 能否稳赢
+// 当前层递归返回的是上一轮的选择结果
+// 下一层递归才告诉我当前我这样选的结果，是不是稳赢
+function dfs(visited, sum, n,desiredTotal) {
+    if (sum >= desiredTotal) return true;
+
+    for (let i = 1; i <= n; i++) {
+        if (visited[i]) continue;
+        visited[i] = true;
+        // 这个 if 把下一层的状态当成自己的了，错了！！！！！
+        // if (sum+i >= desiredTotal) {
+        //     // visited 是全局的，这里如果判断能赢，也得设置 false，否则别的循环不能用
+        //     visited[i] = false;
+        //     continue;
+        // } else {
+            // 当前层递归返回的是上一轮的选择结果
+            // 下一层递归才告诉我当前我这样选的结果，是不是稳赢
+            // dfs 返回的是我选了当前的 i，是不是能赢，是我能赢，那么就告诉上一层，上一层不能稳赢了
+            if (dfs(visited, sum+i, n, desiredTotal)) {
+                // 后手赢了，也要把 visited 置回来，不然后面的 for 用不了了
+                visited[i] = false;
+                return false;
+            }
+        // }
+        visited[i] = false;
+    }
+    return true;
+}
+// 加备忘
+export var canIWin = function(maxChoosableInteger, desiredTotal) {
+    if (desiredTotal <= maxChoosableInteger) return true;
+    let sum = (1+maxChoosableInteger)*maxChoosableInteger/2;
+    if (sum < desiredTotal) return false;
+
+    let visited = Array(maxChoosableInteger+1).fill(false);
+    let map = new Map();
+
+    for (let i = 1; i <= maxChoosableInteger; i++) {
+        visited[i] = true;
+        if (dfs(visited, i, maxChoosableInteger, desiredTotal, map)) return true;
+        visited[i] = false;
+    }
+    return false;
+};
+// 当前这个状态下, 能否稳赢
+// 当前层递归返回的是上一轮的选择结果
+// 下一层递归才告诉我当前我这样选的结果，是不是稳赢
+function dfs(visited, sum, n,desiredTotal, map) {
+    if (sum >= desiredTotal) return true;
+
+    let key = visited.toString(); // 得 1,0,1...
+    if (map.has(key)) return map.get(key);
+
+    for (let i = 1; i <= n; i++) {
+        if (visited[i]) continue;
+        visited[i] = true;
+        // 这个 if 把下一层的状态当成自己的了，错了！！！！！
+        // if (sum+i >= desiredTotal) {
+        //     // visited 是全局的，这里如果判断能赢，也得设置 false，否则别的循环不能用
+        //     visited[i] = false;
+        //     continue;
+        // } else {
+            // 当前层递归返回的是上一轮的选择结果
+            // 下一层递归才告诉我当前我这样选的结果，是不是稳赢
+            // dfs 返回的是我选了当前的 i，是不是能赢，是我能赢，那么就告诉上一层，上一层不能稳赢了
+            if (dfs(visited, sum+i, n, desiredTotal, map)) {
+                map.set(key, false);
+                // 后手赢了，也要把 visited 置回来，不然后面的 for 用不了了
+                visited[i] = false;
+                return false;
+            }
+        // }
+        visited[i] = false;
+    }
+    map.set(key, true);
+    return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
 // https://leetcode-cn.com/problems/can-i-win/solution/hui-su-zhuang-ya-dp-by-8bun/
-export const canIWin = (maxChoosableInteger, desiredTotal) => {
+export const canIWin1 = (maxChoosableInteger, desiredTotal) => {
     if (maxChoosableInteger >= desiredTotal) return true;
     if ((1+maxChoosableInteger)*maxChoosableInteger / 2 < desiredTotal) return false;
 

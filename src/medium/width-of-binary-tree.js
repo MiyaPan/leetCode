@@ -54,9 +54,62 @@
 解释: 最大值出现在树的第 4 层，宽度为 8 (6,null,null,null,null,null,null,7)。
 注意: 答案在32位有符号整数的表示范围内。
 */
-
-// 一个用例没通过，超长，超时了，就是想让你懂完全二叉树的性质规律：每个root的左子树 = pos*2，右子树= pos*2+1
+/**
+ * =============================
+ * 二刷
+*/
 export  const widthOfBinaryTree = (root) => {
+    if (!root) return 0;
+
+    let stack = [{node: root, index: 0}];
+    let max = 1;
+    let p = 0;
+    // let mod = Math.pow(2, 32)-1;
+    let mod = Number.MAX_SAFE_INTEGER;
+    while(p < stack.length) {
+        let nodesInNextLevel = [];
+        while(p < stack.length) {
+            let {node, index} = stack[p++];
+            node.left && nodesInNextLevel.push({node: node.left, index: (index*2+1)%mod});
+            node.right && nodesInNextLevel.push({node: node.right, index: (index*2+2)%mod});
+        }
+        
+        let n = nodesInNextLevel.length;
+        if (n > 0) {
+            // index 可能会变成很大的数，导致失去精度错误，要取模，那应该对谁取模呢，
+            // 超过谁出错就对谁取，但是不能在计算的时候取，应该放的时候就取，因为下一步依赖上一步的结果，不取会放的时候直接出错
+            let len = nodesInNextLevel[n-1].index - nodesInNextLevel[0].index + 1;
+            if (len === 3) {
+                console.log(nodesInNextLevel)
+                console.log(nodesInNextLevel[n-1].index, nodesInNextLevel[0].index)
+            }
+            max = Math.max(max, len);
+        }
+        stack = stack.concat(nodesInNextLevel);
+    }
+    return max;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 一刷
+*/
+// 一个用例没通过，超长，超时了，就是想让你懂完全二叉树的性质规律：每个root的左子树 = pos*2，右子树= pos*2+1
+export  const widthOfBinaryTree1 = (root) => {
     if (!root) {
         return 0;
     }
@@ -109,7 +162,7 @@ export  const widthOfBinaryTree = (root) => {
     return maxWidth;
 }
 
-export  const widthOfBinaryTree1 = (root) => {
+export  const widthOfBinaryTree11 = (root) => {
     if (!root) {
         return 0;
     }
