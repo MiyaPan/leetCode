@@ -98,6 +98,9 @@ export var findItinerary1 = function(tickets) {
             map[from] = [{to, visited: false}];
         }
     }
+// 只有实现了Iterator接口的对象才能够使用 for of 来进行遍历取值。
+// 所以说 for of 只是语法糖，真正的主角是Iterator。
+// 也就是说 Iteratorble 的都可以 for of 哦
     // map.entries()/keys()/values() 这种 iteratorble 的可以用 for..of 但是不可以用 forEach，数组才可以用 forEach，所以可以把 iteratorble 的转成数组再用 forEach
     // map 自身提供 forEach 方法哦！
     // 字符串比较不可以用减法，但是可以用 大小号哦！

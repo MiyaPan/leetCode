@@ -19,6 +19,40 @@
 
     链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee
 */
+/**
+ * =============================
+ * 二刷
+*/
+export const maxProfit = (prices, fee) => {
+    let n = prices.length;
+    let dp = Array(2).fill(null).map(_ => Array(n).fill(0));
+    // dp[0] 是买入的最少花费记录，那么今天买入就应该取 昨天卖出的价格 再减掉今天的花费，因为昨天卖出的价格我们始终记录所有卖出的最大值，所以不用向前遍历
+    // dp[1] 是卖出的最大收益记录，那么今天卖出的收益就是 昨天买入的花费 再加上今天的收益，因为昨天的花费我们始终记录最小值，所以不用向前遍历
+    dp[0][0] = -prices[0];
+    dp[1][0] = 0;
+    for (let i = 1; i < n; i++) {
+        dp[0][i] = Math.max(dp[0][i-1], dp[1][i-1]-prices[i]);
+        dp[1][i] = Math.max(dp[1][i-1], dp[0][i-1]+prices[i]-fee);
+    }
+    // 这次不用在过程中记录最大值，因为我们的 dp[1] 始终记录能获得的最大值
+    // 区别于 121 题，121 题只允许买卖一次，所以 dp[1] 不存在记录最大值，
+    // 就是 dp[1][i] 不可能 由 dp[1][i-1] 得来，如果由 dp[1][i-1] 得来那就成了可以交易多次了
+    return dp[1][n-1];
+}
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 1 刷
+*/
 // 股票问题就是：把钱包当 base，买就减，卖就加，遍历所有条件下的状态：天数 n，交易次数 k，持有与否 s
 // for 0 <= i < n
 //     for 0 <= k < K
