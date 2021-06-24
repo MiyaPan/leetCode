@@ -15,7 +15,86 @@
 
     链接：https://leetcode-cn.com/problems/number-of-longest-increasing-subsequence
 */
+// TODO: 三刷！！！
+
 // [1,2,4,3,5,4,7,2] : 3
+/**
+ * =============================
+ * 二刷
+*/
+export const findNumberOfLIS = (nums) => {
+    let n = nums.length;
+    let dp = Array(n).fill(1);
+    let counts = Array(n).fill(1);
+    let max = 1;
+    for (let i = 1; i < n; i++) {
+        // let tempMax = 0;
+        // // 找到前面符合条件的的最大值
+        // for (let j = 0; j < i; j++) {
+        //     if (nums[j] < nums[i]) {
+        //         tempMax = Math.max(tempMax, dp[j]);
+        //     }
+        // }
+        // // 记录种类数
+        // let maxCount = 0;
+        // for (let j = 0; j < i; j++) {
+        //     // dp 得记录可能的种类数，可以用多个数组啊
+        //     if (dp[j] === tempMax) {
+        //         maxCount += counts[j];
+        //     }
+        // }
+        // dp[i] = tempMax+1;
+
+        // if (maxCount === 0) {
+        //     counts[i] = 1;
+        // } else {
+        //     counts[i] = maxCount;
+        // }
+
+        for (let j = 0; j < i; j++) {
+            if (nums[j] < nums[i]) {
+                if (dp[j] + 1 > dp[i]) {
+                    dp[i] = dp[j] + 1;
+                    counts[i] = counts[j];
+                } else if (dp[j] + 1 === dp[i]) {
+                    counts[i] += counts[j];
+                }
+            }
+        }
+
+        max = Math.max(max, dp[i]);
+    }
+    console.log(counts)
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+        if (dp[i] === max) {
+            count += counts[i];
+        }
+    }
+    return count;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 1 刷
+*/
 export const findNumberOfLIS = (nums) => {
     let n = nums.length;
     let dp = Array(n).fill(1);

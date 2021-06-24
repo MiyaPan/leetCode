@@ -25,8 +25,51 @@
     1 <= N <= 100
     链接：https://leetcode-cn.com/problems/flip-binary-tree-to-match-preorder-traversal
 */
-
+/**
+ * =============================
+ * 二刷
+*/
 export const flipMatchVoyage = (root, voyage) => {
+    if (!root) return [];
+
+    let idx = 0;
+    let ans = [];
+    const dfs = (root) => {
+        if (!root) return;
+        if (root.val !== voyage[idx]) return false;
+
+        idx++;
+
+        if (root.left && root.left.val !== voyage[idx]) {
+            ans.push(root.val);
+            let first = dfs(root.right);
+            let second = dfs(root.left);
+            return first !== false && second !== false;
+        } else {
+            let first = dfs(root.left);
+            let second = dfs(root.right);
+            return first !== false && second !== false;
+        }
+    }
+    if (dfs(root) !== false){
+        return ans;
+    } else {
+        return [-1];
+    }
+}
+
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 1刷
+*/
+export const flipMatchVoyage1 = (root, voyage) => {
     if (!root) return [];
 
     let result = [];
@@ -63,7 +106,7 @@ function helper(root, voyage, voyageIndex, result) {
 }
 
 // 还是要看看官方题解的，所有的翻转，都不用交换节点的，都只是 先遍历左 还是 先遍历右 的区别而已
-export const flipMatchVoyage1 = (root, voyage) => {
+export const flipMatchVoyage2 = (root, voyage) => {
     if (!root) return [];
 
     let result = [];

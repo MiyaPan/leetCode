@@ -15,6 +15,49 @@
 
     链接：https://leetcode-cn.com/problems/maximum-length-of-pair-chain
 */
+/**
+ * =============================  
+ * 二刷
+*/
+// [[-6,9],[1,6],[8,10],[-1,4],[-6,-2],[-9,8],[-5,3],[0,3]]
+// 输出：
+// 1
+// 预期：
+// 3
+var findLongestChain = function(pairs) {
+    let n = pairs.length;
+    pairs.sort((a, b) => a[0] === b[0] ? a[1]-b[1] : a[0]-b[0]);
+    // 还不能默认 0 呢，得看具体题目分析，这里即使前面没有合适的，自己也能构成 1 ，所以默认值就该是 1，不然后面加就不对了
+    // let dp = Array(n).fill(0);
+    let dp = Array(n).fill(1);
+    let max = 1;
+    for (let i = 1; i < n; i++) {
+        for (let j = i-1; j >= 0; j--) {
+            if (pairs[j][1] < pairs[i][0]) {
+                dp[i] = Math.max(dp[i], dp[j]+1);
+            }
+        }
+        max = Math.max(max, dp[i]);
+    }
+    return max;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================  
+ * 1 刷
+*/
 // [[-6,9],[1,6],[8,10],[-1,4],[-6,-2],[-9,8],[-5,3],[0,3]]
 // 输出：
 // 1

@@ -3,6 +3,49 @@
  * 链接：https://leetcode-cn.com/problems/find-elements-in-a-contaminated-binary-tree/
 */
 /**
+ * =============================  
+ * 二刷
+*/
+var FindElements = function(root) {
+    if (!root) return null;
+    root.val = 0;
+    this.root = root;
+    this.set = new Set();
+    dfs(root, this.set);
+}
+function dfs(root, set) {
+    if (!root) return;
+    set.add(root.val);
+    if (root.left) {
+        root.left.val = root.val * 2 + 1;
+        dfs(root.left, set);
+    }
+    if (root.right) {
+        root.right.val = root.val * 2 + 2;
+        dfs(root.right, set);
+    }
+}
+/** 
+ * @param {number} target
+ * @return {boolean}
+ */
+FindElements.prototype.find = function(target) {
+    return this.set.has(target);
+};
+
+
+
+
+
+
+
+
+
+/**
+ * =============================  
+ * 1 刷
+*/
+/**
  * @param {TreeNode} root
  */
 var FindElements = function(root) {

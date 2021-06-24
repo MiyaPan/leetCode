@@ -15,7 +15,37 @@
 
     链接：https://leetcode-cn.com/problems/flip-equivalent-binary-trees
 */
+// TODO: 三刷，思路简单，但是要写下，细节你写不对
+/**
+ * =============================
+ * 二刷
+*/
 export const flipEquiv = (root1, root2) => {
+    if (!root1 && !root2) return true;
+    if (!root1 || !root2) return false;
+    if (root1.val !== root2.val) return false;
+
+    if ((root1.left && root1.left.val) === (root2.left && root2.left.val)) {
+        return flipEquiv(root1.left, root2.left) && flipEquiv(root1.right, root2.right);;
+    } else {
+        return flipEquiv(root1.left, root2.right) && flipEquiv(root1.right, root2.left);
+    }
+}
+
+const aaa = 1;
+export default aaa;
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 1刷
+*/
+export const flipEquiv1 = (root1, root2) => {
     if (!root1 && !root2) return true;
     if (!root1 || !root2 || root1.val !== root2.val) return false;
 
@@ -43,7 +73,7 @@ export const flipEquiv = (root1, root2) => {
 }
 
 
-function flipEquiv(root1, root2) {
+function flipEquiv2(root1, root2) {
     // 为什么可以这么写：可读性是差，但是如果两个对象就想等了，就不用往下了，少一点，null == null呀，叶节点都适用的
     if (root1 == root2)
             return true;

@@ -26,11 +26,52 @@
 
     提示：
     1 <= houses.length, heaters.length <= 3 * 104
-    1 <= houses[i], heaters[i] <= 109
+    1 <= houses[i] <= 109
+    1 <= heaters[i] <= 109
 
     链接：https://leetcode-cn.com/problems/heaters
 */
-// TODO: 三刷
+// TODO: 四刷
+/**
+ * =============================
+ * 三刷
+*/
+export const findRadius = (houses, heaters) => {
+    heaters.sort((a,b) => a-b);
+    let ans = 0;
+    for (let house of houses) {
+        let radius = getRadius(house, heaters);
+        ans = Math.max(ans, radius);
+    }
+    return ans;
+}
+function getRadius(tar, heaters) {
+    let n = heaters.length;
+    let l = 0; 
+    let r = n-1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        if (heaters[m] === tar) return 0;
+        if (heaters[m] < tar) {
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+    // l 是第一个大于 tar 的
+    if (l === 0) return heaters[l] - tar;
+    if (l === n) return tar - heaters[l-1];
+    return Math.min(heaters[l] - tar, tar - heaters[l-1]);
+}
+
+
+
+
+
+
+
+
+
 /**
  * =============================
  * 二刷

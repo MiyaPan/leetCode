@@ -19,6 +19,48 @@
 
     链接：https://leetcode-cn.com/problems/find-the-duplicate-number
 */
+// TODO: 三刷，
+/**
+ * =============================  
+ * 二刷
+*/
+// 脑筋急转弯，不能用 map 存储数量，就去数好了，，，每次去数小于当前值的有多少个，就能二分了
+export var findDuplicate = function(nums) {
+    let n = nums.length;
+    let l = 1;
+    let r = n-1;
+    while (l <= r) {
+        let m = l + parseInt((r-l)/2);
+        let count = 0;
+        for (let i = 0; i < n; i++) {
+            if (nums[i] <= m) {
+                count++;
+            }
+        }
+        if (count > m) {
+            r = m - 1;
+        } else {
+            l = m + 1;
+        }
+    }
+    return l;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================  
+ * 一刷
+*/
 // 只要只要一侧的区间里肯定有，不用管另一侧是否能确定！肯定就根据可以确认的区间分两半了啊！！
 // https://leetcode-cn.com/problems/find-the-duplicate-number/solution/er-fen-fa-si-lu-ji-dai-ma-python-by-liweiwei1419/
 // 二分：思路不常见，时间换空间，但是细节思路有用，比如上面那句话

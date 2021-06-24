@@ -53,7 +53,42 @@
      / \   \
     3   4   6
  */
+/**
+ * =============================
+ * 二刷
+*/
 export const flatten = (root) => {
+    if (!root) return null;
+
+    // let stack = root.right ? [root.right] : [];
+    let stack = [];
+    let node = root;
+    while (stack.length || node) {
+        while (node && node.left) {
+            node.right && stack.push(node.right);
+            node.right = node.left;
+            node.left = null;
+            node = node.right;
+        }
+        
+        if (!node.right) {
+            node.right = stack.length > 0 ? stack.pop() : null;
+        }
+        node = node.right;
+    }
+}
+
+
+
+
+
+
+
+/**
+ * =============================
+ * 1 刷
+*/
+export const flatten1 = (root) => {
     if (!root) {
         return null;
     }

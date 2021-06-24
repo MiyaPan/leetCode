@@ -16,6 +16,48 @@
 
     链接：https://leetcode-cn.com/problems/maximum-length-of-repeated-subarray
 */
+// TODO: 三刷
+/**
+ * =============================  
+ * 二刷
+*/
+// 参考：https://leetcode-cn.com/problems/maximum-length-of-repeated-subarray/solution/zhe-yao-jie-shi-ken-ding-jiu-dong-liao-by-hyj8/
+// 从 0 开始也不怕呀，记录下值就行了，边界设置清楚，演算一下，就是这样的逻辑
+// 双重循环就有了
+export const findLength = (A, B) => {
+    let n = A.length;
+    let m = B.length;
+    // 令 dp[i][j] 表示 A[i:] 和 B[j:] 的最长公共前缀
+    let dp = Array(n+1).fill(null).map(_=> Array(m+1).fill(0));
+    let max = 0;
+    for (let i = 1; i <= n; i++) {
+        for (let j = 1; j <= m; j++) {
+            if (A[i-1] === B[j-1]) {
+                dp[i][j] = dp[i-1][j-1] + 1;
+                max = Math.max(max, dp[i][j]);
+            } else {
+                dp[i][j] = 0;
+            }
+        }
+    }
+    return max;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * =============================  
+ * 1 刷
+*/
 // 最长公共子序列 LCS：
 // 当 a[i] === b[j]: dp[i][j] = dp[i-1][j-1] + 1 
 // 当 a[i] !== b[j]: dp[i][j] = max(dp[i][j-1], dp[i-1][j]) 

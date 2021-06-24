@@ -1,5 +1,5 @@
-import {flatten} from '../../src/middle/flatten';
-import {levelOrder} from '../../../src/easy/level-order-base';
+import {flatten} from '../../../src/medium/flatten';
+import {levelOrder} from '../../../src/easy/tree/level-order-base';
 
 describe('flatten', () => {
     const tree = {

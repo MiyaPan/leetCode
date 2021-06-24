@@ -38,6 +38,12 @@
  * };
  */
 // TODO: 三刷
+export const findSolution = (customfunction, z) => {
+    // 思路不麻烦，不写了 
+}
+
+
+
 /**
  * =============================
  * 二刷
