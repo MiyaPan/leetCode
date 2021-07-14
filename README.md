@@ -1,2 +1,3 @@
-# leetCode
-js leetcode 练习
+# 练习
+js leetcode
+基础知识
